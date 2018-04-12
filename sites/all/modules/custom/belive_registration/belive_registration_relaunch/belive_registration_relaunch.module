@@ -1,0 +1,184 @@
+<?php
+
+//Load functions
+module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_functions');
+module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_relaunch_waiting_users_registration.form');
+
+//Variables
+define("BATCH_LIMIT", 20);
+
+/**
+ * Implements hook_menu().
+ *
+ * @ingroup signup_core
+ */
+function belive_registration_relaunch_menu() {
+	$path = drupal_get_path('module', 'belive_registration_relaunch') . '/includes';
+	
+	return array(
+		//admin menu entrie, page to relaunch node waiting registrations today/everyday
+		'admin/relaunch_waiting' => array(//Call belive_registration_menu_load
+			'title' => 'Relaunch waiting registrations',
+			'page callback' => 'belive_registration_relaunch_admin_relaunch_waiting_users_registration_view',
+			'page arguments' => array(),
+			'access callback' => '_belive_registration_relaunch_admin_relaunch_waiting_users_registration_access',
+			'access arguments' => array('relaunch waiting users registration'),
+			'type' => MENU_LOCAL_TASK,
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+		),
+		
+		//menu entrie, page to relaunch specific node waiting registrations
+		'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
+			'title' => 'Relaunch waiting registrations',
+			'page callback' => 'belive_registration_relaunch_node_relaunch_waiting_users_registration_view',
+			'page arguments' => array(1),
+			'access callback' => '_belive_registration_relaunch_node_relaunch_waiting_users_registration_access',
+			'access arguments' => array(1, 'relaunch waiting users registration'),
+			'type' => MENU_LOCAL_TASK,
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+			'weight' => 5,
+		),
+		//Relaunch all registrations with cron
+		'relaunch_batch_cron' => array(
+			'title' => 'Batch relaunch all',
+			'description' => 'Batch to auto relaunch all registrations',
+			'page callback' => 'belive_registration_relaunch_setup_batch',
+			'page arguments' => array('NULL', FALSE, TRUE),//all, auto, today
+			'access arguments' => array('relaunch waiting users registration'),
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+			'type' => MENU_CALLBACK,
+		),
+		//Relaunch all registrations manually for today
+		'relaunch_batch_manually_today' => array(
+			'title' => 'Batch relaunch',
+			'description' => 'Batch to auto relaunch all registrations',
+			'page callback' => 'belive_registration_relaunch_setup_batch',
+			'page arguments' => array('NULL', TRUE, TRUE),//all, manuel, today
+			'access arguments' => array('relaunch waiting users registration'),
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+			'type' => MENU_CALLBACK,
+		),
+		//Relaunch all registrations manually for everyday
+		'relaunch_batch_manually_everyday' => array(
+			'title' => 'Batch relaunch',
+			'description' => 'Batch to auto relaunch all registrations',
+			'page callback' => 'belive_registration_relaunch_setup_batch',
+			'page arguments' => array('NULL', TRUE, FALSE),//all, manuel, everyday
+			'access arguments' => array('relaunch waiting users registration'),
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+			'type' => MENU_CALLBACK,
+		),
+		//Relaunch a registration manually
+		'relaunch_batch_manually/%' => array(
+			'title' => 'Batch relaunch',
+			'description' => 'Batch to auto relaunch all registrations',
+			'page callback' => 'belive_registration_relaunch_setup_batch',
+			'page arguments' => array(1, TRUE, FALSE),//id, manuel, everyday
+			'access arguments' => array('relaunch waiting users registration'),
+			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+			'file path' => $path,
+			'type' => MENU_CALLBACK,
+		),
+	);
+}
+
+function belive_registration_relaunch_mail($key, &$message, $params) {
+	// note: l'utilisation d'une clé va nous permettre de distinguer plusieurs templates d'emails pouvant être envoyés par un même module.
+	/*switch ($key) {
+		case 'belive_registration_relaunch_send_relaunch_mail':
+			// note: Ici nous récupérons les informations passées dans le tableau $params
+			$message['subject'] = $params['subject'];
+			$message['body'] = $params['body'];
+			$message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+			break;
+	}*/
+	//dpm($message);
+	// Grab the subject and body from params and add it to the message.
+	//$message['headers'] = $params['headers'];
+	$message['subject'] = $params['subject'];
+	$message['body'][] = $params['body'];
+	/*$message['headers'] = array(
+		'MIME-Version' => '1.0',
+		'Content-Type' => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
+		'Content-Transfer-Encoding' => '8bit',
+		'X-Mailer' => 'Drupal',
+	);
+	$message['headers'] = array(
+		'MIME-Version' => '1.0',
+		'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+		'Content-Transfer-Encoding' => '8bit',
+		'X-Mailer' => 'Drupal',
+		['Return-Path']
+	);*/
+	//$message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';
+	//dpm($message);
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _belive_registration_relaunch_node_relaunch_waiting_users_registration_access($node, $permission) {
+  /*if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
+  	return FALSE;
+  }
+  return TRUE;*/
+	if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/**
+ * @param $permission
+ * @return bool
+ */
+function _belive_registration_relaunch_admin_relaunch_waiting_users_registration_access($permission) {
+	if (user_access($permission)) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @ingroup registration_core
+ */
+function belive_registration_relaunch_permission() {
+	$permissions = array(
+		'relaunch waiting users registration' =>  array(
+			'title' => t('Relancer les inscriptions belive'),
+		),
+	);
+
+	return $permissions;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+/*function belive_registration_relaunch_views_api() {
+  return array(
+    //'api' => 2.0,
+    'api' => 3,
+    'path' => drupal_get_path('module', 'belive_registration') . '/views',
+  );
+}*/
+
+function belive_registration_relaunch_cron()
+{
+	belive_registration_relaunch_setup_batch('NULL', FALSE);
+}
