@@ -1,0 +1,12 @@
+name = Belive registration relaunch
+description = This module is used to add relaunching functionnalities to belive registrations
+package = Belive
+dependencies[] = views
+dependencies[] = belive_registration
+;configure = admin/structure/registration/belive-registration/relaunch
+core = 7.x
+
+files[] = includes/belive_registration_relaunch.admin.inc
+files[] = includes/belive_registration_relaunch_relaunch_waiting_users_registration.form.inc
+
+version = "7.x-1"

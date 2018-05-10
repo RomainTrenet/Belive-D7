@@ -1,0 +1,7 @@
+name = Belive user
+description = This module is used to add more options to the user
+core = 7.x
+package = Belive
+version = 7.x-1.0
+dependencies[] = dashboard
+features[features_api][] = api:2

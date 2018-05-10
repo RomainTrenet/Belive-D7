@@ -1,0 +1,12 @@
+name = Belive base
+description = Base for Belive Booking
+core = 7.x
+package = Belive
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = dashboard
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = language_default
+project path = profiles/belive_booking/modules/custom

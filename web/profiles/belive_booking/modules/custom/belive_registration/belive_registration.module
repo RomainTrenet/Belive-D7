@@ -1,0 +1,307 @@
+<?php
+
+//Load functions
+module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'belive_registration', 'includes/belive_registration_determine.form');
+
+/**
+ * Implements hook_menu().
+ *
+ * @ingroup signup_core
+ */
+
+function belive_registration_init() {
+  // $states = _get_belive_registration_states();
+  //_create_belive_registration_workflow( $states );
+}
+
+function _create_belive_registration_workflow($states) {
+  //dpm($states);
+  //$workflow = workflow_create('workflow_test_'.REQUEST_TIME);
+  $workflow = workflow_create('workflow_belive_booking');
+  //$workflow->save();
+
+  /*$workflow = NULL;
+  // Create a workflow.
+  $workflow = workflow_create('test' . REQUEST_TIME);
+  $workflow->save();*/
+
+  // Create States for the workflow.
+  /*$s1 = $workflow->createState('first');
+  $s2 = $workflow->createState('second');
+  $s3 = $workflow->createState('third');
+  $s1->save();
+  $s2->save();
+  $s3->save();*/
+  foreach ($states as $key => $state) {
+    //TODO IF default => name = creation
+    $workflow_state = $workflow->createState($state['name']);
+    $workflow_state->save();
+  }
+
+  // Create Transitions for the workflow.
+/*  $roles = array(-1, 5);
+  $t1 = $workflow->createTransition($s1->sid, $s2->sid);
+  $t1->label = 'transitions t1';
+  $t1->roles = $roles;
+  // The transition was initially saved in createState,
+  // but without roles and name.
+  $t1->save();
+
+  $roles = array(-1, 6);
+  $t2 = $workflow->createTransition($s2->sid, $s3->sid);
+  $t2->label = 'transitions t2';
+  $t2->roles = $roles;
+  $t2->save();*/
+
+  // Remove the workflow and its components.
+  //$workflow->delete();
+}
+
+function belive_registration_menu() {
+  $path = drupal_get_path('module', 'belive_registration') . '/includes';
+  $type = 'performance';
+  return array(
+    // Roles.
+    'admin/structure/registration/belive-registration/roles' => array(
+      'title' => 'Belive Registration roles',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('belive_registration_settings_form'),
+      'access arguments' => array('administer belive registration'),
+      'description' => 'Configure the roles for Belive Registration',
+      'file' => 'includes/belive_registration.admin.inc',
+    ),
+    // Register many.
+    'node/%performance_node_menu/register_many' => array(
+      'title' => 'Register many musicians',
+      'page callback' => 'belive_registration_register_many_users_view',
+      'page arguments' => array(1),//array(1, 'test'),
+      'access callback' => '_belive_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'belive_registration_register_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 3,
+    ),
+    // Unregister many.
+    'node/%performance_node_menu/unregister_many' => array(
+      'title' => 'Unregister many musicians',
+      'page callback' => 'belive_registration_unregister_many_users_view',
+      'page arguments' => array(1),
+      'access callback' => '_belive_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'belive_registration_unregister_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 4,
+    ),
+    // States registration.
+    'node/%performance_node_menu/state_registration/%' => array(
+      'title' => "State $type registration",
+      'page callback' => 'belive_registration_state_registration_view',
+      'page arguments' => array(1, 3),
+      'access callback' => '_belive_registration_menu_state_registration_access',
+      'access arguments' => array(1, 2, 3, "edit own $type registration status"),
+      //'type' => MENU_LOCAL_TASK,
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'belive_registration_state_registration.form.inc',
+      'file path' => $path,
+    ),
+  );
+}
+
+/**
+ * @param $items
+ */
+function belive_registration_menu_alter(&$items) {
+  if (isset($items['node/%entity_object/register'])) {
+    //Remove the tab for all node type
+    $items['node/%entity_object/register']['type'] = MENU_CALLBACK;
+
+    //Avoid register self form for performance node type
+    $items['node/%entity_object/register']['access callback'] = 'belive_registration_register_page_access';
+  }
+
+  if (isset($items['node/%entity_object/registrations'])) {
+    $items['node/%entity_object/registrations']['page callback'] = 'belive_registration_node_registrations_view';
+  }
+}
+
+//TODO put in inc file
+function belive_registration_node_registrations_view () {
+  return views_embed_view('registrations', 'block_nid_registration');
+}
+
+/**
+ * Menu loader callback to load a performance node.
+ */
+function performance_node_menu_load($nid) {
+  if (!is_numeric($nid)) {
+    return FALSE;
+  }
+  $node = node_load($nid);
+  if (empty($node)) {
+    return FALSE;
+  }
+  return $node;
+}
+
+/**
+ * Form on node registration, registrations
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function belive_registration_form_registration_entity_settings_form_alter(&$form, &$form_state, $form_id) {
+  $form['reminder']['#collapsed'] = TRUE;
+  $form['settings']['#collapsed'] = TRUE;
+}
+
+
+function belive_registration_forms($form_id, $args) {
+  if (isset($args[0]) && isset($args[1])) {
+    if ( is_string($args[0]) && is_string($args[1]) ){
+      if ($form_id == 'belive_registration_determine_form_' . $args[0] . '_' . $args[1]) {
+        module_load_include('inc', 'belive_registration', 'includes/belive_registration_determine.form');
+        return array(
+          $form_id => array(
+              'callback' => 'belive_registration_determine_form',
+          ),
+        );
+      }
+    }
+
+  }
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _belive_registration_menu_register_many_users_access($node, $permission) {
+  if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
+  	return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _belive_registration_menu_state_registration_access($node, $op, $uid, $permission) {
+  global $user;
+
+  //If user has the right to edit registration
+  if (!user_access($permission)) {
+    dpm('user can not access form');
+    return FALSE;
+  }
+
+  //TODO if registration is open
+  //SEE registration_status function for example
+  if ($node->nid){
+    //dpm($node->field_inscriptions['und'][0]['registration_type']);
+    $entity_type = 'node';
+    $entity_id = $node->nid;
+    //$entity_id = 112;
+    $settings = registration_entity_settings($entity_type, $entity_id, FALSE);
+    if (empty($settings)) {
+      return FALSE;
+    } else {
+      //dpm($settings);
+      if ($settings['status'] != '1' ) {
+        dpm('inscriptions désactivées');
+        return FALSE;
+      }
+    }
+  }
+
+  //Check if current user is the user concerned
+  if($user->uid != $uid) {
+    dpm('user is not the user concerned');
+    return FALSE;
+  }
+
+  //Check if there is a registration for the user for the node
+  $rid = _get_registration_id($node->nid, $uid);
+  if( empty($rid) ) {
+    dpm('no registration for the user for the node');
+    return FALSE;
+  }
+
+	return TRUE;
+}
+
+function belive_registration_register_page_access($type, $node){
+  if ( $node->type == 'performance' ) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @ingroup registration_core
+ */
+function belive_registration_permission() {
+	$permissions = array(
+		'administer belive registration' =>  array(
+			'title' => t('Administer belive registration'),
+		),
+	);
+
+	//Generate specific rights for each registration node types
+	foreach (registration_get_types() as $type_info) {
+		$permissions += belive_registration_permission_list($type_info);
+	}
+
+	return $permissions;
+}
+
+function belive_registration_permission_list($info) {
+	$type = $info->name;
+	$label = $info->label;
+
+	return array(
+		//Registration state
+		"edit own $type registration status" => array(
+			'title' => t('%type_name: Edit own registration status', array('%type_name' => $label)),
+			'description' => t('Edit own status for %type_name registration', array('%type_name' => $label)),
+		),
+		"edit any $type registration status" => array(
+			'title' => t('%type_name: Edit any registration status', array('%type_name' => $label)),
+			'description' => t('Edit any status for %type_name registration', array('%type_name' => $label)),
+		),
+		"registrate users to $type registration" => array(
+			'title' => t('%type_name: Registrate users to %type registration', array('%type_name' => $label, '%type' => $type )),
+			'description' => t('Add many users to %type_name registration', array('%type_name' => $label)),
+		),
+	);
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function belive_registration_views_api() {
+  return array(
+    //'api' => 2.0,
+    'api' => 3,
+    'path' => drupal_get_path('module', 'belive_registration') . '/views',
+  );
+}

@@ -1,0 +1,105 @@
+name = Belive booking profile
+description = Profile for Belive booking website.
+core = 7.x
+
+;Installation profile is exclusive, the installer will auto-select it.
+exclusive = true
+
+;configure = admin/config/structure/belive
+
+; ----------
+; Variables
+; ----------
+;variables[date_api_version] = '7.2'
+;variables[date_default_timezone] = 'Europe/Paris'
+
+; Core modules
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+dependencies[] = syslog
+
+; Contrib modules
+dependencies[] = adminimal_admin_menu
+dependencies[] = admin_views
+dependencies[] = administerusersbyrole
+dependencies[] = auto_nodetitle
+dependencies[] = backup_migrate
+dependencies[] = better_exposed_filters
+dependencies[] = bootstrap_library
+dependencies[] = calendar
+dependencies[] = content_access
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = datepicker
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = fe_block
+dependencies[] = field_group
+dependencies[] = field_permissions
+dependencies[] = front_page
+dependencies[] = i18n
+dependencies[] = imce
+dependencies[] = imce_wysiwyg
+dependencies[] = jquery_update
+dependencies[] = l10n_update
+dependencies[] = libraries
+dependencies[] = link
+dependencies[] = linkit
+dependencies[] = media
+dependencies[] = menu_firstchild
+dependencies[] = menu_item_visibility
+dependencies[] = messaging
+dependencies[] = metatag
+dependencies[] = module_filter
+dependencies[] = notifications
+dependencies[] = pathauto
+dependencies[] = pathologic
+dependencies[] = pathrules
+dependencies[] = references
+dependencies[] = registration
+dependencies[] = registration_role
+dependencies[] = registration_entity_access
+dependencies[] = registration_views
+dependencies[] = rules
+dependencies[] = rules_admin
+dependencies[] = strongarm
+dependencies[] = token
+dependencies[] = user_picture_default
+dependencies[] = variable
+dependencies[] = variable_admin
+dependencies[] = views
+;dependencies[] = views_bulk_operations
+dependencies[] = views_ui
+dependencies[] = vppr
+dependencies[] = workflow
+dependencies[] = workflow_access
+dependencies[] = workflow_admin_ui
+dependencies[] = workflow_rules
+dependencies[] = workflow_vbo
+dependencies[] = workflowfield
+dependencies[] = wysiwyg
+
+; ----- Custom modules -----
+dependencies[] = artists_position
+dependencies[] = belive_base
+dependencies[] = belive_registration
+dependencies[] = belive_registration_relaunch
+dependencies[] = belive_user
+
+dependencies[] = devel
+dependencies[] = search_krumo

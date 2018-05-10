@@ -1,0 +1,14 @@
+name = Bootstrap Multiselect librairies
+description = Add the Bootstrap Multiselect librairie available to other modules or themes in the project
+package = Media
+core = 7.x
+dependencies[] = file
+dependencies[] = bootstrap_library
+dependencies[] = libraries (>=2.x)
+configure = admin/config/media/bootstrap-multiselect
+files[] = bootstrap_multiselect.module
+files[] = includes/bootstrap_multiselect.admin.inc
+
+version = "7.x-1.0"
+core = "7.x"
+project = "bootstrap_multiselect"

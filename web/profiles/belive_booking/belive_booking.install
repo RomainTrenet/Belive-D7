@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * Implement hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * Insert content into your database during the installation.
+ */
+
+function belive_booking_install() {
+
+  include_once DRUPAL_ROOT . '/profiles/minimal/minimal.install';
+  minimal_install();
+
+  // Allow visitor account creation with administrative approval.
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  /*$menu_name = 'main-menu';
+
+  // Create menu if doesn't exist.
+  if (!menu_load($menu_name)) {
+      $menu = array(
+          'menu_name' => $menu_name,
+          'title' => t('Main menu'),
+          'description' => 'Main menu',
+      );
+      menu_save($menu);
+  }*/
+
+  // Rebuild permission to avoid drupal error message
+  node_access_rebuild();
+}
+
+/**
+ * Disable old modules.
+ *
+ * Enable modules link, linkit, imce, imce_wysiwyg, metatag & media.
+ */
+function belive_booking_update_7100(&$sandbox) {
+  // Disable some modules and remove DB entries.
+  $modules_to_uninstall = array(
+    'autoassignrole',
+    'entity_rules',
+    'nodereference_url',
+    'action_example',
+    'ajax_example',
+    'cron_example',
+    'filter_example',
+    'form_example',
+    'js_example'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+  belive_booking_erase_modules_entry($modules_to_uninstall);
+
+  // Enable modules.
+  module_enable(array(
+    'link',
+    'linkit',
+    'imce',
+    'imce_wysiwyg',
+    'metatag',
+    'media',
+    'fe_block',
+  ), TRUE);
+}
+
+/**
+ * Revert new features.
+ */
+function belive_booking_update_7103(&$sandbox) {
+  features_revert_module('belive_base');
+
+  // Enable modules.
+  module_enable(array(
+    'fe_block',
+  ), TRUE);
+}

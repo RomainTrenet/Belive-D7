@@ -1,0 +1,18 @@
+name = Belive registration
+description = This module is used to add more options to the registration module
+package = Belive
+dependencies[] = views
+dependencies[] = registration
+configure = admin/structure/registration/belive-registration/roles
+core = 7.x
+
+files[] = includes/belive_registration.admin.inc
+files[] = includes/belive_registration_node_registrations.inc
+files[] = views/handlers/belive_registration_handler_field_registration_wait_link.inc
+files[] = views/handlers/belive_registration_handler_field_registration_postpone_link.inc
+files[] = views/handlers/belive_registration_handler_field_registration_accept_link.inc
+files[] = views/handlers/belive_registration_handler_field_registration_refuse_link.inc
+files[] = views/handlers/belive_registration_handler_field_registration_state_id.inc
+files[] = views/handlers/belive_registration_handler_field_registration_state_past_tense_conjugation.inc
+
+version = "7.x-1"
