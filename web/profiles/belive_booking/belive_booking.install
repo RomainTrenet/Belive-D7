@@ -16,17 +16,17 @@ function belive_booking_install() {
   // Allow visitor account creation with administrative approval.
   variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
 
-  /*$menu_name = 'main-menu';
+  // Enable base themes.
+  theme_enable(array('adminimal', 'belive_global', 'belive_booking_front', 'belive_booking_admin'));
 
-  // Create menu if doesn't exist.
-  if (!menu_load($menu_name)) {
-      $menu = array(
-          'menu_name' => $menu_name,
-          'title' => t('Main menu'),
-          'description' => 'Main menu',
-      );
-      menu_save($menu);
-  }*/
+  // Enable final themes and record settings.
+  variable_set('admin_theme', 'belive_booking_admin');
+  variable_set('theme_default', 'belive_booking_front');
+
+  variable_set('node_admin_theme', '1');
+
+  // Disable Baltik.
+  theme_disable(array('bartik'));
 
   // Rebuild permission to avoid drupal error message
   node_access_rebuild();

@@ -38,13 +38,6 @@ function belive_booking_erase_modules_entry(array $modules) {
  */
 function belive_booking_install_tasks(&$install_state) {
   return array (
-    'manage_themes' => array(
-      'display_name' => t('Manage Themes'),
-      'display' => TRUE,
-      'type' => 'normal',
-      'run' => 'INSTALL_TASK_RUN_IF_REACHED',
-      'function' => 'belive_booking_manage_themes',
-    ),
     'apply_default_features' => array(
       'display_name' => t('Apply default features'),
       'display' => TRUE,
@@ -52,23 +45,24 @@ function belive_booking_install_tasks(&$install_state) {
       'run' => 'INSTALL_TASK_RUN_IF_REACHED',
       'function' => 'belive_booking_apply_default_features',
     )
+    // @Todo : delete or make it work.
+  /*,
+    'refresh_default_translations' => array(
+      'display_name' => t('Refresh default translations'),
+      'display' => TRUE,
+      'type' => 'batch',
+      'run' => 'INSTALL_TASK_RUN_IF_REACHED',
+      'function' => 'belive_booking_refresh_default_translations',
+    ),
+    'apply_default_translations' => array(
+      'display_name' => t('Apply default translations'),
+      'display' => TRUE,
+      'type' => 'batch',
+      'run' => 'INSTALL_TASK_RUN_IF_REACHED',
+      'function' => 'belive_booking_apply_default_translations',
+    )
+  */
   );
-}
-
-/**
- * Implements hook_install_tasks_alter().
- *
- * Displays help and module information.
- *
- * @param $install_state
- */
-function belive_booking_install_tasks_alter (&$tasks, $install_state) {
-  $tasks['install_select_locale']['function'] = '_belive_booking_locale_selection';
-}
-
-// Local callback function.
-function _belive_booking_locale_selection (&$install_state) {
-  $install_state['parameters']['locale'] = 'fr';
 }
 
 /**
@@ -96,28 +90,6 @@ function belive_booking_form_install_configure_form_alter(&$form, $form_state) {
 /**
  * Custom function to automatically manage themes.
  */
-function belive_booking_manage_themes() {
-  // Enable usefull theme.
-  db_update('system')
-    ->fields(array('status' => 1))
-    ->condition('type', 'theme')
-    ->condition('name', array('adminimal', 'omega', 'belive_global', 'belive_booking_admin', 'belive_booking_front'), 'IN')
-    ->execute();
-  variable_set('admin_theme', 'belive_booking_admin');
-  variable_set('node_admin_theme', '1');
-  variable_set('theme_default', 'belive_booking_front');
-
-  // Disable unusefull theme.
-  db_update('system')
-    ->fields(array('status' => 0))
-    ->condition('type', 'theme')
-    ->condition('name', array('bartik'), 'IN')
-    ->execute();
-}
-
-/**
- * Custom function to automatically manage themes.
- */
 function belive_booking_apply_default_features() {
   // Revert features to ensure they are all installed
   $features = array(
@@ -127,3 +99,62 @@ function belive_booking_apply_default_features() {
   );
   features_revert($features);
 }
+
+/**
+ * Custom function to automatically manage themes.
+ */
+// @todo : delete or make it work.
+/*
+function belive_booking_refresh_default_translations() {
+  module_load_include('admin.inc', 'l10n_update');
+
+  // Force refreshing.
+  $form_state = array(
+    'values' => array('op' => t('Refresh information'))
+  );
+  l10n_update_admin_import_form_submit(NULL, $form_state);
+}
+
+function belive_booking_apply_default_translations() {
+  module_load_include('admin.inc', 'l10n_update');
+
+  //$projects = l10n_update_get_projects();
+  $languages = l10n_update_language_list('name');
+  dpm('romain !!!');
+  dpm($languages);
+
+  //$build = array();
+  if ($languages) {
+    $history = l10n_update_get_history();
+    $available = l10n_update_available_releases();
+    $updates = l10n_update_build_updates($history, $available);
+    /*$build['project_status'] = array(
+      '#theme' => 'l10n_update_project_status',
+      '#projects' => $projects,
+      '#languages' => $languages,
+      '#history' => $history,
+      '#available' => $available,
+      '#updates' => $updates,
+    );
+    * /
+    //$build['admin_import_form'] = drupal_get_form('l10n_update_admin_import_form', $projects, $updates);
+    // Force importing.
+    $form_state = array(
+      'values' => array(
+        'op' => t('Update translations'),
+        'languages' => $languages,
+        'updates' => $updates,
+      )
+    );
+    dpm($form_state);
+
+    //$form_state['values']['languages'] = $languages;
+    //$form_state['values']['updates'] = $updates;
+    l10n_update_admin_import_form_submit(NULL, $form_state);
+  }
+  else {
+    //$build['no_languages'] = array('#markup' => t('No translatable language defined. <a href="/admin/config/regional/language">Add a language</a>.'));
+  }
+  //return $build;
+}
+*/

@@ -32,6 +32,7 @@ dependencies[] = field_ui
 dependencies[] = file
 dependencies[] = rdf
 dependencies[] = syslog
+dependencies[] = update
 
 ; Contrib modules
 dependencies[] = adminimal_admin_menu
