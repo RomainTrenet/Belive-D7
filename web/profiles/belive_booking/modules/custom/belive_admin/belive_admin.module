@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Belive admin feature.
+ */
+
+include_once 'belive_admin.features.inc';

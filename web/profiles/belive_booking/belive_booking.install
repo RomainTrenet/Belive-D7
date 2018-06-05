@@ -67,7 +67,7 @@ function belive_booking_update_7100(&$sandbox) {
 }
 
 /**
- * Revert new features.
+ * Revert new features and enable fe_block.
  */
 function belive_booking_update_7103(&$sandbox) {
   features_revert_module('belive_base');
@@ -75,5 +75,44 @@ function belive_booking_update_7103(&$sandbox) {
   // Enable modules.
   module_enable(array(
     'fe_block',
+  ), TRUE);
+}
+
+/**
+ * Enable metatag module.
+ */
+function belive_booking_update_7104(&$sandbox) {
+  module_enable(array(
+    'metatag',
+  ), TRUE);
+}
+
+/**
+ * - Enable some missing modules.
+ * - disable some unnecessary modules.
+ * - Delete tags taxonomy.
+ */
+function belive_booking_update_7106(&$sandbox) {
+  // Uninstall modules.
+  $modules_to_uninstall = array(
+    'comment',
+    'tb_megamenu'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+
+  // Delete taxonomy.
+  taxonomy_vocabulary_delete('tags');
+
+  // Install modules.
+  module_enable(array(
+    'admin_views',
+    'views_bulk_operations',
+    'belive_language',
+    'bootstrap_multiselect',
+    'i18n_field',
+    'i18n_string',
+    'uuid',
+    'uuidrole'
   ), TRUE);
 }

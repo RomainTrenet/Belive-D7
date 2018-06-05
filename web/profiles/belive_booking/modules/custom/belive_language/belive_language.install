@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * File that manage install and update states.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function belive_language_install() {
+  //belive_language_auto_update_files();
+}
+
+/**
+ * Auto update language.
+ */
+function belive_language_update_7101(&$sandbox) {
+  belive_language_auto_update_files();
+}

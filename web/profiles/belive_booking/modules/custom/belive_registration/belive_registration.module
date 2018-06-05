@@ -1,4 +1,10 @@
 <?php
+/**
+ * @file
+ * Code for the Belive registration feature.
+ */
+
+include_once 'belive_registration.features.inc';
 
 //Load functions
 module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
