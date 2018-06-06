@@ -69,7 +69,6 @@ dependencies[] = menu_item_visibility
 dependencies[] = messaging
 dependencies[] = metatag
 dependencies[] = module_filter
-dependencies[] = notifications
 dependencies[] = pathauto
 dependencies[] = pathologic
 dependencies[] = pathrules
@@ -96,6 +95,10 @@ dependencies[] = workflow_rules
 dependencies[] = workflow_vbo
 dependencies[] = workflowfield
 dependencies[] = wysiwyg
+dependencies[] = uuid
+dependencies[] = uuidrole
+dependencies[] = uuid_path
+dependencies[] = references_uuid
 
 ; ----- Custom modules -----
 dependencies[] = artists_position

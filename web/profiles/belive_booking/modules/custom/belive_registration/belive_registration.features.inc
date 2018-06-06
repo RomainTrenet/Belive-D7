@@ -23,30 +23,23 @@ function belive_registration_default_Workflow() {
       "waiting" : {"weight":"-19","sysid":"0","state":"Waiting","status":"1","name":"waiting"}
     },
     "transitions" : {
-      "_creation_to_accepted" : {"roles":{"5":5},"name":"_creation_to_accepted","label":"","rdf_mapping":[],"start_state":"(creation)","end_state":"accepted"},
-      "_creation_to_refused" : {"roles":{"5":5},"name":"_creation_to_refused","label":"","rdf_mapping":[],"start_state":"(creation)","end_state":"refused"},
+      "_creation_to_accepted" : {"roles":[],"name":"_creation_to_accepted","label":"","rdf_mapping":[],"start_state":"(creation)","end_state":"accepted"},
+      "_creation_to_refused" : {"roles":[],"name":"_creation_to_refused","label":"","rdf_mapping":[],"start_state":"(creation)","end_state":"refused"},
       "_creation_to_waiting" : {"roles":{"-1":-1},"name":"_creation_to_waiting","label":"","rdf_mapping":[],"start_state":"(creation)","end_state":"waiting"},
-      "accepted_to_accepted" : {"roles":{"-1":-1,"1":1,"2":2,"3":3,"4":4,"5":5},"name":"accepted_to_accepted","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"accepted"},
-      "accepted_to_refused" : {"roles":{"3":3,"4":4,"5":5},"name":"accepted_to_refused","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"refused"},
-      "accepted_to_waiting" : {"roles":{"3":3,"4":4},"name":"accepted_to_waiting","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"waiting"},
-      "refused_to_accepted" : {"roles":{"3":3,"4":4},"name":"refused_to_accepted","label":"","rdf_mapping":[],"start_state":"refused","end_state":"accepted"},
-      "refused_to_refused" : {"roles":{"-1":-1,"1":1,"2":2,"3":3,"4":4,"5":5},"name":"refused_to_refused","label":"","rdf_mapping":[],"start_state":"refused","end_state":"refused"},
-      "refused_to_waiting" : {"roles":{"3":3,"4":4},"name":"refused_to_waiting","label":"","rdf_mapping":[],"start_state":"refused","end_state":"waiting"},
-      "waiting_to_accepted" : {"roles":{"3":3,"4":4,"5":5},"name":"waiting_to_accepted","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"accepted"},
-      "waiting_to_refused" : {"roles":{"3":3,"4":4,"5":5},"name":"waiting_to_refused","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"refused"},
-      "waiting_to_waiting" : {"roles":{"-1":-1,"1":1,"2":2,"3":3,"4":4,"5":5},"name":"waiting_to_waiting","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"waiting"}
+      "accepted_to_accepted" : {"roles":{"-1":-1,"4":4},"name":"accepted_to_accepted","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"accepted"},
+      "accepted_to_refused" : {"roles":{"4":4},"name":"accepted_to_refused","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"refused"},
+      "accepted_to_waiting" : {"roles":{"4":4},"name":"accepted_to_waiting","label":"","rdf_mapping":[],"start_state":"accepted","end_state":"waiting"},
+      "refused_to_accepted" : {"roles":{"4":4},"name":"refused_to_accepted","label":"","rdf_mapping":[],"start_state":"refused","end_state":"accepted"},
+      "refused_to_refused" : {"roles":{"-1":-1,"4":4},"name":"refused_to_refused","label":"","rdf_mapping":[],"start_state":"refused","end_state":"refused"},
+      "refused_to_waiting" : {"roles":{"4":4},"name":"refused_to_waiting","label":"","rdf_mapping":[],"start_state":"refused","end_state":"waiting"},
+      "waiting_to_accepted" : {"roles":{"4":4},"name":"waiting_to_accepted","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"accepted"},
+      "waiting_to_refused" : {"roles":{"4":4},"name":"waiting_to_refused","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"refused"},
+      "waiting_to_waiting" : {"roles":{"-1":-1,"4":4},"name":"waiting_to_waiting","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"waiting"}
     },
     "label" : "workflow_belive_booking",
     "typeMap" : [],
     "rdf_mapping" : [],
-    "system_roles" : {
-      "-1" : "(auteur)",
-      "1" : "utilisateur anonyme",
-      "2" : "utilisateur authentifi\\u00e9",
-      "3" : "administrateur",
-      "4" : "G\\u00e9rant",
-      "5" : "Artiste"
-    }
+    "system_roles" : { "-1" : "(auteur)", "4" : "G\\u00e9rant" }
   }');
 
   return $workflows;
@@ -62,6 +55,13 @@ function belive_registration_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function belive_registration_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**

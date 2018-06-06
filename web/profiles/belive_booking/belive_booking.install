@@ -113,6 +113,20 @@ function belive_booking_update_7106(&$sandbox) {
     'i18n_field',
     'i18n_string',
     'uuid',
-    'uuidrole'
+    'uuidrole',
+    'references_uuid',
+    'uuid_path'
   ), TRUE);
+}
+
+/**
+ * - Disable notifications module.
+ */
+function belive_booking_update_7107(&$sandbox) {
+  // Uninstall modules.
+  $modules_to_uninstall = array(
+    'notifications'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
 }

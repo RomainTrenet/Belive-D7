@@ -304,10 +304,11 @@ function belive_registration_permission_list($info) {
 /**
  * Implements hook_views_api().
  */
+/*
 function belive_registration_views_api() {
   return array(
     //'api' => 2.0,
     'api' => 3,
     'path' => drupal_get_path('module', 'belive_registration') . '/views',
   );
-}
+}*/

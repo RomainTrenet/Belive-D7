@@ -335,15 +335,6 @@ function belive_admin_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'administer notifications'.
-  $permissions['administer notifications'] = array(
-    'name' => 'administer notifications',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'notifications',
-  );
-
   // Exported permission: 'administer own performance registration'.
   $permissions['administer own performance registration'] = array(
     'name' => 'administer own performance registration',
@@ -643,15 +634,6 @@ function belive_admin_user_default_permissions() {
     'module' => 'registration',
   );
 
-  // Exported permission: 'create subscriptions'.
-  $permissions['create subscriptions'] = array(
-    'name' => 'create subscriptions',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'notifications',
-  );
-
   // Exported permission: 'create url aliases'.
   $permissions['create url aliases'] = array(
     'name' => 'create url aliases',
@@ -937,24 +919,6 @@ function belive_admin_user_default_permissions() {
     'module' => 'content_access',
   );
 
-  // Exported permission: 'maintain own subscriptions'.
-  $permissions['maintain own subscriptions'] = array(
-    'name' => 'maintain own subscriptions',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'notifications',
-  );
-
-  // Exported permission: 'manage all subscriptions'.
-  $permissions['manage all subscriptions'] = array(
-    'name' => 'manage all subscriptions',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'notifications',
-  );
-
   // Exported permission: 'manage features'.
   $permissions['manage features'] = array(
     'name' => 'manage features',
@@ -1065,15 +1029,6 @@ function belive_admin_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'workflow',
-  );
-
-  // Exported permission: 'skip notifications'.
-  $permissions['skip notifications'] = array(
-    'name' => 'skip notifications',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'notifications',
   );
 
   // Exported permission: 'switch shortcut sets'.
