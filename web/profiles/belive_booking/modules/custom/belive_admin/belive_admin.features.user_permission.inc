@@ -298,15 +298,6 @@ function belive_admin_user_default_permissions() {
     'module' => 'messaging',
   );
 
-  // Exported permission: 'administer meta tags'.
-  $permissions['administer meta tags'] = array(
-    'name' => 'administer meta tags',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'metatag',
-  );
-
   // Exported permission: 'administer module filter'.
   $permissions['administer module filter'] = array(
     'name' => 'administer module filter',
@@ -784,15 +775,6 @@ function belive_admin_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'belive_registration',
-  );
-
-  // Exported permission: 'edit meta tags'.
-  $permissions['edit meta tags'] = array(
-    'name' => 'edit meta tags',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'metatag',
   );
 
   // Exported permission: 'edit own page content'.
