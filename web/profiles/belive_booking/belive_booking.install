@@ -33,9 +33,7 @@ function belive_booking_install() {
 }
 
 /**
- * Disable old modules.
- *
- * Enable modules link, linkit, imce, imce_wysiwyg, metatag & media.
+ * Disable old modules and enable new modules.
  */
 function belive_booking_update_7100(&$sandbox) {
   // Disable some modules and remove DB entries.
@@ -48,85 +46,54 @@ function belive_booking_update_7100(&$sandbox) {
     'cron_example',
     'filter_example',
     'form_example',
-    'js_example'
-  );
-  drupal_uninstall_modules($modules_to_uninstall);
-  module_disable($modules_to_uninstall);
-  belive_booking_erase_modules_entry($modules_to_uninstall);
-
-  // Enable modules.
-  module_enable(array(
-    'link',
-    'linkit',
-    'imce',
-    'imce_wysiwyg',
-    'metatag',
-    'media',
-    'fe_block',
-  ), TRUE);
-}
-
-/**
- * Revert new features and enable fe_block.
- */
-function belive_booking_update_7103(&$sandbox) {
-  features_revert_module('belive_base');
-
-  // Enable modules.
-  module_enable(array(
-    'fe_block',
-  ), TRUE);
-}
-
-/**
- * Enable metatag module.
- */
-function belive_booking_update_7104(&$sandbox) {
-  module_enable(array(
-    'metatag',
-  ), TRUE);
-}
-
-/**
- * - Enable some missing modules.
- * - disable some unnecessary modules.
- * - Delete tags taxonomy.
- */
-function belive_booking_update_7106(&$sandbox) {
-  // Uninstall modules.
-  $modules_to_uninstall = array(
-    'comment',
+    'js_example',
+    'notifications',
     'tb_megamenu'
   );
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 
+  // @todo.
+  //belive_booking_erase_modules_entry($modules_to_uninstall);
+  // Revert new features.
+  //features_revert_module('belive_base');
+
   // Delete taxonomy.
   taxonomy_vocabulary_delete('tags');
 
-  // Install modules.
+  // Enable modules.
   module_enable(array(
     'admin_views',
-    'views_bulk_operations',
-    'belive_language',
-    'bootstrap_multiselect',
+    'fe_block',
     'i18n_field',
     'i18n_string',
+    'imce',
+    'imce_wysiwyg',
+    'link',
+    'linkit',
+    'metatag',
+    'media',
+    'references_uuid',
     'uuid',
     'uuidrole',
-    'references_uuid',
-    'uuid_path'
+    'uuid_path',
+    'views_bulk_operations',
   ), TRUE);
 }
 
 /**
- * - Disable notifications module.
+ * Enable belive modules.
  */
-function belive_booking_update_7107(&$sandbox) {
-  // Uninstall modules.
-  $modules_to_uninstall = array(
-    'notifications'
-  );
-  drupal_uninstall_modules($modules_to_uninstall);
-  module_disable($modules_to_uninstall);
+/*
+function belive_booking_update_7102(&$sandbox) {
+  // Enable modules.
+  module_enable(array(
+    'belive_base',
+    'belive_admin',
+    'belive_language',
+  ), TRUE);
+
+  // Revert new features.
+  //features_revert_module('belive_base');
 }
+*/
