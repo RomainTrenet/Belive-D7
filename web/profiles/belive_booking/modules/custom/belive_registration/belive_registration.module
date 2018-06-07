@@ -1,10 +1,4 @@
 <?php
-/**
- * @file
- * Code for the Belive registration feature.
- */
-
-include_once 'belive_registration.features.inc';
 
 //Load functions
 module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
@@ -313,11 +307,10 @@ function belive_registration_permission_list($info) {
 /**
  * Implements hook_views_api().
  */
-/*
 function belive_registration_views_api() {
   return array(
     //'api' => 2.0,
     'api' => 3,
     'path' => drupal_get_path('module', 'belive_registration') . '/views',
   );
-}*/
+}

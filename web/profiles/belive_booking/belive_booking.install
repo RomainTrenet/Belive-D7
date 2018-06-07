@@ -33,10 +33,10 @@ function belive_booking_install() {
 }
 
 /**
- * Disable old modules and enable new modules.
+ * Temporary prepare to the new profile : disable old modules, enable new modules, delete unneeded taxonomy.
  */
 function belive_booking_update_7100(&$sandbox) {
-  // Disable some modules and remove DB entries.
+  // Disable some modules.
   $modules_to_uninstall = array(
     'autoassignrole',
     'entity_rules',
@@ -52,11 +52,6 @@ function belive_booking_update_7100(&$sandbox) {
   );
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
-
-  // @todo.
-  //belive_booking_erase_modules_entry($modules_to_uninstall);
-  // Revert new features.
-  //features_revert_module('belive_base');
 
   // Delete taxonomy.
   taxonomy_vocabulary_delete('tags');
@@ -82,18 +77,16 @@ function belive_booking_update_7100(&$sandbox) {
 }
 
 /**
- * Enable belive modules.
+ * Temporary Disable belive modules.
  */
-/*
-function belive_booking_update_7102(&$sandbox) {
-  // Enable modules.
-  module_enable(array(
-    'belive_base',
-    'belive_admin',
-    'belive_language',
-  ), TRUE);
-
-  // Revert new features.
-  //features_revert_module('belive_base');
+function belive_booking_update_7103(&$sandbox) {
+// Disable some modules.
+  $modules_to_uninstall = array(
+    'artists_position',
+    'belive_user',
+    'belive_registration_relaunch',
+    'belive_registration'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
 }
-*/

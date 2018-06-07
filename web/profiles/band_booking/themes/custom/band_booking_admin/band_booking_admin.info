@@ -1,0 +1,6 @@
+name = Band Booking Admin Theme
+description = Custom admin themes for Band booking
+version = 1.0
+core = 7.x
+engine = phptemplate
+base theme = band_booking_global

@@ -1,0 +1,12 @@
+name = Band Booking Global Theme, base for Admin and Front Theme
+description = Custom global theme for Band Booking
+version = 1.0
+core = 7.x
+engine = phptemplate
+base theme = adminimal
+
+; CSS
+stylesheets[all][] = fontello/css/fontello.css
+
+; JS
+;scripts[] = js/script.js

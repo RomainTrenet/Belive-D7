@@ -1,0 +1,28 @@
+# French translation of Menu Firstchild (7.x-1.1)
+# Copyright (c) 2011 by the French translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Menu Firstchild (7.x-1.1)\n"
+"POT-Creation-Date: 2011-12-28 16:28+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "disabled"
+msgstr "désactivé"
+msgid " Enter %firstchild to link to the item's first accessible child."
+msgstr ""
+" Entrez %firstchild pour pointer vers le premier enfant accessible de "
+"cet élément."
+msgid "Menu Firstchild"
+msgstr "Menu Firstchild"
+msgid ""
+"Allows to create parent menu items without path that link to their "
+"first viewable children."
+msgstr ""
+"Permet de créer des éléments de menu parents sans chemin qui "
+"pointent vers leur premier enfant accessible."
