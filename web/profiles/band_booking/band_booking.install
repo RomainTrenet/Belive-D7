@@ -33,47 +33,17 @@ function band_booking_install() {
 }
 
 /**
- * Temporary prepare to the new profile : disable old modules, enable new modules, delete unneeded taxonomy.
+ * Enable themes in case non profile installation.
  */
 function band_booking_update_7100(&$sandbox) {
-  // Disable some modules.
-  $modules_to_uninstall = array(
-    'autoassignrole',
-    'entity_rules',
-    'nodereference_url',
-    'action_example',
-    'ajax_example',
-    'cron_example',
-    'filter_example',
-    'form_example',
-    'js_example',
-    'notifications',
-    'tb_megamenu'
-  );
-  drupal_uninstall_modules($modules_to_uninstall);
-  module_disable($modules_to_uninstall);
+  // Enable band booking themes.
+  theme_enable(array('adminimal', 'band_booking_global', 'band_booking_front', 'band_booking_admin'));
 
-  // Delete taxonomy.
-  taxonomy_vocabulary_delete('tags');
+  // Enable final themes and record settings.
+  variable_set('admin_theme', 'band_booking_admin');
+  variable_set('theme_default', 'band_booking_front');
 
-  // Enable modules.
-  module_enable(array(
-    'admin_views',
-    'fe_block',
-    'i18n_field',
-    'i18n_string',
-    'imce',
-    'imce_wysiwyg',
-    'link',
-    'linkit',
-    'metatag',
-    'media',
-    'references_uuid',
-    'uuid',
-    'uuidrole',
-    'uuid_path',
-    'views_bulk_operations',
-  ), TRUE);
+  variable_set('node_admin_theme', '1');
 }
 
 /**
@@ -97,3 +67,18 @@ function band_booking_update_7102(&$sandbox) {
   //features_revert_module('belive_base');
 }
 */
+
+/**
+ * Temporary Disable belive modules.
+ */
+/*function belive_booking_update_7103(&$sandbox) {
+// Disable some modules.
+  $modules_to_uninstall = array(
+    'artists_position',
+    'belive_user',
+    'belive_registration_relaunch',
+    'belive_registration'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+}*/

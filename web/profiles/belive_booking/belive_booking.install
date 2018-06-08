@@ -33,7 +33,7 @@ function belive_booking_install() {
 }
 
 /**
- * Temporary prepare to the new profile : disable old modules, enable new modules, delete unneeded taxonomy.
+ * Temporary prepare to the new profile : disable old modules, delete unneeded taxonomy.
  */
 function belive_booking_update_7100(&$sandbox) {
   // Disable some modules.
@@ -55,6 +55,23 @@ function belive_booking_update_7100(&$sandbox) {
 
   // Delete taxonomy.
   taxonomy_vocabulary_delete('tags');
+}
+
+/**
+ * Temporary switch belive_booking profile to band_booking, before deleting belive_booking ; enable new modules.
+ */
+function belive_booking_update_7101(&$sandbox) {
+  db_update('system')
+    ->condition('name', 'belive_booking', '=')
+    ->condition('type', 'module')
+    ->fields(array(
+      'filename' => 'profiles/band_booking/band_booking.profile',
+      'name' => 'band_booking',
+      'schema_version' => 7000,
+    ))
+    ->execute();
+
+  variable_set('install_profile', 'band_booking');
 
   // Enable modules.
   module_enable(array(
@@ -74,19 +91,7 @@ function belive_booking_update_7100(&$sandbox) {
     'uuid_path',
     'views_bulk_operations',
   ), TRUE);
-}
 
-/**
- * Temporary Disable belive modules.
- */
-function belive_booking_update_7103(&$sandbox) {
-// Disable some modules.
-  $modules_to_uninstall = array(
-    'artists_position',
-    'belive_user',
-    'belive_registration_relaunch',
-    'belive_registration'
-  );
-  drupal_uninstall_modules($modules_to_uninstall);
-  module_disable($modules_to_uninstall);
+  // Disable old belive themes.
+  theme_disable(array('belive_global', 'belive_booking_front', 'belive_booking_admin'));
 }
