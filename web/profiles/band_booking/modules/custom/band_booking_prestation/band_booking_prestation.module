@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Band booking prestation feature.
+ */
+
+include_once 'band_booking_prestation.features.inc';

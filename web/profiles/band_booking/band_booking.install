@@ -47,38 +47,11 @@ function band_booking_update_7100(&$sandbox) {
 }
 
 /**
- * Temporary Enable belive modules.
+ * Enable band booking base module.
  */
-/*
-function band_booking_update_7102(&$sandbox) {
+function band_booking_update_7101(&$sandbox) {
   // Enable modules.
   module_enable(array(
-    'belive_base',
-    'belive_admin',
-    'belive_language',
+    'band_booking_base'
   ), TRUE);
-
-  // Revert new features.
-  //features_revert_module('belive_base');
-
-  // @todo.
-  //belive_booking_erase_modules_entry($modules_to_uninstall);
-  // Revert new features.
-  //features_revert_module('belive_base');
 }
-*/
-
-/**
- * Temporary Disable belive modules.
- */
-/*function belive_booking_update_7103(&$sandbox) {
-// Disable some modules.
-  $modules_to_uninstall = array(
-    'artists_position',
-    'belive_user',
-    'belive_registration_relaunch',
-    'belive_registration'
-  );
-  drupal_uninstall_modules($modules_to_uninstall);
-  module_disable($modules_to_uninstall);
-}*/

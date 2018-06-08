@@ -1,0 +1,9 @@
+name = Band booking admin
+description = Admin parts for Band booking
+core = 7.x
+package = Band booking
+version = 7.x-1.0
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features_exclude[dependencies][ctools] = ctools
+project path = profiles/band_booking/modules/custom

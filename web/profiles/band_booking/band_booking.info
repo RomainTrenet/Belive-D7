@@ -36,7 +36,3 @@ dependencies[] = update
 
 ; Will activate every dependencies
 dependencies[] = band_booking_base
-
-;@todo : create a belive_dev module.
-dependencies[] = devel
-dependencies[] = search_krumo

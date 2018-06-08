@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Band booking admin feature.
+ */
+
+include_once 'band_booking_admin.features.inc';
