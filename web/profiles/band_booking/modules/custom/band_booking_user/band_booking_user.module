@@ -1,4 +1,7 @@
 <?php
+
+define('BB_ADMINISTRATOR_RID', 3);
+
 /**
  * @file
  * Drupal needs this blank file.

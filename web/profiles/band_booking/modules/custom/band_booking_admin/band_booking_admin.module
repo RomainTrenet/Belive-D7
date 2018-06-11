@@ -5,3 +5,65 @@
  */
 
 include_once 'band_booking_admin.features.inc';
+
+/**
+ * Alter menu items, specially for Admin parts.
+ *
+ * @param $items
+ *   List of menu items.
+ */
+function band_booking_admin_menu_alter(&$items) {
+  // List of strictly admin reserved menu items and permissions.
+  $menu_items_strictly_admin = [
+    'node/add' => ['administer nodes'],
+    'admin/people' => ['access user profiles'],
+    'admin/people/create' => ['access user profiles']
+  ];
+
+  // For each path, add associated arguments and special access function.
+  foreach ($menu_items_strictly_admin as $path => $permissions) {
+    if (isset($items[$path])) {
+      $args = array(
+        array('rid' => BB_ADMINISTRATOR_RID),
+        $permissions
+      );
+      $items[$path]['access arguments'] = $args;
+      $items[$path]['access callback'] = 'band_booking_admin_restricted_access';
+    }
+  }
+}
+
+/**
+ * Restricted access for Band booking admin parts, per role and permissions.
+ *
+ * @param null $rid
+ *   The administrator role ID.
+ * @param null $permissions
+ *   The permissions array to pass.
+ *
+ * @return bool
+ *   If user has access or no.
+ */
+function band_booking_admin_restricted_access($rid = NULL, $permissions = NULL){
+  global $user;
+
+  if (isset($rid['rid'])) {
+    // User has no administrator role.
+    if (!user_has_role($rid['rid'], $user)) {
+      return FALSE;
+    }
+    // Has administrator role. Test every permissions.
+    elseif (!empty($permissions)) {
+      foreach ($permissions as $permission) {
+        if (!user_access($permission, $user)) {
+          return FALSE;
+        }
+      }
+    }
+    // If all passed.
+    return TRUE;
+  }
+
+  // Security.
+  return FALSE;
+}
