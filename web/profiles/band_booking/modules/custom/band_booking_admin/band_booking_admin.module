@@ -8,6 +8,7 @@ include_once 'band_booking_admin.features.inc';
 
 function band_booking_admin_menu() {
   return [
+    /*
     'admin/band_booking_dashboard' => array(
       'title' => 'Dashboard',
       'description' => 'Dashboard for Band Booking',
@@ -20,6 +21,33 @@ function band_booking_admin_menu() {
       //'access callback' => '_as_user_become_partner_page_access',
       'file' => 'includes/band_booking_admin_dashboard_page_view.inc',
       'type' => MENU_NORMAL_ITEM,
+    ),*/
+    'admin/dashboard/add_performance' => array(
+      'title' => 'Add performance',
+      'page callback' => 'drupal_goto',
+      'page arguments' => array('node/add/performance'),
+      //'access arguments' => array('administer content types'),
+      // @todo.
+      'access callback' => TRUE,
+      'type' => MENU_LOCAL_ACTION,
+    ),
+    'admin/performances/add_performance' => array(
+      'title' => 'Add performance',
+      'page callback' => 'drupal_goto',
+      'page arguments' => array('node/add/performance'),
+      //'access arguments' => array('administer content types'),
+      // @todo.
+      'access callback' => TRUE,
+      'type' => MENU_LOCAL_ACTION,
+    ),
+    'admin/artists/list/add_artist' => array(
+      'title' => 'Add artist',
+      'page callback' => 'drupal_goto',
+      'page arguments' => array('artist/register'),
+      //'access arguments' => array('administer content types'),
+      // @todo.
+      'access callback' => TRUE,
+      'type' => MENU_LOCAL_ACTION,
     ),
   ];
 }
@@ -44,6 +72,10 @@ function band_booking_admin_menu_alter(&$items) {
       'permissions' => ['create users', 'administer users']
     ],
     'admin/people/create' => [
+      'roles' => [BB_ADMINISTRATOR_RID,],
+      'permissions' => ['create users', 'administer users']
+    ],
+    'admin/config/people/accounts' => [
       'roles' => [BB_ADMINISTRATOR_RID,],
       'permissions' => ['create users', 'administer users']
     ],

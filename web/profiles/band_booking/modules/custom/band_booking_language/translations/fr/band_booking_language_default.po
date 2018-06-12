@@ -18,5 +18,17 @@ msgstr ""
 msgid "Artists"
 msgstr "Artistes"
 
+msgid "List of artists"
+msgstr "Liste des artistes"
+
 msgid "Dashboard"
 msgstr "Tableau de bord"
+
+msgid "Reminders"
+msgstr "Relances"
+
+msgid "Add performance"
+msgstr "Ajouter une prestation"
+
+msgid "Add artist"
+msgstr "Ajouter un artiste"

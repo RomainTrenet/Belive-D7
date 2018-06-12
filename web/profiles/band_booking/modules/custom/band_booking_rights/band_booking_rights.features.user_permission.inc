@@ -24,7 +24,6 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access administration pages'] = array(
     'name' => 'access administration pages',
     'roles' => array(
-      'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
     'module' => 'system',

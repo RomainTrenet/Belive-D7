@@ -5,7 +5,7 @@ module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_regi
 module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_relaunch_waiting_users_registration.form');
 
 //Variables
-define("BATCH_LIMIT", 20);
+//define("BATCH_LIMIT", 20);
 
 /**
  * Implements hook_menu().
@@ -16,18 +16,6 @@ function belive_registration_relaunch_menu() {
 	$path = drupal_get_path('module', 'belive_registration_relaunch') . '/includes';
 	
 	return array(
-		//admin menu entrie, page to relaunch node waiting registrations today/everyday
-		'admin/relaunch_waiting' => array(//Call belive_registration_menu_load
-			'title' => 'Relaunch waiting registrations',
-			'page callback' => 'belive_registration_relaunch_admin_relaunch_waiting_users_registration_view',
-			'page arguments' => array(),
-			'access callback' => '_belive_registration_relaunch_admin_relaunch_waiting_users_registration_access',
-			'access arguments' => array('relaunch waiting users registration'),
-			'type' => MENU_LOCAL_TASK,
-			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
-			'file path' => $path,
-		),
-		
 		//menu entrie, page to relaunch specific node waiting registrations
 		'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
 			'title' => 'Relaunch waiting registrations',
@@ -136,17 +124,6 @@ function _belive_registration_relaunch_node_relaunch_waiting_users_registration_
   }
   return TRUE;*/
 	if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
-		return TRUE;
-	}
-	return FALSE;
-}
-
-/**
- * @param $permission
- * @return bool
- */
-function _belive_registration_relaunch_admin_relaunch_waiting_users_registration_access($permission) {
-	if (user_access($permission)) {
 		return TRUE;
 	}
 	return FALSE;

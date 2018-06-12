@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Drupal needs this blank file.
+ */
+
+//Load functions
+//module_load_include('inc', 'belive_registration_relaunch', 'includes/band_booking_registration_reminder_functions');
+//module_load_include('inc', 'belive_registration_relaunch', 'includes/band_booking_registration_reminder_relaunch_waiting_users_registration.form');
+
+//Variables
+define("BATCH_LIMIT", 20);
+
+/**
+ * Implements hook_menu().
+ *
+ * @ingroup signup_core
+ */
+function band_booking_registration_reminder_menu() {
+  // Common path.
+  $path = drupal_get_path('module', 'band_booking_registration_reminder') . '/includes';
+
+  return [
+    // Page to relaunch node waiting registrations today/everyday
+    'admin/relaunch_waiting' => array(
+      //Call belive_registration_menu_load
+      'title' => 'Reminders',
+      'page callback' => 'band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view',
+      'page arguments' => array(),
+      'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
+      'access arguments' => array('relaunch waiting users registration'),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'band_booking_registration_reminder_relaunch_waiting_users_registration.form.inc',
+      'file path' => $path,
+    ),
+  ];
+}
+
+/**
+ * Access callback for admin/performances/relaunch_waiting.
+ * @param $permission
+ * @return bool
+ */
+function _band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access($permission) {
+  if (user_access($permission)) {
+    return TRUE;
+  }
+  return FALSE;
+}
