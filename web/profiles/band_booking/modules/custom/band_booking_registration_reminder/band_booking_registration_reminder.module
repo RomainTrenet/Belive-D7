@@ -5,7 +5,6 @@
  */
 
 //Load functions
-//module_load_include('inc', 'belive_registration_relaunch', 'includes/band_booking_registration_reminder_functions');
 //module_load_include('inc', 'belive_registration_relaunch', 'includes/band_booking_registration_reminder_relaunch_waiting_users_registration.form');
 
 //Variables
@@ -23,7 +22,6 @@ function band_booking_registration_reminder_menu() {
   return [
     // Page to relaunch node waiting registrations today/everyday
     'admin/relaunch_waiting' => array(
-      //Call belive_registration_menu_load
       'title' => 'Reminders',
       'page callback' => 'band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view',
       'page arguments' => array(),
