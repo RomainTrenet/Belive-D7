@@ -1,7 +1,5 @@
 <?php
 
-module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_functions');
-
 /**
 * @file
 * Code for the form to
