@@ -1,7 +1,0 @@
-name = Belive | Language
-description = Module which manage traductions for Belive.
-
-version = "7.x-1.0"
-core = 7.x
-package = Belive
-project path = profiles/belive_booking/modules/custom

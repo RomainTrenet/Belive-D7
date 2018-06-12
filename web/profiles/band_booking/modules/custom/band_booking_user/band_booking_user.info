@@ -5,3 +5,4 @@ package = Band booking
 version = 7.x-1.0
 features[features_api][] = api:2
 project path = profiles/band_booking/modules/custom
+dependencies[] = user

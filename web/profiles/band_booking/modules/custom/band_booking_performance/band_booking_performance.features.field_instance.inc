@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.features.field_instance.inc
+ * band_booking_performance.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function band_booking_prestation_field_default_field_instances() {
+function band_booking_performance_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'node-performance-body'.

@@ -22,7 +22,7 @@ function band_booking_admin_views_default_views() {
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
-  $handler->display->display_options['title'] = 'Artistes';
+  $handler->display->display_options['title'] = 'Liste des artistes';
   $handler->display->display_options['css_class'] = 'admin-views-view';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
@@ -287,7 +287,7 @@ function band_booking_admin_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page_1');
-  $handler->display->display_options['path'] = 'admin/artists';
+  $handler->display->display_options['path'] = 'admin/artists/list';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Artists';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -299,7 +299,7 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['tab_options']['weight'] = '0';
   $translatables['administration_artists'] = array(
     t('Defaults'),
-    t('Artistes'),
+    t('Liste des artistes'),
     t('plus'),
     t('Appliquer'),
     t('Réinitialiser'),

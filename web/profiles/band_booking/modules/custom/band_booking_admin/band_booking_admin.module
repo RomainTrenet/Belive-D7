@@ -8,89 +8,20 @@ include_once 'band_booking_admin.features.inc';
 
 function band_booking_admin_menu() {
   return [
-    'band_booking_dashboard' => array(
-      'title' => 'Artists !',
-      'description' => 'Artists management',
-      //'page callback'   => 'drupal_goto',
-      'page callback' => 'mymodule_abc_view',
+    'admin/band_booking_dashboard' => array(
+      'title' => 'Dashboard',
+      'description' => 'Dashboard for Band Booking',
+      'weight' => -50,
+      'menu_name' => 'management',
+      'page callback' => '_band_booking_admin_dashboard_page_view',
       //'page arguments'   => array('admin/artists/list'),
+      // @TODO.
+      'access callback' => TRUE,
       //'access callback' => '_as_user_become_partner_page_access',
-      //'file' => 'includes/as_user_become_partner_page_view.inc',
-      //'weight' => 40,
-      //'menu_name' => 'management',
+      'file' => 'includes/band_booking_admin_dashboard_page_view.inc',
       'type' => MENU_NORMAL_ITEM,
     ),
-    // Fonctionne
-    /*
-    'docs' => array(
-      'title' => 'Documentations',
-      // @TODO : manage title.
-      // 'title callback' => '_as_doc_get_contextual_docs_page_title',
-      'description' => 'Documentations',
-      'page callback' => '_as_doc_docs_page_view',
-      'access callback' => TRUE,
-      'file' => 'includes/as_doc_docs_page_view.inc',
-      'weight' => 20,
-      //'menu_name' => 'menu-api-store-menu',
-      'type' => MENU_NORMAL_ITEM,
-    ),
-    'admin/artists/list' => array(
-      'title' => 'Documentations',
-      'description' => 'Documentations',
-      'access callback' => TRUE,
-      'weight' => 20,
-      'type' => MENU_NORMAL_ITEM,
-    ),*/
-
-    /*
-    'admin/artists' => array(
-      'title' => 'Artists',
-      'page callback' => 'drupal_goto',
-      'page arguments'   => array('admin/artists/list'),
-      'access callback' => TRUE,
-      'weight' => 20,
-      'type' => MENU_NORMAL_ITEM,
-    ),
-    'admin/artists/list' => array(
-      'title' => 'Liste des artistes',
-      'weight' => 10,
-      'type' => MENU_NORMAL_ITEM,
-    ),
-    'admin/artists/add' => array(
-      'title' => 'Add an artist',
-      //'page callback' => '_as_doc_docs_page_view',
-      'access callback' => TRUE,
-      //'file' => 'includes/as_doc_docs_page_view.inc',
-      'weight' => 20,
-      'type' => MENU_NORMAL_ITEM,
-    ),*/
-
-
-      /*
-    'user/create/artist' => array(
-      'title' => 'Liste b',
-      'page callback' => '_as_doc_docs_page_view',
-      'access callback' => TRUE,
-      'file' => 'includes/as_doc_docs_page_view.inc',
-      'weight' => 30,
-      'type' => MENU_NORMAL_ITEM,
-    ),*/
-    /*
-    'admin/artists/listeeeb' => array(
-      'title' => 'Liste b',
-      'page callback' => '_as_doc_docs_page_view',
-      'access callback' => TRUE,
-      'file' => 'includes/as_doc_docs_page_view.inc',
-      'weight' => 30,
-      'type' => MENU_NORMAL_ITEM,
-    ),*/
   ];
-}
-
-function mymodule_abc_view() {
-
-  // ...
-  return '<p>YOOOOOO</p>';
 }
 
 /**
@@ -102,12 +33,21 @@ function mymodule_abc_view() {
 function band_booking_admin_menu_alter(&$items) {
   // List of strictly admin reserved menu items and permissions.
   $menu_items_strictly_admin = [
+    // Ensure Manager only access to 'prestation' node add form.
     'node/add' => [
       'roles' => [BB_ADMINISTRATOR_RID, BB_MANAGER_RID],
       'permissions' => ['administer nodes']
     ],
-    //'admin/people' => ['access user profiles'],
-    //'admin/people/create' => ['access user profiles']
+    // Force "admin people" paths to be inaccessible even if Manager role has the right.
+    'admin/people' => [
+      'roles' => [BB_ADMINISTRATOR_RID,],
+      'permissions' => ['create users', 'administer users']
+    ],
+    'admin/people/create' => [
+      'roles' => [BB_ADMINISTRATOR_RID,],
+      'permissions' => ['create users', 'administer users']
+    ],
+    // Ensure Manager and Admin can access it, even if they are logged.
     'artist/register' => [
       'roles' => [BB_ADMINISTRATOR_RID, BB_MANAGER_RID],
       'permissions' => ['create users']
@@ -115,22 +55,17 @@ function band_booking_admin_menu_alter(&$items) {
   ];
 
   // For each path, add associated arguments and special access function.
-  //foreach ($menu_items_strictly_admin as $path => $permissions) {
   foreach ($menu_items_strictly_admin as $path => $options) {
     if (isset($items[$path])) {
       $args = array(
         'roles' => !empty($options['roles']) ? $options['roles'] : [],
         'permissions' => !empty($options['permissions']) ? $options['permissions'] : [],
+        'path' => [$path]
       );
       $items[$path]['access arguments'] = $args;
       $items[$path]['access callback'] = 'band_booking_admin_restricted_access';
     }
   }
-
-  /*if (isset($items['user/create/artist'])) {
-    dpm($items['user/create/artist']);
-    //$items[$path]['access arguments'][0][] = BB_MANAGER_RID;
-  }*/
 }
 
 /**
@@ -144,10 +79,11 @@ function band_booking_admin_menu_alter(&$items) {
  * @return bool
  *   If user has access or no.
  */
-function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL){
+function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL, $path = NULL){
   global $user;
-  //dpm($rids);
-  //dpm($permissions);
+
+  /*dpm($rids);
+  dpm($permissions);*/
 
   $has_one_role = FALSE;
   $has_permission = FALSE;
@@ -163,82 +99,46 @@ function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL)
     }
 
     if (!$has_one_role) {
-      //dpm('no role...');
+      /*if ($path[0] == 'admin/people/create') {
+        dpm('no role...');
+      }*/
       return FALSE;
     }
 
-    //dpm('role passed');
+    /*if ($path[0] == 'admin/people/create') {
+      dpm('role passed');
+    }*/
   }
 
   // Has administrator role. Test every permissions.
-  //elseif (!empty($permissions)) {
   if (!empty($permissions)) {
-    //dpm($permissions);
     $has_permission = TRUE;
     foreach ($permissions as $permission) {
       if (!user_access($permission, $user)) {
-        //dpm('pas le droit d acceder');
+        /*if ($path[0] == 'admin/people/create') {
+          dpm('pas le droit d acceder');
+        }*/
         $has_permission = FALSE;
         return FALSE;
       }
     }
-    //dpm('permission ok');
+    /*if ($path[0] == 'admin/people/create') {
+      dpm('permissions ok');
+    }*/
   }
 
   // If all passed.
   if ($has_one_role && $has_permission) {
-    //dpm('all passed');
+    /*if ($path[0] == 'admin/people/create') {
+      dpm('all passed');
+    }*/
     return TRUE;
   }
 
-  //dpm('rien');
+  /*if ($path[0] == 'admin/people/create') {
+    dpm('rien');
+  }*/
 
   // Security.
   return FALSE;
 }
-
-/**
- * Restricted access for Band booking admin parts, per role and permissions.
- *
- * @param null $rid
- *   The administrator role ID.
- * @param null $permissions
- *   The permissions array to pass.
- *
- * @return bool
- *   If user has access or no.
- * /
-function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL){
-  global $user;
-  //dpm($rids);
-  //dpm($permissions);
-
-  //if (isset($rid['rid'])) {
-  if (isset($rids)) {
-    // User has no administrator role.
-    foreach ($rids as $rid) {
-      dpm($rid);
-      if (!user_has_role($rid, $user)) {
-        dpm('pas de role');
-        return FALSE;
-      }
-    }
-    // Has administrator role. Test every permissions.
-    //elseif (!empty($permissions)) {
-    if (!empty($permissions)) {
-      dpm('il y a des perm');
-      foreach ($permissions as $permission) {
-        if (!user_access($permission, $user)) {
-          return FALSE;
-        }
-      }
-    }
-    dpm('pas de perm');
-    // If all passed.
-    return TRUE;
-  }
-  dpm('rien');
-
-  // Security.
-  return FALSE;
-}*/

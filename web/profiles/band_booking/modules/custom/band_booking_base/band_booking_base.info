@@ -79,14 +79,13 @@ dependencies[] = references_uuid
 
 ; ----- Custom modules -----
 dependencies[] = band_booking_admin
-;dependencies[] = band_booking_language
-dependencies[] = band_booking_prestation
+dependencies[] = band_booking_language
+dependencies[] = band_booking_performance
 dependencies[] = band_booking_registration
 dependencies[] = band_booking_registration_views
 ;dependencies[] = band_booking_registration_relaunch
 dependencies[] = band_booking_rights
 dependencies[] = band_booking_user
-;dependencies[] = artists_position
 dependencies[] = bootstrap_multiselect
 
 
@@ -104,7 +103,6 @@ features[field_instance][] = node-page-body
 features[filter][] = full_html
 features[filter][] = plain_text
 features[node][] = page
-features[user_permission][] = use text format full_html
 features[user_role][] = Gérant
 features[user_role][] = administrator
 features[variable][] = language_content_type_page

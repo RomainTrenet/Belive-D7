@@ -7,3 +7,95 @@ define('BB_MANAGER_RID', 4);
  * @file
  * Drupal needs this blank file.
  */
+
+/**
+ * Implements hook_theme().
+ */
+function band_booking_user_theme($existing, $type, $theme, $path) {
+  return array(
+    'user_quick_access_block' => array(
+      'variables' => array(),
+      'template' => 'template/user_quick_access_block'
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function band_booking_user_block_info() {
+  $blocks['user_quick_access'] = array(
+    'info' => t('User quick access'),
+    'status' => 1,
+    'region' => 'sidebar_first',
+    'cache' => DRUPAL_CACHE_PER_USER,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function band_booking_user_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'user_quick_access':
+      global $user;
+      $block['subject'] = $user->name;
+      $block['content'] = band_booking_user_user_quick_access_block_content();
+      $block['block_html_id'] = drupal_html_id('block-band_booking-user-user-quick-access');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Get export links
+ *
+ * @code $link = array('text' => 'link text', 'path' => 'drupal path', 'options' => array());
+ */
+function band_booking_user_user_quick_access_block_content() {
+  global $user;
+  global $base_url;
+
+  //Links info to poulate $links array, passed to the template.
+  $links = array();
+  $links['my_account'] = array(
+    'text' => t('My account'),
+    'path' => $base_url . '/user',
+  );
+  $links['my_performances'] = array(
+    'text' => t('My performances'),
+    'path' => $base_url . '/mes-prestations',
+  );
+  $links['edit_account'] = array(
+    'text' => t('Edit my account'),
+    'path' => $base_url . '/user/' . $user->uid . '/edit',
+  );
+  $links['logout'] = array(
+    'text' => t('Logout'),
+    'path' => $base_url . '/user/logout',
+  );
+
+  return theme('user_quick_access_block', array('links' => $links));
+}
+
+function band_booking_user_form_user_pass_alter(&$form, &$form_state, $form_id) {
+  $form['actions'][] = array(
+    '#markup' => l(t('Log in'),'/user')
+  );
+}
+
+/**
+ * Implements hook_block_form_FORM_ID_alter().
+ * Add a "request password" link
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function band_booking_user_form_user_login_alter(&$form, &$form_state, $form_id) {
+  $form['actions'][] = array(
+    '#markup' => l(t('Request new password'),'/user/password')
+  );
+}

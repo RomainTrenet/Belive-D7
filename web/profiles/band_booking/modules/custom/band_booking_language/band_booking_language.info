@@ -1,0 +1,7 @@
+name = Band booking language
+description = Module which manage traductions for Band booking.
+
+version = "7.x-1.0"
+core = 7.x
+package = Band booking
+project path = profiles/band_booking/modules/custom

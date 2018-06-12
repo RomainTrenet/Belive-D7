@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.features.inc
+ * band_booking_performance.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function band_booking_prestation_ctools_plugin_api($module = NULL, $api = NULL) {
+function band_booking_performance_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "field_group" && $api == "field_group") {
     return array("version" => "1");
   }
@@ -19,14 +19,14 @@ function band_booking_prestation_ctools_plugin_api($module = NULL, $api = NULL) 
 /**
  * Implements hook_views_api().
  */
-function band_booking_prestation_views_api($module = NULL, $api = NULL) {
+function band_booking_performance_views_api($module = NULL, $api = NULL) {
   return array("api" => "3.0");
 }
 
 /**
  * Implements hook_node_info().
  */
-function band_booking_prestation_node_info() {
+function band_booking_performance_node_info() {
   $items = array(
     'performance' => array(
       'name' => t('Prestation'),

@@ -8,7 +8,7 @@
 /**
  * Documentation page content.
  */
-function _as_doc_docs_page_view() {
+function _band_booking_admin_dashboard_page_view() {
   // Variable needed in the content function.
   /*
   $is_node_tab = FALSE;

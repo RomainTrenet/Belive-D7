@@ -8,15 +8,15 @@
 /**
  * Auto update po files foreach languages.
  */
-function belive_language_auto_update_files() {
+function band_booking_language_auto_update_files() {
   // Import original translations foreach langcode.
-  $belive_langcodes = belive_language_get_translation_langcodes();
-  foreach ($belive_langcodes as $belive_langcode) {
+  $band_booking_langcodes = band_booking_language_get_translation_langcodes();
+  foreach ($band_booking_langcodes as $band_booking_langcode) {
     $folder = 'translations';
-    $folder_path = drupal_get_path('module', 'belive_language') . '/' . $folder . '/' . $belive_langcode;
-    $po_files_list = belive_language_list_po_files($folder_path);
+    $folder_path = drupal_get_path('module', 'band_booking_language') . '/' . $folder . '/' . $band_booking_langcode;
+    $po_files_list = band_booking_language_list_po_files($folder_path);
     // @todo : test.
-    //_belive_language_import_translations_po_files($po_files_list, $folder, $belive_langcode);
+    _band_booking_language_import_translations_po_files($po_files_list, $folder, $band_booking_langcode);
   }
 }
 
@@ -26,7 +26,7 @@ function belive_language_auto_update_files() {
  * @return array
  *   The array of Belive languages to look for.
  */
-function belive_language_get_translation_langcodes() {
+function band_booking_language_get_translation_langcodes() {
   $langcodes = array(
     0 => 'fr',
   );
@@ -39,7 +39,7 @@ function belive_language_get_translation_langcodes() {
  * @param array $langcodes
  *   Array of langcodes, folders with po files to import.
  */
-function _belive_language_locale_add_language(array $langcodes) {
+function _band_booking_language_locale_add_language(array $langcodes) {
   foreach ($langcodes as $langcode) {
     // From here, $folder = langcode.
     locale_add_language($langcode, NULL, NULL, LANGUAGE_LTR, '', '', TRUE, TRUE);
@@ -58,7 +58,7 @@ function _belive_language_locale_add_language(array $langcodes) {
  *   Array of files ordered by language subfolders, empty array if no file
  *   found.
  */
-function belive_language_list_po_files($folder_path) {
+function band_booking_language_list_po_files($folder_path) {
   $result = array();
   if (is_dir($folder_path)) {
     $files = new DirectoryIterator($folder_path);
@@ -86,12 +86,13 @@ function belive_language_list_po_files($folder_path) {
  * @param string $langcode
  *   Language code.
  */
-function _belive_language_import_translations_po_files(array $po_files_list, $folder, $langcode) {
+function _band_booking_language_import_translations_po_files(array $po_files_list, $folder, $langcode) {
   // Add language to the drupal language list if it is not already set.
-  $languages = language_list();
+  // @todo : test.
+  /*$languages = language_list();
   if (!isset($languages[$langcode])) {
     locale_add_language($langcode, NULL, NULL, LANGUAGE_LTR, '', '', TRUE, TRUE);
-  }
+  }*/
 
   // Add each file for the current langcode.
   foreach ($po_files_list as $po_file) {
@@ -99,7 +100,7 @@ function _belive_language_import_translations_po_files(array $po_files_list, $fo
       if (substr($file, -3) == '.po') {
         $f = new stdClass();
         $f->filename = $file;
-        $f->uri = drupal_get_path('module', 'belive_language') . '/' . $folder . '/' . $langcode . '/' . $file;
+        $f->uri = drupal_get_path('module', 'band_booking_language') . '/' . $folder . '/' . $langcode . '/' . $file;
         _locale_import_po($f, $langcode, LOCALE_IMPORT_OVERWRITE, 'default');
       }
     }

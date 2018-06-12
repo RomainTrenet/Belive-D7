@@ -17,3 +17,6 @@ msgstr ""
 
 msgid "Artists"
 msgstr "Artistes"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"

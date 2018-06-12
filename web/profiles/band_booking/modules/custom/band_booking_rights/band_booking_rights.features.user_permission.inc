@@ -148,7 +148,6 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access users overview'] = array(
     'name' => 'access users overview',
     'roles' => array(
-      'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
     'module' => 'administerusersbyrole',
@@ -476,6 +475,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer users'] = array(
     'name' => 'administer users',
     'roles' => array(
+      'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
     'module' => 'user',
@@ -572,6 +572,15 @@ function band_booking_rights_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'user',
+  );
+
+  // Exported permission: 'create field_inscriptions'.
+  $permissions['create field_inscriptions'] = array(
+    'name' => 'create field_inscriptions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
   );
 
   // Exported permission: 'create page content'.
@@ -776,6 +785,24 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'belive_registration',
   );
 
+  // Exported permission: 'edit field_inscriptions'.
+  $permissions['edit field_inscriptions'] = array(
+    'name' => 'edit field_inscriptions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_inscriptions'.
+  $permissions['edit own field_inscriptions'] = array(
+    'name' => 'edit own field_inscriptions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit own page content'.
   $permissions['edit own page content'] = array(
     'name' => 'edit own page content',
@@ -837,7 +864,6 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit users with role 4'] = array(
     'name' => 'edit users with role 4',
     'roles' => array(
-      'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
     'module' => 'administerusersbyrole',
@@ -848,7 +874,6 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit users with role 5',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'Musicien' => 'Musicien',
       'administrator' => 'administrator',
     ),
     'module' => 'administerusersbyrole',
@@ -1102,6 +1127,24 @@ function band_booking_rights_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'filter',
+  );
+
+  // Exported permission: 'view field_inscriptions'.
+  $permissions['view field_inscriptions'] = array(
+    'name' => 'view field_inscriptions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_inscriptions'.
+  $permissions['view own field_inscriptions'] = array(
+    'name' => 'view own field_inscriptions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
   );
 
   // Exported permission: 'view own performance registration'.

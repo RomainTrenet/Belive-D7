@@ -79,6 +79,7 @@ dependencies[] = references_uuid
 ; ----- Custom modules -----
 dependencies[] = belive_admin
 dependencies[] = belive_language
+dependencies[] = belive_language
 dependencies[] = belive_registration
 dependencies[] = belive_registration_relaunch
 dependencies[] = belive_user

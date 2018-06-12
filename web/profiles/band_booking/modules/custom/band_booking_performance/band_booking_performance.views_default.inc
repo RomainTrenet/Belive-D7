@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.views_default.inc
+ * band_booking_performance.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function band_booking_prestation_views_default_views() {
+function band_booking_performance_views_default_views() {
   $export = array();
 
   $view = new view();
@@ -22,7 +22,7 @@ function band_booking_prestation_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Les prestations';
+  $handler->display->display_options['title'] = 'Liste des prestations';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'plus';
@@ -240,7 +240,7 @@ function band_booking_prestation_views_default_views() {
   $handler->display->display_options['menu']['context_only_inline'] = 0;
   $translatables['performances'] = array(
     t('Master'),
-    t('Les prestations'),
+    t('Liste des prestations'),
     t('plus'),
     t('Appliquer'),
     t('Réinitialiser'),

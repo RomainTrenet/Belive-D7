@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.features.user_permission.inc
+ * band_booking_performance.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function band_booking_prestation_user_default_permissions() {
+function band_booking_performance_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'create field_inscriptions'.

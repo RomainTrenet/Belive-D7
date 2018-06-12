@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.features.field_base.inc
+ * band_booking_performance.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function band_booking_prestation_field_default_field_bases() {
+function band_booking_performance_field_default_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'field_date'.

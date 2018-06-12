@@ -56,17 +56,19 @@ function band_booking_update_7101(&$sandbox) {
 }
 
 /**
- * Enable .. and disable registration_role.
+ * Enable profile2 and disable registration_role.
  */
 function band_booking_update_7102(&$sandbox) {
   module_enable(array(
     'menu_firstchild',
     'profile2',
     'profile2_regpath',
+    'band_booking_language'
   ), TRUE);
 
   $modules_to_uninstall = array(
-    'registration_role'
+    'registration_role',
+    'belive_user'
   );
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * band_booking_prestation.field_group.inc
+ * band_booking_performance.field_group.inc
  */
 
 /**
  * Implements hook_field_group_info().
  */
-function band_booking_prestation_field_group_info() {
+function band_booking_performance_field_group_info() {
   $field_groups = array();
 
   $field_group = new stdClass();
