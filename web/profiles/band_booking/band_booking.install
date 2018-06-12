@@ -50,8 +50,24 @@ function band_booking_update_7100(&$sandbox) {
  * Enable band booking base module.
  */
 function band_booking_update_7101(&$sandbox) {
-  // Enable modules.
   module_enable(array(
     'band_booking_base'
   ), TRUE);
+}
+
+/**
+ * Enable .. and disable registration_role.
+ */
+function band_booking_update_7102(&$sandbox) {
+  module_enable(array(
+    'menu_firstchild',
+    'profile2',
+    'profile2_regpath',
+  ), TRUE);
+
+  $modules_to_uninstall = array(
+    'registration_role'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
 }
