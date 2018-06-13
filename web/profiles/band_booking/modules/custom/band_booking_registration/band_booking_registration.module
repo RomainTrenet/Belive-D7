@@ -17,11 +17,11 @@ function band_booking_registration_menu() {
   //@todo : check why "Call band_booking_registration_menu_load"
   return array(
     //Roles
-    'admin/structure/registration/band_booking-registration/roles' => array(
+    'admin/structure/registration/band-booking-registration/roles' => array(
       'title' => 'Band booking registration roles',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('band_booking_registration_settings_form'),
-      'access arguments' => array('administer band_booking registration'),
+      'access arguments' => array('administer band booking registration'),
       'description' => 'Configure the roles for Belive Registration',
       'file' => 'includes/band_booking_registration.admin.inc',
     ),
@@ -170,8 +170,8 @@ function _band_booking_registration_menu_state_registration_access($node, $op, $
  */
 function band_booking_registration_permission() {
   $permissions = array(
-    'administer band_booking registration' =>  array(
-      'title' => t('Administer band_booking registration'),
+    'administer band booking registration' =>  array(
+      'title' => t('Administer Band Booking registration'),
     ),
   );
 

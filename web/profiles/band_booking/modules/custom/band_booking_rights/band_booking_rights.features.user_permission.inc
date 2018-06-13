@@ -170,6 +170,16 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'backup_migrate',
   );
 
+  // Exported permission: 'administer band booking registration'.
+  $permissions['administer band booking registration'] = array(
+    'name' => 'administer band booking registration',
+    'roles' => array(
+      'Gérant' => 'Gérant',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'band_booking_registration',
+  );
+
   // Exported permission: 'administer blocks'.
   $permissions['administer blocks'] = array(
     'name' => 'administer blocks',
@@ -362,6 +372,33 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'vppr',
   );
 
+  // Exported permission: 'administer profile types'.
+  $permissions['administer profile types'] = array(
+    'name' => 'administer profile types',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'profile2',
+  );
+
+  // Exported permission: 'administer profile2_regpath'.
+  $permissions['administer profile2_regpath'] = array(
+    'name' => 'administer profile2_regpath',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'profile2_regpath',
+  );
+
+  // Exported permission: 'administer profiles'.
+  $permissions['administer profiles'] = array(
+    'name' => 'administer profiles',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'profile2',
+  );
+
   // Exported permission: 'administer registration'.
   $permissions['administer registration'] = array(
     'name' => 'administer registration',
@@ -435,6 +472,15 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'system',
   );
 
+  // Exported permission: 'administer tags vocabulary terms'.
+  $permissions['administer tags vocabulary terms'] = array(
+    'name' => 'administer tags vocabulary terms',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'vppr',
+  );
+
   // Exported permission: 'administer taxonomy'.
   $permissions['administer taxonomy'] = array(
     'name' => 'administer taxonomy',
@@ -470,6 +516,15 @@ function band_booking_rights_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'user',
+  );
+
+  // Exported permission: 'administer uuid'.
+  $permissions['administer uuid'] = array(
+    'name' => 'administer uuid',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'uuid',
   );
 
   // Exported permission: 'administer views'.
@@ -780,6 +835,13 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'band_booking_registration',
   );
 
+  // Exported permission: 'edit any profil_musicien profile'.
+  $permissions['edit any profil_musicien profile'] = array(
+    'name' => 'edit any profil_musicien profile',
+    'roles' => array(),
+    'module' => 'profile2',
+  );
+
   // Exported permission: 'edit field_inscriptions'.
   $permissions['edit field_inscriptions'] = array(
     'name' => 'edit field_inscriptions',
@@ -824,6 +886,13 @@ function band_booking_rights_user_default_permissions() {
       'Musicien' => 'Musicien',
     ),
     'module' => 'band_booking_registration',
+  );
+
+  // Exported permission: 'edit own profil_musicien profile'.
+  $permissions['edit own profil_musicien profile'] = array(
+    'name' => 'edit own profil_musicien profile',
+    'roles' => array(),
+    'module' => 'profile2',
   );
 
   // Exported permission: 'edit performance registration state'.
@@ -966,6 +1035,16 @@ function band_booking_rights_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'band_booking_registration',
+  );
+
+  // Exported permission: 'relaunch waiting users registration'.
+  $permissions['relaunch waiting users registration'] = array(
+    'name' => 'relaunch waiting users registration',
+    'roles' => array(
+      'Gérant' => 'Gérant',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'belive_registration_relaunch',
   );
 
   // Exported permission: 'rename features'.
@@ -1124,6 +1203,13 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'filter',
   );
 
+  // Exported permission: 'view any profil_musicien profile'.
+  $permissions['view any profil_musicien profile'] = array(
+    'name' => 'view any profil_musicien profile',
+    'roles' => array(),
+    'module' => 'profile2',
+  );
+
   // Exported permission: 'view field_inscriptions'.
   $permissions['view field_inscriptions'] = array(
     'name' => 'view field_inscriptions',
@@ -1149,6 +1235,13 @@ function band_booking_rights_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'registration',
+  );
+
+  // Exported permission: 'view own profil_musicien profile'.
+  $permissions['view own profil_musicien profile'] = array(
+    'name' => 'view own profil_musicien profile',
+    'roles' => array(),
+    'module' => 'profile2',
   );
 
   // Exported permission: 'view own unpublished content'.
