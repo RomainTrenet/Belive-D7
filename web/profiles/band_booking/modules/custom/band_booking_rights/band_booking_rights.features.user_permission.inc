@@ -170,15 +170,6 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'backup_migrate',
   );
 
-  // Exported permission: 'administer belive registration'.
-  $permissions['administer belive registration'] = array(
-    'name' => 'administer belive registration',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'belive_registration',
-  );
-
   // Exported permission: 'administer blocks'.
   $permissions['administer blocks'] = array(
     'name' => 'administer blocks',
@@ -327,6 +318,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer own performance registration'] = array(
     'name' => 'administer own performance registration',
     'roles' => array(
+      'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
     'module' => 'registration',
@@ -614,14 +606,18 @@ function band_booking_rights_user_default_permissions() {
   // Exported permission: 'create performance registration other anonymous'.
   $permissions['create performance registration other anonymous'] = array(
     'name' => 'create performance registration other anonymous',
-    'roles' => array(),
+    'roles' => array(
+      'Gérant' => 'Gérant',
+    ),
     'module' => 'registration',
   );
 
   // Exported permission: 'create performance registration other users'.
   $permissions['create performance registration other users'] = array(
     'name' => 'create performance registration other users',
-    'roles' => array(),
+    'roles' => array(
+      'Gérant' => 'Gérant',
+    ),
     'module' => 'registration',
   );
 
@@ -781,7 +777,7 @@ function band_booking_rights_user_default_permissions() {
       'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
-    'module' => 'belive_registration',
+    'module' => 'band_booking_registration',
   );
 
   // Exported permission: 'edit field_inscriptions'.
@@ -827,7 +823,7 @@ function band_booking_rights_user_default_permissions() {
     'roles' => array(
       'Musicien' => 'Musicien',
     ),
-    'module' => 'belive_registration',
+    'module' => 'band_booking_registration',
   );
 
   // Exported permission: 'edit performance registration state'.
@@ -969,7 +965,7 @@ function band_booking_rights_user_default_permissions() {
       'Gérant' => 'Gérant',
       'administrator' => 'administrator',
     ),
-    'module' => 'belive_registration',
+    'module' => 'band_booking_registration',
   );
 
   // Exported permission: 'rename features'.

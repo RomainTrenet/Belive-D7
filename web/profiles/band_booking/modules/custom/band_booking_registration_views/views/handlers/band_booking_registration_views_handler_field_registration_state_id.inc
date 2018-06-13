@@ -1,10 +1,10 @@
 <?php
 
-module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 /**
  * Field handler to generate a link to edit a given registration.
  */
-class belive_registration_handler_field_registration_state_id extends views_handler_field {
+class band_booking_registration_views_handler_field_registration_state_id extends views_handler_field {
   function construct() {
     parent::construct();
     $this->additional_fields['state'] = array(

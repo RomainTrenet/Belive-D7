@@ -3,7 +3,7 @@
 /**
  * Custom function to get default state for a given registation type
  */
-function belive_registration_get_registration_type_default_state($registration_type) {
+function band_booking_registration_get_registration_type_default_state($registration_type) {
     $query = db_select('registration_type', 'r')
       ->condition('r.name', $registration_type, '=')
       ->fields('r', array('default_state'))
@@ -16,7 +16,7 @@ function belive_registration_get_registration_type_default_state($registration_t
 /**
  * Custom function to get corrects combinations
  */
-function belive_registration_get_status_combinations() {
+function band_booking_registration_get_status_combinations() {
 	return array(
     'waiting' => t('Waiting'),
     'postponed' => t('Postponed'),
@@ -25,7 +25,7 @@ function belive_registration_get_status_combinations() {
   );
 }
 
-//belive_registration_handler_field_registration_state_past_tense_conjugation
+//band_booking_registration_handler_field_registration_state_past_tense_conjugation
 function _get_registration_states_past_tense_conjugation($state) {
   $state_past_tense_conjugation = array(
     'waiting' => t('a mis en attente de décision'),
@@ -39,7 +39,7 @@ function _get_registration_states_past_tense_conjugation($state) {
 /**
  * Custom function to get corrects combinations
  */
-function belive_registration_get_actions_combinations() {
+function band_booking_registration_get_actions_combinations() {
 	return array(
       'wait' => t('Wait'),
       'postpone' => t('Postpone'),
@@ -93,7 +93,7 @@ function _get_node_available_users($excepted_users) {
     }
 
     //Get authorized roles
-    $rolesId = variable_get('belive_registration_default_roles', array());
+    $rolesId = variable_get('band_booking_registration_default_roles', array());
 
     $query=db_select('users','u');
     $query->fields('u',array('uid', 'name'));
@@ -123,7 +123,7 @@ function _get_node_available_users_id_with_position($excepted_users, $positions)
     }
 
     //Get authorized roles
-    $rolesId = variable_get('belive_registration_default_roles', array());
+    $rolesId = variable_get('band_booking_registration_default_roles', array());
 
     $query=db_select('users','u');
     $query->fields('u',array('uid', 'name'));
@@ -173,7 +173,7 @@ function _get_workflow_status_id_from_machine_name($states, $registration_state)
  * @param $roles
  * @return array
  */
-function _get_belive_registration_worklflow_possible_statuses($workflow_transitions, $registration_state_id, $roles)
+function _get_band_booking_registration_worklflow_possible_statuses($workflow_transitions, $registration_state_id, $roles)
 {
   $statuses = array();
   $transitions = _get_list_transitions_for_roles_and_state_id($workflow_transitions, $registration_state_id, $roles);
@@ -211,7 +211,7 @@ function _get_list_transitions_for_roles_and_state_id($workflow_transitions, $re
  * Get states (like in registration_state table)
  * @return array
  */
-function _get_belive_registration_states() {
+function _get_band_booking_registration_states() {
   return array(
     0 => array(
       'name' => 'waiting',

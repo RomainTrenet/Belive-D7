@@ -119,14 +119,10 @@ function belive_registration_relaunch_mail($key, &$message, $params) {
  *   TRUE if the operation should be permitted, otherwise FALSE.
  */
 function _belive_registration_relaunch_node_relaunch_waiting_users_registration_access($node, $permission) {
-  /*if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
-  	return FALSE;
+  if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
+    return TRUE;
   }
-  return TRUE;*/
-	if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
-		return TRUE;
-	}
-	return FALSE;
+  return FALSE;
 }
 
 /**
@@ -135,27 +131,15 @@ function _belive_registration_relaunch_node_relaunch_waiting_users_registration_
  * @ingroup registration_core
  */
 function belive_registration_relaunch_permission() {
-	$permissions = array(
-		'relaunch waiting users registration' =>  array(
-			'title' => t('Relancer les inscriptions belive'),
-		),
-	);
+  $permissions = array(
+    'relaunch waiting users registration' =>  array(
+      'title' => t('Relancer les inscriptions belive'),
+    ),
+  );
 
-	return $permissions;
+  return $permissions;
 }
 
-/**
- * Implements hook_views_api().
- */
-/*function belive_registration_relaunch_views_api() {
-  return array(
-    //'api' => 2.0,
-    'api' => 3,
-    'path' => drupal_get_path('module', 'belive_registration') . '/views',
-  );
-}*/
-
-function belive_registration_relaunch_cron()
-{
-	belive_registration_relaunch_setup_batch('NULL', FALSE);
+function belive_registration_relaunch_cron() {
+  belive_registration_relaunch_setup_batch('NULL', FALSE);
 }

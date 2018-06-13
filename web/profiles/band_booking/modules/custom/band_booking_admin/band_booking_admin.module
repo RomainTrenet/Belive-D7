@@ -59,7 +59,7 @@ function band_booking_admin_menu() {
  *   List of menu items.
  */
 function band_booking_admin_menu_alter(&$items) {
-  // List of strictly admin reserved menu items and permissions.
+  // Rearrange menu items and permissions, between strictly admin reserved items, and manager items.
   $menu_items_strictly_admin = [
     // Ensure Manager only access to 'prestation' node add form.
     'node/add' => [
@@ -96,6 +96,38 @@ function band_booking_admin_menu_alter(&$items) {
       );
       $items[$path]['access arguments'] = $args;
       $items[$path]['access callback'] = 'band_booking_admin_restricted_access';
+    }
+  }
+
+  // Change entity register access.
+  /*if (isset($items['node/%entity_object/register'])) {
+    //Remove the tab for all node type
+    $items['node/%entity_object/register']['type'] = MENU_CALLBACK;
+
+    // Avoid register self form for performance node type.
+    $items['node/%entity_object/register']['access callback'] = 'band_booking_admin_register_page_access';
+  }
+
+  // Change registrations page on node.
+  if (isset($items['node/%entity_object/registrations'])) {
+    $items['node/%entity_object/registrations']['page callback'] = 'band_booking_admin_node_registrations_view';
+  }*/
+
+  // @todo.
+  foreach (registration_get_registration_instances() as $instance) {
+    $type = $instance['entity_type'];
+    if (!in_array($type, array('registration', 'registration_type'))) {
+      $items[$type . '/%entity_object/registrations/list']['access callback'] = FALSE;
+      $items[$type . '/%entity_object/registrations/settings']['access callback'] = FALSE;
+      $items[$type . '/%entity_object/registrations/broadcast']['access callback'] = FALSE;
+
+      // Remove the tab for all type.
+      $items[$type . '/%entity_object/register']['type'] = MENU_CALLBACK;
+      // Avoid register self form.
+      $items[$type . '/%entity_object/register']['access callback'] = 'band_booking_admin_register_page_access';
+
+      // Change registrations page.
+      $items[$type . '/%entity_object/registrations']['page callback'] = 'band_booking_admin_node_registrations_view';
     }
   }
 }
@@ -173,4 +205,16 @@ function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL,
 
   // Security.
   return FALSE;
+}
+
+//TODO put in inc file
+function band_booking_admin_node_registrations_view () {
+  return views_embed_view('registrations', 'block_nid_registration');
+}
+
+function band_booking_admin_register_page_access($type, $node){
+  if ( $node->type == 'performance' ) {
+    return FALSE;
+  }
+  return TRUE;
 }

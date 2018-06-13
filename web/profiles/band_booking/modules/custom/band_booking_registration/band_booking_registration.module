@@ -5,3 +5,201 @@
  */
 
 include_once 'band_booking_registration.features.inc';
+
+//Load functions
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_determine.form');
+
+function band_booking_registration_menu() {
+  $path = drupal_get_path('module', 'band_booking_registration') . '/includes';
+  $type = 'performance';
+
+  //@todo : check why "Call band_booking_registration_menu_load"
+  return array(
+    //Roles
+    'admin/structure/registration/band_booking-registration/roles' => array(
+      'title' => 'Band booking registration roles',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('band_booking_registration_settings_form'),
+      'access arguments' => array('administer band_booking registration'),
+      'description' => 'Configure the roles for Belive Registration',
+      'file' => 'includes/band_booking_registration.admin.inc',
+    ),
+    //Register many
+    'node/%performance_node_menu/register_many' => array(
+      'title' => 'Register many artists',
+      'page callback' => 'band_booking_registration_register_many_users_view',
+      'page arguments' => array(1),//array(1, 'test'),
+      'access callback' => '_band_booking_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'band_booking_registration_register_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 3,
+    ),
+    //Unregister many
+    'node/%performance_node_menu/unregister_many' => array(
+      'title' => 'Unregister many musicians',
+      'page callback' => 'band_booking_registration_unregister_many_users_view',
+      'page arguments' => array(1),
+      'access callback' => '_band_booking_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'band_booking_registration_unregister_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 4,
+    ),
+    //States registration
+    'node/%performance_node_menu/state_registration/%' => array(
+      'title' => "State $type registration",
+      'page callback' => 'band_booking_registration_state_registration_view',
+      'page arguments' => array(1, 3),
+      'access callback' => '_band_booking_registration_menu_state_registration_access',
+      'access arguments' => array(1, 2, 3, "edit own $type registration status"),
+      //'type' => MENU_LOCAL_TASK,
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'band_booking_registration_state_registration.form.inc',
+      'file path' => $path,
+    ),
+  );
+}
+
+/**
+ * Menu loader callback to load a performance node.
+ */
+function performance_node_menu_load($nid) {
+  if (!is_numeric($nid)) {
+    return FALSE;
+  }
+  $node = node_load($nid);
+  if (empty($node)) {
+    return FALSE;
+  }
+  return $node;
+}
+
+/**
+ * Form on node registration, registrations
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function band_booking_registration_form_registration_entity_settings_form_alter(&$form, &$form_state, $form_id) {
+  //dpm($form);
+  $form['reminder']['#collapsed'] = TRUE;
+  $form['settings']['#collapsed'] = TRUE;
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _band_booking_registration_menu_register_many_users_access($node, $permission) {
+  if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _band_booking_registration_menu_state_registration_access($node, $op, $uid, $permission) {
+  global $user;
+
+  //If user has the right to edit registration
+  if (!user_access($permission)) {
+    dpm('user can not access form');
+    return FALSE;
+  }
+
+  //TODO if registration is open
+  //SEE registration_status function for example
+  if ($node->nid){
+    //dpm($node->field_inscriptions['und'][0]['registration_type']);
+    $entity_type = 'node';
+    $entity_id = $node->nid;
+    //$entity_id = 112;
+    $settings = registration_entity_settings($entity_type, $entity_id, FALSE);
+    if (empty($settings)) {
+      return FALSE;
+    } else {
+      //dpm($settings);
+      if ($settings['status'] != '1' ) {
+        dpm('inscriptions désactivées');
+        return FALSE;
+      }
+    }
+  }
+
+  //Check if current user is the user concerned
+  if($user->uid != $uid) {
+    dpm('user is not the user concerned');
+    return FALSE;
+  }
+
+  //Check if there is a registration for the user for the node
+  $rid = _get_registration_id($node->nid, $uid);
+  if( empty($rid) ) {
+    dpm('no registration for the user for the node');
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @ingroup registration_core
+ */
+function band_booking_registration_permission() {
+  $permissions = array(
+    'administer band_booking registration' =>  array(
+      'title' => t('Administer band_booking registration'),
+    ),
+  );
+
+  //Generate specific rights for each registration node types
+  foreach (registration_get_types() as $type_info) {
+    $permissions += band_booking_registration_permission_list($type_info);
+  }
+
+  return $permissions;
+}
+
+function band_booking_registration_permission_list($info) {
+  $type = $info->name;
+  $label = $info->label;
+
+  return array(
+    //Registration state
+    "edit own $type registration status" => array(
+      'title' => t('%type_name: Edit own registration status', array('%type_name' => $label)),
+      'description' => t('Edit own status for %type_name registration', array('%type_name' => $label)),
+    ),
+    "edit any $type registration status" => array(
+      'title' => t('%type_name: Edit any registration status', array('%type_name' => $label)),
+      'description' => t('Edit any status for %type_name registration', array('%type_name' => $label)),
+    ),
+    "registrate users to $type registration" => array(
+      'title' => t('%type_name: Registrate users to %type registration', array('%type_name' => $label, '%type' => $type )),
+      'description' => t('Add many users to %type_name registration', array('%type_name' => $label)),
+    ),
+  );
+}

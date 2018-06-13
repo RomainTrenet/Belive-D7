@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 
 /**
  * @file
@@ -24,20 +24,29 @@ module_load_include('inc', 'belive_registration', 'includes/belive_registration_
  *   The FAPI form array for the signup accept form.
  */
 
-function belive_registration_unregister_many_users_view ($node) {
+function band_booking_registration_unregister_many_users_view ($node) {
     drupal_set_title($node->title);
-    return drupal_get_form('belive_registration_unregister_many_users_form', $node);//, 'admin', FALSE);
+    return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);//, 'admin', FALSE);
 }
 
-function belive_registration_unregister_many_users_form($form, &$form_state, $node) {//, $register_type = 'auth') {
-    //Attached custom js
-    $form['#attached'] = array(
-        'js' => array(
-            drupal_get_path('module', 'belive_registration') . '/js/belive_registration.js' => array(
-                'scope' => 'footer',
-            ),
-        ),
-    );
+function band_booking_registration_unregister_many_users_form($form, &$form_state, $node) {//, $register_type = 'auth') {
+  //Attached custom js
+  /*$form['#attached'] = array(
+      'js' => array(
+          drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
+              'scope' => 'footer',
+          ),
+      ),
+  );*/
+  // @todo : clean.
+  $form['#attached'] = array(
+    'js' => array(
+      drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
+        'scope' => 'footer',
+        'weight' => 101
+      ),
+    ),
+  );
 
   //Default values
   $default_users = !empty($form_state['input']['users']) ? $form_state['input']['users'] : array();
@@ -72,7 +81,7 @@ function belive_registration_unregister_many_users_form($form, &$form_state, $no
       '#size' => 5,
       '#weight' => 0,
       '#options' => $users_list['#value'],
-      '#element_validate' => array('belive_registration_unregister_many_users_form_users_validate'),
+      '#element_validate' => array('band_booking_registration_unregister_many_users_form_users_validate'),
   );
   $form['registration_user_form'] = $registration_form;
 
@@ -92,7 +101,7 @@ function belive_registration_unregister_many_users_form($form, &$form_state, $no
  *   The form state array containing node ID of the node the user is being signed up for.
  */
 
-function belive_registration_unregister_many_users_form_users_validate($element, &$form_state, $form) {
+function band_booking_registration_unregister_many_users_form_users_validate($element, &$form_state, $form) {
 	// Set Error if element is required and empty
 	if ($element['#required'] == TRUE && empty($element['#value'])) {
 		form_error($element, t('This field is required !'));
@@ -112,11 +121,11 @@ function belive_registration_unregister_many_users_form_users_validate($element,
 	return $element;
 }
 
-function belive_registration_unregister_many_users_form_validate($form, &$form_state) {
-	if (!user_access('registrate users to belive performance')) {
-		form_set_error('title', t('You are not allowed to unregister people.'));
-		return FALSE;
-	}
+function band_booking_registration_unregister_many_users_form_validate($form, &$form_state) {
+  if (!user_access('registrate users to performance registration')) {
+    form_set_error('title', t('You are not allowed to unregister people.'));
+    return FALSE;
+  }
 }
 
 /**
@@ -128,7 +137,7 @@ function belive_registration_unregister_many_users_form_validate($form, &$form_s
  *   The state of the form, including the submitted values.
  */
 
-function belive_registration_unregister_many_users_form_submit($form, &$form_state) {
+function band_booking_registration_unregister_many_users_form_submit($form, &$form_state) {
 	if (isset($form_state['values']['users'])) {
     //from node id and users id , get the registrations id
     $registrations_ids = _get_node_registrations_id_for_users( arg(1), $form_state['values']['users']);

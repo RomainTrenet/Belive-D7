@@ -1,0 +1,8 @@
+name = Belive registration
+description = This module is used to add more options to the registration module
+package = Belive
+
+
+core = 7.x
+
+version = "7.x-1"

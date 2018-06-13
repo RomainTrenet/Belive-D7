@@ -3,5 +3,13 @@ description = Views for Band booking registration
 core = 7.x
 package = Band booking
 version = 7.x-1.0
-features[features_api][] = api:2
+dependencies[] = views
+dependencies[] = band_booking_registration
 project path = profiles/band_booking/modules/custom
+
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_wait_link.inc
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_postpone_link.inc
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_accept_link.inc
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_refuse_link.inc
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_state_id.inc
+files[] = views/handlers/band_booking_registration_views_handler_field_registration_state_past_tense_conjugation.inc

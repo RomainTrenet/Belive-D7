@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 
 /**
  * @file
@@ -23,21 +23,21 @@ module_load_include('inc', 'belive_registration', 'includes/belive_registration_
  *   The FAPI form array for the signup accept form.
  */
 
-function belive_registration_state_registration_view ($node, $uid) {
+function band_booking_registration_state_registration_view ($node, $uid) {
   drupal_set_title($node->title);
-  return drupal_get_form('belive_registration_state_registration_form', $node, $uid);
+  return drupal_get_form('band_booking_registration_state_registration_form', $node, $uid);
 }
 
-function belive_registration_state_registration_form($form, &$form_state, $node, $uid) {
+function band_booking_registration_state_registration_form($form, &$form_state, $node, $uid) {
   $registration_user = user_load($uid);
   $rid = _get_registration_id($node->nid, $registration_user->uid);
   $registration = entity_load_single('registration', $rid);
   $registration_author = user_load($registration->author_uid);
-  $status_combinations = belive_registration_get_status_combinations();
+  $status_combinations = band_booking_registration_get_status_combinations();
 
-  $workflow = workflow_load_single('workflow_belive_booking');
+  $workflow = workflow_load_single('workflow_band_booking_booking');
   $registration_state_id = _get_workflow_status_id_from_machine_name($workflow->states, $registration->state);
-  $statuses = _get_belive_registration_worklflow_possible_statuses($workflow->transitions, $registration_state_id, $registration_user->roles );
+  $statuses = _get_band_booking_registration_worklflow_possible_statuses($workflow->transitions, $registration_state_id, $registration_user->roles );
 
   //Pass status to form validate to prevent changing to wrong status
   $form['allowed_statuses'] = array(
@@ -79,7 +79,7 @@ function belive_registration_state_registration_form($form, &$form_state, $node,
       '#title_display' => 'before',
       '#default_value' => $registration->state,
       '#options' => $statuses_list['#value'],
-      '#element_validate' => array('belive_registration_state_registration_form_state_validate'),
+      '#element_validate' => array('band_booking_registration_state_registration_form_state_validate'),
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -104,7 +104,7 @@ function belive_registration_state_registration_form($form, &$form_state, $node,
  *   The form state array containing node ID of the node the user is being signed up for.
  */
 
-function belive_registration_state_registration_form_state_validate($element, &$form_state, $form) {
+function band_booking_registration_state_registration_form_state_validate($element, &$form_state, $form) {
 	// Set Error if element is required and empty
 	if ($element['#required'] == TRUE && empty($element['#value'])) {
 		form_error($element, t('This field is required !'));
@@ -129,7 +129,7 @@ function belive_registration_state_registration_form_state_validate($element, &$
 	return $element;
 }
 
-function belive_registration_state_registration_form_validate($form, &$form_state) {
+function band_booking_registration_state_registration_form_validate($form, &$form_state) {
 	if (!user_access('edit own performance registration status')) {
 		form_set_error('title', t('You are not allowed to state registration.'));
 		return FALSE;
@@ -149,7 +149,7 @@ function belive_registration_state_registration_form_validate($form, &$form_stat
  *   The state of the form, including the submitted values.
  */
 
-function belive_registration_state_registration_form_submit($form, &$form_state) {
+function band_booking_registration_state_registration_form_submit($form, &$form_state) {
   if (isset($form_state['values']['status'])) {
     $registration_wrapper = entity_metadata_wrapper('registration', $form_state['values']['registration_id']);
     $registration_wrapper->state = $form_state['values']['status'];

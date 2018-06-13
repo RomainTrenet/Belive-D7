@@ -3,3 +3,29 @@
  * @file
  * Drupal needs this blank file.
  */
+
+/**
+ * Implements hook_views_api().
+ */
+function band_booking_registration_views_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'band_booking_registration_views') . '/views',
+  );
+}
+
+function band_booking_registration_views_forms($form_id, $args) {
+  if (isset($args[0]) && isset($args[1])) {
+    if ( is_string($args[0]) && is_string($args[1]) ){
+      if ($form_id == 'band_booking_registration_views_determine_form_' . $args[0] . '_' . $args[1]) {
+        module_load_include('inc', 'band_booking_registration_views', 'includes/band_booking_registration_views_determine.form');
+        return array(
+          $form_id => array(
+            'callback' => 'band_booking_registration_views_determine_form',
+          ),
+        );
+      }
+    }
+
+  }
+}

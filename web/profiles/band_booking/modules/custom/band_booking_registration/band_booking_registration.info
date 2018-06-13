@@ -5,6 +5,7 @@ package = Band booking
 version = 7.x-1.0
 dependencies[] = better_exposed_filters
 dependencies[] = views
+dependencies[] = registration
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
 features[views_view][] = last_registrations_change
@@ -12,3 +13,8 @@ features[views_view][] = registrations
 features[views_view][] = registrations_unchanged
 features_exclude[dependencies][ctools] = ctools
 project path = profiles/band_booking/modules/custom
+configure = admin/structure/registration/belive-registration/roles
+
+files[] = includes/band_booking_registration.admin.inc
+
+;files[] = includes/belive_registration_node_registrations.inc

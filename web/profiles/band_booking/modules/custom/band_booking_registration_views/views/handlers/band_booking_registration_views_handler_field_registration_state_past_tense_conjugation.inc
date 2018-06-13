@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 /**
  * @file
  * Custom views handler definition.
@@ -14,7 +14,9 @@ module_load_include('inc', 'belive_registration', 'includes/belive_registration_
  *
  * @ingroup views_field_handlers
  */
-class belive_registration_handler_field_state_past_tense_conjugation extends views_handler_field {
+// @todo : check
+// OLD : band_booking_registration_handler_field_state_past_tense_conjugation
+class band_booking_registration_views_handler_field_registration_state_past_tense_conjugation extends views_handler_field {
   function construct() {
     parent::construct();
     $this->additional_fields['state'] = array(
