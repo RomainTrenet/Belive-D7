@@ -185,7 +185,6 @@ function band_booking_performance_views_default_views() {
 
   /* Display: Page user */
   $handler = $view->new_display('page', 'Page user', 'page_1');
-  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['access'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
