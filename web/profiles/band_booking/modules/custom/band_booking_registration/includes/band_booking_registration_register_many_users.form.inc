@@ -30,7 +30,7 @@ function band_booking_registration_register_many_users_view ($node) {
 }
 
 function band_booking_registration_register_many_users_form($form, &$form_state, $node) {//, $register_type = 'auth') {
-  //Attached custom js
+  // Attached custom js.
   // @todo : check the placement of js.
   $form['#attached'] = array(
     'js' => array(
@@ -42,7 +42,7 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
   );
 
   //Default values
-  $default_users = !empty($form_state['input']['users']) ? $form_state['input']['users'] : array();
+  $default_users = !empty($form_state['input']['add_users']) ? $form_state['input']['add_users'] : array();
 
   //Vars
   $registered_musicians = _get_node_registered_users( $node->nid );
@@ -117,7 +117,7 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
       '#value' => $available_musicians_options,
   );
 
-  $registration_form['users'] = array(
+  $registration_form['add_users'] = array(
       '#type' => 'bootstrap_multiselect_field',
       '#required' => TRUE,
       '#multiple' => TRUE,
@@ -164,7 +164,7 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
  * array of commands), we can just return a piece of the form.
  */
 function band_booking_registration_register_users_filter_position_callback($form, $form_state) {
-    $available_musicians_options = $form['registration_user_form']['available_musicians']['#value'];//$form['registration_user_form']['users']['#options'];
+    $available_musicians_options = $form['registration_user_form']['available_musicians']['#value'];//$form['registration_user_form']['add_users']['#options'];
     $registered_musicians = $form['registration_user_form']['registered_musicians']['#value'];
     $musicians_with_position = _get_node_available_users_id_with_position( $registered_musicians, $form_state['values']['position']);
     $musicians_to_hide=array_diff_key($available_musicians_options,$musicians_with_position);
@@ -198,7 +198,7 @@ function band_booking_registration_form_users_validate($element, &$form_state, $
 		form_set_error($element['#id'], t('No users selected.'));
 		return;
 	}
-	$users_to_add = $form_state['values']['users'];
+	$users_to_add = $form_state['values']['add_users'];
 	$available_musicians_options = $form_state['values']['available_musicians'];
 
 	// Set Error if users selected aren't in availables users list
@@ -229,10 +229,10 @@ function band_booking_registration_register_many_users_form_validate($form, &$fo
 
 function band_booking_registration_register_many_users_form_submit($form, &$form_state) {
 
-	if (isset($form_state['values']['users'])) {
+	if (isset($form_state['values']['add_users'])) {
 		$registration_base = $form_state['registration_base'];
 		$nid = $registration_base['entity_id'];
-		$accounts = user_load_multiple( $form_state['values']['users'] );
+		$accounts = user_load_multiple( $form_state['values']['add_users'] );
 
 		$registrations = array();
 

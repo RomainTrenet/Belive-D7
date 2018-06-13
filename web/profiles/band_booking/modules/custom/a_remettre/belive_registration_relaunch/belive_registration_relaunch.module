@@ -17,7 +17,8 @@ function belive_registration_relaunch_menu() {
 	
 	return array(
 		//menu entrie, page to relaunch specific node waiting registrations
-		'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
+		/* TEMPORARY DESACTIVATED.
+        'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
 			'title' => 'Relaunch waiting registrations',
 			'page callback' => 'belive_registration_relaunch_node_relaunch_waiting_users_registration_view',
 			'page arguments' => array(1),
@@ -28,6 +29,7 @@ function belive_registration_relaunch_menu() {
 			'file path' => $path,
 			'weight' => 5,
 		),
+		*/
 		//Relaunch all registrations with cron
 		'relaunch_batch_cron' => array(
 			'title' => 'Batch relaunch all',

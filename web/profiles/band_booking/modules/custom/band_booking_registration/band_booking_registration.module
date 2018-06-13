@@ -6,9 +6,13 @@
 
 include_once 'band_booking_registration.features.inc';
 
-//Load functions
+// Load functions.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_determine.form');
+
+// Needed register and unregister for blocks.
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
 
 function band_booking_registration_menu() {
   $path = drupal_get_path('module', 'band_booking_registration') . '/includes';
@@ -25,11 +29,12 @@ function band_booking_registration_menu() {
       'description' => 'Configure the roles for Belive Registration',
       'file' => 'includes/band_booking_registration.admin.inc',
     ),
-    //Register many
+    // Register many.
+    /*
     'node/%performance_node_menu/register_many' => array(
       'title' => 'Register many artists',
       'page callback' => 'band_booking_registration_register_many_users_view',
-      'page arguments' => array(1),//array(1, 'test'),
+      'page arguments' => array(1),
       'access callback' => '_band_booking_registration_menu_register_many_users_access',
       'access arguments' => array(1, "registrate users to $type registration"),
       'type' => MENU_LOCAL_TASK,
@@ -48,7 +53,7 @@ function band_booking_registration_menu() {
       'file' => 'band_booking_registration_unregister_many_users.form.inc',
       'file path' => $path,
       'weight' => 4,
-    ),
+    ),*/
     //States registration
     'node/%performance_node_menu/state_registration/%' => array(
       'title' => "State $type registration",
@@ -76,6 +81,62 @@ function performance_node_menu_load($nid) {
     return FALSE;
   }
   return $node;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function band_booking_registration_block_info() {
+  $blocks['bbr_register_many'] = array(
+    'info' => t('Band booking - Register many'),
+    'status' => 1,
+    'region' => 'sidebar_right',
+    //'cache' => DRUPAL_CACHE_PER_USER,
+  );
+  $blocks['bbr_unregister_many'] = array(
+    'info' => t('Band booking - Unregister many'),
+    'status' => 1,
+    'region' => 'sidebar_right',
+    //'cache' => DRUPAL_CACHE_PER_USER,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function band_booking_registration_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'bbr_register_many':
+      //global $user;
+      $block['subject'] = 'Register many';
+      $block['content'] = band_booking_registration_register_many_block_content();
+      $block['block_html_id'] = drupal_html_id('block-band-booking-registration-register-many');
+      break;
+    case 'bbr_unregister_many':
+      //global $user;
+      $block['subject'] = 'Unregister many';
+      $block['content'] = band_booking_registration_unregister_many_block_content();
+      $block['block_html_id'] = drupal_html_id('block-band-booking-unegistration-register-many');
+      break;
+  }
+  return $block;
+}
+
+function band_booking_registration_register_many_block_content() {
+  if ($node = menu_get_object()) {
+    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
+    return drupal_get_form('band_booking_registration_register_many_users_form', $node);
+  }
+}
+
+function band_booking_registration_unregister_many_block_content() {
+  if ($node = menu_get_object()) {
+    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
+    return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);
+  }
 }
 
 /**

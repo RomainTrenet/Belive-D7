@@ -14,7 +14,7 @@
       });
 
       //Global for add and remove form
-      $('#edit-users').multiselect({
+      $('#edit-add-users, #edit-remove-users').multiselect({
         includeSelectAllOption: true,
         selectAllText: ' Sélectionner tout',
         nonSelectedText: 'Aucun sélectionné',

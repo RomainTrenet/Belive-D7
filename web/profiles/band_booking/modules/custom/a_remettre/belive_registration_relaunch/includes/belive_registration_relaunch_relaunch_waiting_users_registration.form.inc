@@ -1,6 +1,6 @@
 <?php
 
-module_load_include('inc', 'belive_registration', 'includes/belive_registration_functions');
+module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 
 function belive_registration_relaunch_node_relaunch_waiting_users_registration_view ($node) {
 	global $base_url;

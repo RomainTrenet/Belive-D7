@@ -117,6 +117,10 @@ function band_booking_admin_menu_alter(&$items) {
   foreach (registration_get_registration_instances() as $instance) {
     $type = $instance['entity_type'];
     if (!in_array($type, array('registration', 'registration_type'))) {
+
+      // Temporary.
+      $items[$type . '/%entity_object/registrations']['access callback'] = FALSE;
+
       $items[$type . '/%entity_object/registrations/list']['access callback'] = FALSE;
       $items[$type . '/%entity_object/registrations/settings']['access callback'] = FALSE;
       $items[$type . '/%entity_object/registrations/broadcast']['access callback'] = FALSE;

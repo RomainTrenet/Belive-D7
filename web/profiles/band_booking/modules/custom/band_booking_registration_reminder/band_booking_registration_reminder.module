@@ -45,3 +45,40 @@ function _band_booking_registration_reminder_admin_relaunch_waiting_users_regist
   }
   return FALSE;
 }
+
+/**
+ * Implements hook_block_info().
+ */
+function band_booking_registration_reminder_block_info() {
+  $blocks['bbrr_performance_reminder'] = array(
+    'info' => t('Band booking - Performance reminder'),
+    'status' => 1,
+    'region' => 'sidebar_right',
+    //'cache' => DRUPAL_CACHE_PER_USER,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function band_booking_registration_reminder_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'bbrr_performance_reminder':
+      //global $user;
+      $block['subject'] = 'Relaunch waiting registrations';
+      $block['content'] = band_booking_registration_reminder_performance_reminder_block_content();
+      $block['block_html_id'] = drupal_html_id('block-band-booking-registration-reminder-performance');
+      break;
+  }
+  return $block;
+}
+
+function band_booking_registration_reminder_performance_reminder_block_content() {
+  if ($node = menu_get_object()) {
+    module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_relaunch_waiting_users_registration.form');
+    return belive_registration_relaunch_node_relaunch_waiting_users_registration_view($node);
+  }
+}
