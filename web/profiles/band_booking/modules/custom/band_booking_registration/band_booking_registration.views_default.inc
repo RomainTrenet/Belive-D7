@@ -114,7 +114,7 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['exclude'] = TRUE;
   $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-  /* Champ: Inscription : Registration: State past tense conjugation */
+  /* Champ: Gestionnaire défectueux/manquant */
   $handler->display->display_options['fields']['state_past_tense_conjugation']['id'] = 'state_past_tense_conjugation';
   $handler->display->display_options['fields']['state_past_tense_conjugation']['table'] = 'registration';
   $handler->display->display_options['fields']['state_past_tense_conjugation']['field'] = 'state_past_tense_conjugation';
@@ -932,6 +932,14 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'adm-regist-lst';
   $handler->display->display_options['display_description'] = 'All registrations for a certain nid';
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* Comportement en l'absence de résultats: Global : Zone de texte */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Aucune inscription pour le moment.';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Filtre contextuel: Contenu : Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -1006,6 +1014,7 @@ function band_booking_registration_views_default_views() {
 <p>Vous n\'avez aucune inscription statuée à des évènements.</p>'),
     t('Admin | Performance | Registrations block'),
     t('All registrations for a certain nid'),
+    t('Aucune inscription pour le moment.'),
   );
   $export['registrations'] = $view;
 

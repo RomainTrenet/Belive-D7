@@ -21,7 +21,7 @@ function band_booking_performance_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Relances',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_relaunch',
       1 => 'field_objet_du_mail',
