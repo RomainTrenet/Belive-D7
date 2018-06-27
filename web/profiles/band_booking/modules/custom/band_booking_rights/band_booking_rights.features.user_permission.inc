@@ -60,8 +60,8 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access content'] = array(
     'name' => 'access content',
     'roles' => array(
+      'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'Musicien' => 'Musicien',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
@@ -613,8 +613,8 @@ function band_booking_rights_user_default_permissions() {
   $permissions['change own username'] = array(
     'name' => 'change own username',
     'roles' => array(
+      'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'Musicien' => 'Musicien',
       'administrator' => 'administrator',
     ),
     'module' => 'user',
@@ -856,7 +856,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit own performance registration status'] = array(
     'name' => 'edit own performance registration status',
     'roles' => array(
-      'Musicien' => 'Musicien',
+      'Artiste' => 'Artiste',
     ),
     'module' => 'band_booking_registration',
   );
@@ -984,8 +984,8 @@ function band_booking_rights_user_default_permissions() {
   $permissions['participate in workflow'] = array(
     'name' => 'participate in workflow',
     'roles' => array(
+      'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'Musicien' => 'Musicien',
       'administrator' => 'administrator',
     ),
     'module' => 'workflow',

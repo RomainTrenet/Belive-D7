@@ -111,13 +111,11 @@ function band_booking_registration_block_view($delta = '') {
 
   switch ($delta) {
     case 'bbr_register_many':
-      //global $user;
       $block['subject'] = 'Register many';
       $block['content'] = band_booking_registration_register_many_block_content();
       $block['block_html_id'] = drupal_html_id('block-band-booking-registration-register-many');
       break;
     case 'bbr_unregister_many':
-      //global $user;
       $block['subject'] = 'Unregister many';
       $block['content'] = band_booking_registration_unregister_many_block_content();
       $block['block_html_id'] = drupal_html_id('block-band-booking-unegistration-register-many');
@@ -147,7 +145,6 @@ function band_booking_registration_unregister_many_block_content() {
  * @param $form_id
  */
 function band_booking_registration_form_registration_entity_settings_form_alter(&$form, &$form_state, $form_id) {
-  //dpm($form);
   $form['reminder']['#collapsed'] = TRUE;
   $form['settings']['#collapsed'] = TRUE;
 }
@@ -186,24 +183,20 @@ function _band_booking_registration_menu_state_registration_access($node, $op, $
 
   //If user has the right to edit registration
   if (!user_access($permission)) {
-    dpm('user can not access form');
     return FALSE;
   }
 
   //TODO if registration is open
   //SEE registration_status function for example
   if ($node->nid){
-    //dpm($node->field_inscriptions['und'][0]['registration_type']);
     $entity_type = 'node';
     $entity_id = $node->nid;
-    //$entity_id = 112;
     $settings = registration_entity_settings($entity_type, $entity_id, FALSE);
     if (empty($settings)) {
       return FALSE;
     } else {
-      //dpm($settings);
       if ($settings['status'] != '1' ) {
-        dpm('inscriptions désactivées');
+        //dpm('inscriptions désactivées');
         return FALSE;
       }
     }
@@ -211,14 +204,12 @@ function _band_booking_registration_menu_state_registration_access($node, $op, $
 
   //Check if current user is the user concerned
   if($user->uid != $uid) {
-    dpm('user is not the user concerned');
     return FALSE;
   }
 
   //Check if there is a registration for the user for the node
   $rid = _get_registration_id($node->nid, $uid);
   if( empty($rid) ) {
-    dpm('no registration for the user for the node');
     return FALSE;
   }
 
@@ -278,21 +269,12 @@ This will apply for all token lists which can retrieve user information,
  *
  */
 function band_booking_registration_token_info() {
-  $info['tokens']['user']['dummy'] = array(
-    'name' => t('user dummy'),
-    'description' => t('Returns the User dummy item)'),
-  );
   $info['tokens']['node']['registered_users_mail_list'] = array(
     'name' => t('Registered users mail list'),
     'description' => t('Returns the mail list from registered users)'),
   );
   return $info;
 }
-
-
-/* Now we need to actually return the contents (or replacement value) of this token and
- * this is done in the hook_tokens():
-*/
 
 /**
  * Implements hook_tokens().
@@ -312,12 +294,10 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
 
           if (is_numeric($nid)) {
             $temp_user_list = _get_node_registered_users_mail_list($nid);
-            dpm($temp_user_list);
             $data['users_mail_list'] = _prepare_user_mail_list($temp_user_list);
           }
 
           // Construct user mail list.
-          dpm($data);
           if (!empty($data['users_mail_list'])) {
             $replacements[$original] = $data['users_mail_list'];
           }
@@ -325,35 +305,35 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
       }
     }
   }
-  if (!empty($replacements)) {
-    dpm('replacement =');
-    dpm($replacements);
-  }
 
   return $replacements;
 }
 
+/**
+ * Prepare string of users mail.
+ *
+ * @param $users
+ *  The list of users.
+ *
+ * @return string
+ *  The string of users mail.
+ *
+ */
 function _prepare_user_mail_list($users) {
   $total = count($users);
-  //dpm($total);
   $count = 1;
   $mails = '';
 
   foreach ($users as $user) {
     if (is_object($user)) {
-      //$current_mail = '<' . $user->mail . '>';
       $current_mail = $user->mail;
-
       if ($count < $total) {
         $current_mail = $current_mail . ',';
       }
-
       $mails = $mails . $current_mail;
     }
-
     $count++;
   }
 
-  dpm($mails);
   return $mails;
 }
