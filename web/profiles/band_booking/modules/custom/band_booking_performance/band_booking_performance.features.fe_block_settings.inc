@@ -165,7 +165,7 @@ function band_booking_performance_default_fe_block_settings() {
         'region' => 'content',
         'status' => 1,
         'theme' => 'band_booking_admin',
-        'weight' => -20,
+        'weight' => -17,
       ),
       'band_booking_front' => array(
         'region' => 'content',

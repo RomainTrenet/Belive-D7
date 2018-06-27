@@ -223,6 +223,7 @@ function band_booking_performance_views_default_views() {
 
   /* Display: Page admin */
   $handler = $view->new_display('page', 'Page admin', 'page');
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['access'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
@@ -231,8 +232,8 @@ function band_booking_performance_views_default_views() {
   );
   $handler->display->display_options['path'] = 'admin/performances';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Les prestations';
-  $handler->display->display_options['menu']['description'] = 'Les prestations';
+  $handler->display->display_options['menu']['title'] = 'Liste des prestations';
+  $handler->display->display_options['menu']['description'] = 'Liste des prestations';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;

@@ -23,15 +23,10 @@ function band_booking_performance_default_rules_configuration() {
         }
       ],
       "DO" : [
-        { "drupal_message" : {
-            "message" : "La prestation a \\u00e9t\\u00e9 mise \\u00e0 jour. La prestation \\u00e9tait [node-unchanged:field_confirm], elle est d\\u00e9sormais [node:field_confirm].\\r\\nEnvoyer mail \\u00e0 : [node:registered_users_mail_list]",
-            "type" : "warning"
-          }
-        },
         { "mail" : {
-            "to" : "\\u003Cromain.trenet@gmail.com\\u003E,\\u003Cromain.trenet@outlook.fr\\u003E",
+            "to" : "[node:registered_users_mail_list]",
             "subject" : "Prestation [node:title] [node:field_confirm]",
-            "message" : "La prestation [node:title] \\u00e9tait [node-unchanged:field_confirm] et d\\u00e9sormais [node:field_confirm]",
+            "message" : "La prestation \\u0022[node:title]\\u0022 a \\u00e9t\\u00e9 mise \\u00e0 jour.\\r\\nElle \\u00e9tait [node-unchanged:field_confirm], elle est d\\u00e9sormais [node:field_confirm].",
             "from" : "[site:mail]",
             "language" : [ "site:current-user:language" ]
           }
