@@ -44,9 +44,9 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
   //Default values
   $default_users = !empty($form_state['input']['add_users']) ? $form_state['input']['add_users'] : array();
 
-  //Vars
-  $registered_musicians = _get_node_registered_users( $node->nid );
-  $available_musicians = _get_node_available_users( $registered_musicians );
+  // Vars.
+  $registered_musicians = _get_node_registered_users($node->nid);
+  $available_musicians = _get_node_available_users($registered_musicians);
   $available_musicians_options = array();
   foreach ($available_musicians as $uid => $available_musician) {
       $available_musicians_options[$uid] = $available_musician->name;

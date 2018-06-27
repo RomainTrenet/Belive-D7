@@ -64,20 +64,32 @@ function _get_node_registrations_id_for_users($nid, $users_id) {
 }
 
 function _get_node_registered_users($nid) {
-    if ( is_numeric($nid) ) {
-        $ids = array();
+  if (is_numeric($nid)) {
+    $ids = array();
 
-        $query = db_select('registration', 'e')
-            ->condition('e.entity_id', $nid, '=')
-            ->fields('e', array('user_uid'))
-            ->execute();
+    $query = db_select('registration', 'e')
+      ->condition('e.entity_id', $nid, '=')
+      ->fields('e', array('user_uid'))
+      ->execute();
 
-        while($user = $query->fetchAssoc()) {
-            $ids[] = $user['user_uid'];
-        }
-
-        return user_load_multiple($ids);
+    while($user = $query->fetchAssoc()) {
+      $ids[] = $user['user_uid'];
     }
+
+    return user_load_multiple($ids);
+  }
+}
+
+function _get_node_registered_users_mail_list($nid) {
+  if (is_numeric($nid)) {
+    $query=db_select('users','u');
+    $query->fields('u',array('mail'));
+    $query->join('registration', 'e', 'e.user_uid = u.uid');
+    $query->condition('u.status', 1, '=');
+    $query->condition('e.entity_id', $nid, '=');
+    return $query->execute()->fetchAll();
+  }
+  return FALSE;
 }
 
 /**
@@ -159,10 +171,14 @@ function _get_registration_id($nid, $uid) {
 }
 
 function _get_workflow_status_id_from_machine_name($states, $registration_state) {
-  foreach ($states as $key => $state ) {
-    if($state->name == $registration_state) {
-      return $state->sid;
+  if (!empty($states)) {
+    foreach ($states as $key => $state ) {
+      if($state->name == $registration_state) {
+        return $state->sid;
+      }
     }
+  } else {
+    return FALSE;
   }
 }
 
@@ -173,8 +189,7 @@ function _get_workflow_status_id_from_machine_name($states, $registration_state)
  * @param $roles
  * @return array
  */
-function _get_band_booking_registration_worklflow_possible_statuses($workflow_transitions, $registration_state_id, $roles)
-{
+function _get_band_booking_registration_worklflow_possible_statuses($workflow_transitions, $registration_state_id, $roles) {
   $statuses = array();
   $transitions = _get_list_transitions_for_roles_and_state_id($workflow_transitions, $registration_state_id, $roles);
   foreach ($transitions as $key => $transition) {
@@ -193,13 +208,15 @@ function _get_band_booking_registration_worklflow_possible_statuses($workflow_tr
  */
 function _get_list_transitions_for_roles_and_state_id($workflow_transitions, $registration_state_id, $roles) {
   $transitions = array();
-  foreach($workflow_transitions as $key => $transition) {
-    if ($transition->sid == $registration_state_id && $transition->sid != $transition->target_sid) {
-      //Check roles
-      foreach ($transition->roles as $role_key => $role) {
-        if (array_key_exists($role, $roles)) {
-          $transitions[$key] = $transition;
-          break;
+  if (!empty($workflow_transitions)) {
+    foreach($workflow_transitions as $key => $transition) {
+      if ($transition->sid == $registration_state_id && $transition->sid != $transition->target_sid) {
+        //Check roles
+        foreach ($transition->roles as $role_key => $role) {
+          if (array_key_exists($role, $roles)) {
+            $transitions[$key] = $transition;
+            break;
+          }
         }
       }
     }

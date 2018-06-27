@@ -63,11 +63,10 @@ function band_booking_registration_menu() {
       'page arguments' => array(1, 3),
       'access callback' => '_band_booking_registration_menu_state_registration_access',
       'access arguments' => array(1, 2, 3, "edit own $type registration status"),
-      //'type' => MENU_LOCAL_TASK,
       'type' => MENU_NORMAL_ITEM,
       'file' => 'band_booking_registration_state_registration.form.inc',
       'file path' => $path,
-    ),
+    )
   );
 }
 
@@ -265,4 +264,96 @@ function band_booking_registration_permission_list($info) {
       'description' => t('Add many users to %type_name registration', array('%type_name' => $label)),
     ),
   );
+}
+
+/**
+ * Implements hook_token_info().
+ * You first of all have to define your token in the hook_token_info(): -
+See more at: http://www.whenwhowhere.com/tech-blog/create-custom-token-drupal-7#sthash.6IQaG7A5.dpuf
+If you define your token in ['tokens']['user'] like I did it will appear in the available tokens under user
+but you can change it to another option, in my case this is what made most sense.
+This will apply for all token lists which can retrieve user information,
+
+
+ *
+ */
+function band_booking_registration_token_info() {
+  $info['tokens']['user']['dummy'] = array(
+    'name' => t('user dummy'),
+    'description' => t('Returns the User dummy item)'),
+  );
+  $info['tokens']['node']['registered_users_mail_list'] = array(
+    'name' => t('Registered users mail list'),
+    'description' => t('Returns the mail list from registered users)'),
+  );
+  return $info;
+}
+
+
+/* Now we need to actually return the contents (or replacement value) of this token and
+ * this is done in the hook_tokens():
+*/
+
+/**
+ * Implements hook_tokens().
+ */
+function band_booking_registration_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'node') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'registered_users_mail_list':
+          // Prepare value.
+          $data['users_mail_list'] = '';
+
+          // Get contextual node id/
+          $nid = arg(1);
+
+          if (is_numeric($nid)) {
+            $temp_user_list = _get_node_registered_users_mail_list($nid);
+            dpm($temp_user_list);
+            $data['users_mail_list'] = _prepare_user_mail_list($temp_user_list);
+          }
+
+          // Construct user mail list.
+          dpm($data);
+          if (!empty($data['users_mail_list'])) {
+            $replacements[$original] = $data['users_mail_list'];
+          }
+          break;
+      }
+    }
+  }
+  if (!empty($replacements)) {
+    dpm('replacement =');
+    dpm($replacements);
+  }
+
+  return $replacements;
+}
+
+function _prepare_user_mail_list($users) {
+  $total = count($users);
+  //dpm($total);
+  $count = 1;
+  $mails = '';
+
+  foreach ($users as $user) {
+    if (is_object($user)) {
+      //$current_mail = '<' . $user->mail . '>';
+      $current_mail = $user->mail;
+
+      if ($count < $total) {
+        $current_mail = $current_mail . ',';
+      }
+
+      $mails = $mails . $current_mail;
+    }
+
+    $count++;
+  }
+
+  dpm($mails);
+  return $mails;
 }
