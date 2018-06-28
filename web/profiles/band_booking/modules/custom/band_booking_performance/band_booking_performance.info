@@ -4,6 +4,7 @@ core = 7.x
 package = Band booking
 version = 7.x-1.0
 dependencies[] = band_booking_base
+dependencies[] = band_booking_performance
 dependencies[] = band_booking_registration
 dependencies[] = band_booking_registration_reminder
 dependencies[] = ctools
