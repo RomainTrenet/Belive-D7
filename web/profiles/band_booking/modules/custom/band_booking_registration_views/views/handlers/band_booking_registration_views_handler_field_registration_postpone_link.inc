@@ -17,23 +17,18 @@ class band_booking_registration_views_handler_field_registration_postpone_link e
   }
 
   function render($values) {
-    $rid = $values->{$this->aliases['registration_id']};
     global $user;
-    /*
 
-    //TODO get workflow from registration
+    $rid = $values->{$this->aliases['registration_id']};
     $workflow = workflow_load_single(BB_REGISTRATION_WORKFLOW);
     $registration_state_id = _get_workflow_status_id_from_machine_name($workflow->states, $values->{$this->aliases['state']});
     $statuses = _get_band_booking_registration_worklflow_possible_statuses($workflow->transitions, $registration_state_id, $user->roles );
+
     if (array_key_exists('postponed', $statuses)) {
-      return (drupal_get_form('band_booking_registration_views_determine_form_postpone_'.$rid, 'postpone', $rid));
+      return (drupal_get_form('band_booking_registration_views_determine_form_accept_'.$rid, 'postpone', $rid));
     } else {
       return '';
     }
-
-    */
-
-    return '<p>temp</p>';
   }
 
 }

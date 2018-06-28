@@ -6,7 +6,7 @@
 
 include_once 'band_booking_registration.features.inc';
 
-define('BB_REGISTRATION_WORKFLOW', 'bb_registration_workflow');
+define('BB_REGISTRATION_WORKFLOW', 'bb_confirmation_workflow');
 
 // Load functions.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
