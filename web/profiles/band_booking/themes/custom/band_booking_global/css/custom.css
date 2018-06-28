@@ -139,6 +139,24 @@ ul.multiselect-container {
     margin-top: 20px;
 }
 
+/* Custom field confirmation */
+.field-name-field-confirm {
+    float: right;
+    padding: 1em;
+}
+.field-name-field-confirm span.icon {
+    font-size: 6em;
+}
+.field-name-field-confirm span.icon-perf-pending {
+    color: #696969;
+}
+.field-name-field-confirm span.icon-perf-confirmed {
+    color: #4d8f46;
+}
+.field-name-field-confirm span.icon-perf-canceled {
+    color: #df4530;
+}
+
 
 /*
 .progress-disabled {

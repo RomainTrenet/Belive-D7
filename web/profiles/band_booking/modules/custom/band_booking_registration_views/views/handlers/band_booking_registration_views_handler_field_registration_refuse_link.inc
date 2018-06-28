@@ -25,7 +25,7 @@ class band_booking_registration_views_handler_field_registration_refuse_link ext
     $statuses = _get_band_booking_registration_worklflow_possible_statuses($workflow->transitions, $registration_state_id, $user->roles );
 
     if (array_key_exists('refused', $statuses)) {
-      return (drupal_get_form('band_booking_registration_views_determine_form_accept_'.$rid, 'refuse', $rid));
+      return (drupal_get_form('band_booking_registration_views_determine_form_refuse_'.$rid, 'refuse', $rid));
     } else {
       return '';
     }
