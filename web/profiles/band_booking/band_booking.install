@@ -75,3 +75,14 @@ function band_booking_update_7102(&$sandbox) {
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 }
+
+/**
+ * Disable artists_position.
+ */
+function band_booking_update_7103(&$sandbox) {
+  $modules_to_uninstall = array(
+    'artists_position'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+}

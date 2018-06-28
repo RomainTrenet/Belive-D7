@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Belive base feature.
- */
-
-include_once 'belive_base.features.inc';

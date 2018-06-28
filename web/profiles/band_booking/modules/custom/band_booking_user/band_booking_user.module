@@ -1,5 +1,7 @@
 <?php
 
+include_once 'band_booking_user.features.inc';
+
 define('BB_ADMINISTRATOR_RID', 3);
 define('BB_MANAGER_RID', 4);
 
