@@ -19,8 +19,6 @@ function band_booking_admin_menu() {
     'admin/band_booking_dashboard' => array(
       'title' => 'Dashboard',
       'description' => 'Dashboard for Band Booking',
-      'weight' => -50,
-      'menu_name' => 'management',
       'page callback' => '_band_booking_admin_dashboard_page_view',
       'access arguments' => array('administer band booking'),
       'file' => 'includes/band_booking_admin_dashboard_page_view.inc',
