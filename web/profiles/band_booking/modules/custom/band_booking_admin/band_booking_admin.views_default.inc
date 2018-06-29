@@ -752,8 +752,8 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
-  /* Display: Bloc dashboard */
-  $handler = $view->new_display('block', 'Bloc dashboard', 'block_1');
+  /* Display: Bloc prestations à venir */
+  $handler = $view->new_display('block', 'Bloc prestations à venir', 'block_1');
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Critère de filtrage: Contenu : Type */
@@ -852,7 +852,7 @@ function band_booking_admin_views_default_views() {
     t('A venir'),
     t('Liste des prestations'),
     t('Anciennes prestations'),
-    t('Bloc dashboard'),
+    t('Bloc prestations à venir'),
   );
   $export['band_booking_administration_performances'] = $view;
 

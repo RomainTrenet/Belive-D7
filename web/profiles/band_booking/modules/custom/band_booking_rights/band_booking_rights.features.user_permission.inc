@@ -91,7 +91,6 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access dashboard'] = array(
     'name' => 'access dashboard',
     'roles' => array(
-      'Gérant' => 'Gérant',
       'administrateur' => 'administrateur',
     ),
     'module' => 'dashboard',
@@ -168,6 +167,15 @@ function band_booking_rights_user_default_permissions() {
       'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
+  );
+
+  // Exported permission: 'administer band booking'.
+  $permissions['administer band booking'] = array(
+    'name' => 'administer band booking',
+    'roles' => array(
+      'Gérant' => 'Gérant',
+    ),
+    'module' => 'band_booking_admin',
   );
 
   // Exported permission: 'administer band booking registration'.

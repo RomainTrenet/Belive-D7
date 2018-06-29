@@ -15,7 +15,7 @@ function band_booking_registration_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'registration';
-  $view->human_name = 'Last registrations change';
+  $view->human_name = 'Band booking Administration : Last registrations change';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -157,8 +157,8 @@ function band_booking_registration_views_default_views() {
     'waiting' => 'waiting',
   );
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  /* Display: Dernières inscriptions */
+  $handler = $view->new_display('block', 'Dernières inscriptions', 'block');
   $translatables['last_registrations_change'] = array(
     t('Master'),
     t('Dernières inscriptions'),
@@ -172,7 +172,6 @@ function band_booking_registration_views_default_views() {
     t('Utilisateur'),
     t('node from Registration'),
     t('[name] [state_past_tense_conjugation] [title]'),
-    t('Block'),
   );
   $export['last_registrations_change'] = $view;
 
@@ -1181,7 +1180,7 @@ function band_booking_registration_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'registration';
-  $view->human_name = 'Registrations unchanged';
+  $view->human_name = 'Band booking Administration : Last registrations unchanged';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -1318,8 +1317,8 @@ function band_booking_registration_views_default_views() {
     'waiting' => 'waiting',
   );
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  /* Display: Inscriptions non statuées */
+  $handler = $view->new_display('block', 'Inscriptions non statuées', 'block');
   $translatables['registrations_unchanged'] = array(
     t('Master'),
     t('Inscriptions non statuées'),
@@ -1334,7 +1333,6 @@ function band_booking_registration_views_default_views() {
     t('node from Registration'),
     t('[title]'),
     t('[name] - [title]'),
-    t('Block'),
   );
   $export['registrations_unchanged'] = $view;
 

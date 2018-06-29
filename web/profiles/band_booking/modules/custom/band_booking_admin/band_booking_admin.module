@@ -6,47 +6,49 @@
 
 include_once 'band_booking_admin.features.inc';
 
+function band_booking_admin_admin_paths() {
+  $paths = array(
+    'admin/band_booking_dashboard' => TRUE,
+  );
+  return $paths;
+}
+
 function band_booking_admin_menu() {
   return [
-    /*
+    // Admin dashboard path and local action.
     'admin/band_booking_dashboard' => array(
       'title' => 'Dashboard',
       'description' => 'Dashboard for Band Booking',
       'weight' => -50,
       'menu_name' => 'management',
       'page callback' => '_band_booking_admin_dashboard_page_view',
-      //'page arguments'   => array('admin/artists/list'),
-      // @TODO.
-      'access callback' => TRUE,
-      //'access callback' => '_as_user_become_partner_page_access',
+      'access arguments' => array('administer band booking'),
       'file' => 'includes/band_booking_admin_dashboard_page_view.inc',
       'type' => MENU_NORMAL_ITEM,
-    ),*/
-    'admin/dashboard/add_performance' => array(
+    ),
+    'admin/band_booking_dashboard/add_performance' => array(
       'title' => 'Add performance',
       'page callback' => 'drupal_goto',
       'page arguments' => array('node/add/performance'),
-      //'access arguments' => array('administer content types'),
-      // @todo.
-      'access callback' => TRUE,
+      'access arguments' => array('create performance content'),
       'type' => MENU_LOCAL_ACTION,
     ),
+
+    // Local action on admin performances view.
     'admin/performances/add_performance' => array(
       'title' => 'Add performance',
       'page callback' => 'drupal_goto',
       'page arguments' => array('node/add/performance'),
-      //'access arguments' => array('administer content types'),
-      // @todo.
-      'access callback' => TRUE,
+      'access arguments' => array('create performance content'),
       'type' => MENU_LOCAL_ACTION,
     ),
+
+    // Local action on admin artists view.
     'admin/artists/list/add_artist' => array(
       'title' => 'Add artist',
       'page callback' => 'drupal_goto',
       'page arguments' => array('artist/register'),
-      //'access arguments' => array('administer content types'),
-      // @todo.
-      'access callback' => TRUE,
+      'access arguments' => array('create users'),
       'type' => MENU_LOCAL_ACTION,
     ),
   ];
@@ -211,14 +213,30 @@ function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL,
   return FALSE;
 }
 
-//TODO put in inc file
+// @TODO put in inc file
 function band_booking_admin_node_registrations_view () {
   return views_embed_view('registrations', 'block_nid_registration');
 }
 
+// @todo.
 function band_booking_admin_register_page_access($type, $node){
   if ( $node->type == 'performance' ) {
     return FALSE;
   }
   return TRUE;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @ingroup registration_core
+ */
+function band_booking_admin_permission() {
+  $permissions = array(
+    'administer band booking' =>  array(
+      'title' => t('Administer Band Booking'),
+    ),
+  );
+
+  return $permissions;
 }

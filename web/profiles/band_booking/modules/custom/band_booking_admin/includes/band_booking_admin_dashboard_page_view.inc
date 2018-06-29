@@ -9,33 +9,12 @@
  * Documentation page content.
  */
 function _band_booking_admin_dashboard_page_view() {
-  // Variable needed in the content function.
-  /*
-  $is_node_tab = FALSE;
+  //global $theme;
+  //dpm($theme);
 
-  // Init products array.
-  $products = array();
-
-  // Get the contextual product id, if there is one.
-  $contextual_pid = _as_doc_get_contextual_pid();
-
-  // If a contextual product is set.
-  if (is_numeric($contextual_pid)) {
-    $product = node_load($contextual_pid);
-    if (!empty($product)) {
-      $products[$product->nid] = $product;
-    }
-  }
-  // Get authorized products.
-  else {
-    $nids = product_list_products();
-    $nids = array_reverse($nids);
-    $products = node_load_multiple($nids);
-  }*/
-
-  return as_doc_documentation_content();
+  return _band_booking_admin_dashboard_page_content();
 }
 
-function as_doc_documentation_content() {
-  return ('<p>WIZZZZ</p>');
+function _band_booking_admin_dashboard_page_content() {
+  return '';
 }

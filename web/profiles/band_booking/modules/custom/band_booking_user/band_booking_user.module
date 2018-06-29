@@ -14,10 +14,13 @@ define('BB_MANAGER_RID', 4);
  * Implements hook_theme().
  */
 function band_booking_user_theme($existing, $type, $theme, $path) {
+  $path = drupal_get_path('module', 'band_booking_user') . '/theme';
+  // @todo: repair.
   return array(
     'user_quick_access_block' => array(
       'variables' => array(),
-      'template' => 'template/user_quick_access_block'
+      'template' => 'user_quick_access_block',
+      'path' => $path
     ),
   );
 }
