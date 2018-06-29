@@ -932,6 +932,94 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'adm-regist-lst';
   $handler->display->display_options['display_description'] = 'All registrations for a certain nid';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'state',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['row_class'] = 'blv-evt-[state_id]';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'state_id' => 'state_id',
+    'state' => 'state',
+    'name' => 'name',
+    'title' => 'title',
+    'field_place' => 'title',
+    'field_date' => 'title',
+    'accept_link' => 'accept_link',
+    'refuse_link' => 'accept_link',
+    'postpone_link' => 'accept_link',
+    'wait_link' => 'accept_link',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'state_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'state' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_place' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_date' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'accept_link' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'refuse_link' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'postpone_link' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'wait_link' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* Comportement en l'absence de résultats: Global : Zone de texte */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -940,6 +1028,76 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Aucune inscription pour le moment.';
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Champ: Inscription : Registration: State id */
+  $handler->display->display_options['fields']['state_id']['id'] = 'state_id';
+  $handler->display->display_options['fields']['state_id']['table'] = 'registration';
+  $handler->display->display_options['fields']['state_id']['field'] = 'state_id';
+  $handler->display->display_options['fields']['state_id']['label'] = '';
+  $handler->display->display_options['fields']['state_id']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['state_id']['element_label_colon'] = FALSE;
+  /* Champ: Inscription : State entity */
+  $handler->display->display_options['fields']['state']['id'] = 'state';
+  $handler->display->display_options['fields']['state']['table'] = 'registration';
+  $handler->display->display_options['fields']['state']['field'] = 'state';
+  $handler->display->display_options['fields']['state']['label'] = '';
+  $handler->display->display_options['fields']['state']['element_label_colon'] = FALSE;
+  /* Champ: Utilisateur : Nom */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'user_uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Utilisateur inscrit';
+  /* Champ: Contenu : Titre */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['title']['label'] = 'Prestation';
+  /* Champ: Contenu : Lieu */
+  $handler->display->display_options['fields']['field_place']['id'] = 'field_place';
+  $handler->display->display_options['fields']['field_place']['table'] = 'field_data_field_place';
+  $handler->display->display_options['fields']['field_place']['field'] = 'field_place';
+  $handler->display->display_options['fields']['field_place']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['field_place']['label'] = '';
+  $handler->display->display_options['fields']['field_place']['element_type'] = 'h5';
+  $handler->display->display_options['fields']['field_place']['element_label_colon'] = FALSE;
+  /* Champ: Contenu : Date */
+  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
+  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['field_date']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_date']['alter']['text'] = ' ([field_date])';
+  $handler->display->display_options['fields']['field_date']['element_type'] = 'div';
+  $handler->display->display_options['fields']['field_date']['settings'] = array(
+    'format_type' => 'medium',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+  );
+  /* Champ: Inscription : User: Accept registration */
+  $handler->display->display_options['fields']['accept_link']['id'] = 'accept_link';
+  $handler->display->display_options['fields']['accept_link']['table'] = 'registration';
+  $handler->display->display_options['fields']['accept_link']['field'] = 'accept_link';
+  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut';
+  /* Champ: Inscription : User: Refuse registration */
+  $handler->display->display_options['fields']['refuse_link']['id'] = 'refuse_link';
+  $handler->display->display_options['fields']['refuse_link']['table'] = 'registration';
+  $handler->display->display_options['fields']['refuse_link']['field'] = 'refuse_link';
+  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut';
+  /* Champ: Inscription : User: Postpone registration */
+  $handler->display->display_options['fields']['postpone_link']['id'] = 'postpone_link';
+  $handler->display->display_options['fields']['postpone_link']['table'] = 'registration';
+  $handler->display->display_options['fields']['postpone_link']['field'] = 'postpone_link';
+  $handler->display->display_options['fields']['postpone_link']['label'] = 'Changer le statut';
+  /* Champ: Inscription : User: Wait registration */
+  $handler->display->display_options['fields']['wait_link']['id'] = 'wait_link';
+  $handler->display->display_options['fields']['wait_link']['table'] = 'registration';
+  $handler->display->display_options['fields']['wait_link']['field'] = 'wait_link';
+  $handler->display->display_options['fields']['wait_link']['label'] = 'Changer le statut';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Filtre contextuel: Contenu : Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';

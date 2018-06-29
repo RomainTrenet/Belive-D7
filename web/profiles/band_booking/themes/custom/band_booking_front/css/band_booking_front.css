@@ -22,3 +22,21 @@
 .node .user-picture { float: left; width: 100px; margin: 0 20px 20px 0; }
 .node .user-picture img { width: 100%; height: auto; }
 .node hr { margin: 20px 0; }
+
+/* Custom field confirmation */
+.field-name-field-confirm {
+    float: right;
+    padding: 1em;
+}
+.field-name-field-confirm span.icon {
+    font-size: 6em;
+}
+.field-name-field-confirm span.icon-perf-pending {
+    color: #696969;
+}
+.field-name-field-confirm span.icon-perf-confirmed {
+    color: #4d8f46;
+}
+.field-name-field-confirm span.icon-perf-canceled {
+    color: #df4530;
+}

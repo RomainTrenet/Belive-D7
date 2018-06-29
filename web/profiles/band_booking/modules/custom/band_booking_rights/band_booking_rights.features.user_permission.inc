@@ -15,7 +15,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'access administration menu',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'admin_menu',
   );
@@ -24,7 +24,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access administration pages'] = array(
     'name' => 'access administration pages',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -33,7 +33,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access all views'] = array(
     'name' => 'access all views',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'views',
   );
@@ -42,7 +42,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access backup and migrate'] = array(
     'name' => 'access backup and migrate',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -51,7 +51,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access backup files'] = array(
     'name' => 'access backup files',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -62,7 +62,7 @@ function band_booking_rights_user_default_permissions() {
     'roles' => array(
       'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
@@ -73,7 +73,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access content overview'] = array(
     'name' => 'access content overview',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -82,7 +82,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access contextual links'] = array(
     'name' => 'access contextual links',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'contextual',
   );
@@ -92,7 +92,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'access dashboard',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'dashboard',
   );
@@ -101,7 +101,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access private fields'] = array(
     'name' => 'access private fields',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -110,7 +110,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access rules debug'] = array(
     'name' => 'access rules debug',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'rules',
   );
@@ -119,7 +119,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access site in maintenance mode'] = array(
     'name' => 'access site in maintenance mode',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -128,7 +128,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access site reports'] = array(
     'name' => 'access site reports',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -138,7 +138,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'access user profiles',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -147,7 +147,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access users overview'] = array(
     'name' => 'access users overview',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -156,7 +156,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer actions'] = array(
     'name' => 'administer actions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -165,7 +165,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer backup and migrate'] = array(
     'name' => 'administer backup and migrate',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -175,7 +175,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer band booking registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'band_booking_registration',
   );
@@ -184,7 +184,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer blocks'] = array(
     'name' => 'administer blocks',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'block',
   );
@@ -193,7 +193,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer bootstrap multiselect'] = array(
     'name' => 'administer bootstrap multiselect',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'bootstrap_multiselect',
   );
@@ -202,7 +202,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer content types'] = array(
     'name' => 'administer content types',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -211,7 +211,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer features'] = array(
     'name' => 'administer features',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'features',
   );
@@ -220,7 +220,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer field permissions'] = array(
     'name' => 'administer field permissions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -229,7 +229,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer fieldgroups'] = array(
     'name' => 'administer fieldgroups',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_group',
   );
@@ -238,7 +238,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer fields'] = array(
     'name' => 'administer fields',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field',
   );
@@ -247,7 +247,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer filters'] = array(
     'name' => 'administer filters',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'filter',
   );
@@ -256,7 +256,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer front page'] = array(
     'name' => 'administer front page',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'front_page',
   );
@@ -265,7 +265,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer image styles'] = array(
     'name' => 'administer image styles',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'image',
   );
@@ -274,7 +274,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer languages'] = array(
     'name' => 'administer languages',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'locale',
   );
@@ -283,7 +283,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'menu',
   );
@@ -292,7 +292,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer messaging'] = array(
     'name' => 'administer messaging',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'messaging',
   );
@@ -301,7 +301,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer module filter'] = array(
     'name' => 'administer module filter',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'module_filter',
   );
@@ -310,7 +310,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer modules'] = array(
     'name' => 'administer modules',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -319,7 +319,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer nodes'] = array(
     'name' => 'administer nodes',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -329,7 +329,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer own performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -338,7 +338,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer pathauto'] = array(
     'name' => 'administer pathauto',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'pathauto',
   );
@@ -348,7 +348,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -357,7 +357,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer permissions'] = array(
     'name' => 'administer permissions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -367,7 +367,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer position vocabulary terms',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'vppr',
   );
@@ -376,7 +376,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer profile types'] = array(
     'name' => 'administer profile types',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'profile2',
   );
@@ -385,7 +385,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer profile2_regpath'] = array(
     'name' => 'administer profile2_regpath',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'profile2_regpath',
   );
@@ -394,7 +394,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer profiles'] = array(
     'name' => 'administer profiles',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'profile2',
   );
@@ -404,7 +404,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -413,7 +413,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer registration states'] = array(
     'name' => 'administer registration states',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -422,7 +422,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer registration types'] = array(
     'name' => 'administer registration types',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -431,7 +431,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer rules'] = array(
     'name' => 'administer rules',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'rules',
   );
@@ -440,7 +440,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer search'] = array(
     'name' => 'administer search',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'search',
   );
@@ -449,7 +449,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer shortcuts'] = array(
     'name' => 'administer shortcuts',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'shortcut',
   );
@@ -458,7 +458,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer site configuration'] = array(
     'name' => 'administer site configuration',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -467,7 +467,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer software updates'] = array(
     'name' => 'administer software updates',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -476,7 +476,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer tags vocabulary terms'] = array(
     'name' => 'administer tags vocabulary terms',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'vppr',
   );
@@ -485,7 +485,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer taxonomy'] = array(
     'name' => 'administer taxonomy',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'taxonomy',
   );
@@ -494,7 +494,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer themes'] = array(
     'name' => 'administer themes',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -503,7 +503,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer url aliases'] = array(
     'name' => 'administer url aliases',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'path',
   );
@@ -513,7 +513,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'administer users',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -522,7 +522,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer uuid'] = array(
     'name' => 'administer uuid',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'uuid',
   );
@@ -531,7 +531,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer views'] = array(
     'name' => 'administer views',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'views',
   );
@@ -540,7 +540,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['administer workflow'] = array(
     'name' => 'administer workflow',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'workflow_admin_ui',
   );
@@ -549,7 +549,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['block IP addresses'] = array(
     'name' => 'block IP addresses',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );
@@ -558,7 +558,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['bypass node access'] = array(
     'name' => 'bypass node access',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -567,7 +567,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['bypass rules access'] = array(
     'name' => 'bypass rules access',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'rules',
   );
@@ -576,7 +576,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['cancel account'] = array(
     'name' => 'cancel account',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -585,7 +585,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['cancel users with role 2'] = array(
     'name' => 'cancel users with role 2',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -594,7 +594,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['cancel users with role 4'] = array(
     'name' => 'cancel users with role 4',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -604,7 +604,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'cancel users with role 5',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -615,7 +615,7 @@ function band_booking_rights_user_default_permissions() {
     'roles' => array(
       'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -624,7 +624,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['create page content'] = array(
     'name' => 'create page content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -634,7 +634,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'create performance content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -644,7 +644,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'create performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -678,7 +678,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['create url aliases'] = array(
     'name' => 'create url aliases',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'path',
   );
@@ -688,7 +688,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'create users',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -697,7 +697,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['customize shortcut links'] = array(
     'name' => 'customize shortcut links',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'shortcut',
   );
@@ -706,7 +706,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['delete any page content'] = array(
     'name' => 'delete any page content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -716,7 +716,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'delete any performance content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -726,7 +726,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'delete any performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -735,7 +735,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['delete backup files'] = array(
     'name' => 'delete backup files',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -744,7 +744,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['delete own page content'] = array(
     'name' => 'delete own page content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -754,7 +754,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'delete own performance content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -764,7 +764,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'delete own performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -773,7 +773,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['delete revisions'] = array(
     'name' => 'delete revisions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -783,7 +783,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'delete terms in position',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'taxonomy',
   );
@@ -792,7 +792,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['display drupal links'] = array(
     'name' => 'display drupal links',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'admin_menu',
   );
@@ -801,7 +801,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit any page content'] = array(
     'name' => 'edit any page content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -811,7 +811,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit any performance content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -821,7 +821,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit any performance registration status',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'band_booking_registration',
   );
@@ -837,7 +837,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit own page content'] = array(
     'name' => 'edit own page content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -847,7 +847,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit own performance content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -873,7 +873,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit performance registration state',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -883,7 +883,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit terms in position',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'taxonomy',
   );
@@ -892,7 +892,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit users with role 2'] = array(
     'name' => 'edit users with role 2',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -901,7 +901,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit users with role 4'] = array(
     'name' => 'edit users with role 4',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -911,7 +911,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit users with role 5',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
   );
@@ -920,7 +920,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['edit workflow comment'] = array(
     'name' => 'edit workflow comment',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'workflow',
   );
@@ -930,7 +930,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'flush caches',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'admin_menu',
   );
@@ -939,7 +939,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['generate features'] = array(
     'name' => 'generate features',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'features',
   );
@@ -948,7 +948,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['grant content access'] = array(
     'name' => 'grant content access',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'content_access',
   );
@@ -957,7 +957,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['grant own content access'] = array(
     'name' => 'grant own content access',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'content_access',
   );
@@ -966,7 +966,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['manage features'] = array(
     'name' => 'manage features',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'features',
   );
@@ -975,7 +975,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['notify of path changes'] = array(
     'name' => 'notify of path changes',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'pathauto',
   );
@@ -986,7 +986,7 @@ function band_booking_rights_user_default_permissions() {
     'roles' => array(
       'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'workflow',
   );
@@ -995,7 +995,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['perform backup'] = array(
     'name' => 'perform backup',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -1005,7 +1005,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'registrate users to performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'band_booking_registration',
   );
@@ -1015,7 +1015,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'relaunch waiting users registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'belive_registration_relaunch',
   );
@@ -1024,7 +1024,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['rename features'] = array(
     'name' => 'rename features',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'features',
   );
@@ -1033,7 +1033,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['restore from backup'] = array(
     'name' => 'restore from backup',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'backup_migrate',
   );
@@ -1042,7 +1042,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['revert revisions'] = array(
     'name' => 'revert revisions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -1051,7 +1051,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['schedule workflow transitions'] = array(
     'name' => 'schedule workflow transitions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'workflow',
   );
@@ -1060,7 +1060,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['search content'] = array(
     'name' => 'search content',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'search',
   );
@@ -1069,7 +1069,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['select account cancellation method'] = array(
     'name' => 'select account cancellation method',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'user',
   );
@@ -1079,7 +1079,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'show workflow state form',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'workflow',
   );
@@ -1088,7 +1088,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['switch shortcut sets'] = array(
     'name' => 'switch shortcut sets',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'shortcut',
   );
@@ -1097,7 +1097,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['translate admin strings'] = array(
     'name' => 'translate admin strings',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'i18n_string',
   );
@@ -1106,7 +1106,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['translate interface'] = array(
     'name' => 'translate interface',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'locale',
   );
@@ -1115,7 +1115,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['translate user-defined strings'] = array(
     'name' => 'translate user-defined strings',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'i18n_string',
   );
@@ -1125,7 +1125,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'update any performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -1134,7 +1134,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['update own performance registration'] = array(
     'name' => 'update own performance registration',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -1143,7 +1143,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['use PHP for title patterns'] = array(
     'name' => 'use PHP for title patterns',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'auto_nodetitle',
   );
@@ -1152,7 +1152,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['use advanced search'] = array(
     'name' => 'use advanced search',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'search',
   );
@@ -1161,7 +1161,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['use ctools import'] = array(
     'name' => 'use ctools import',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'ctools',
   );
@@ -1171,7 +1171,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'use text format full_html',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'filter',
   );
@@ -1187,7 +1187,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['view own performance registration'] = array(
     'name' => 'view own performance registration',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -1204,7 +1204,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'view own unpublished content',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -1214,7 +1214,7 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'view performance registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'registration',
   );
@@ -1223,7 +1223,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['view revisions'] = array(
     'name' => 'view revisions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'node',
   );
@@ -1232,7 +1232,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['view the administration theme'] = array(
     'name' => 'view the administration theme',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'system',
   );

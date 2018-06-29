@@ -22,7 +22,7 @@ function band_booking_performance_default_fe_block_settings() {
     ),
     'pages' => '',
     'roles' => array(
-      'administrator' => 3,
+      'administrateur' => 3,
       'Gérant' => 4,
     ),
     'themes' => array(
@@ -65,7 +65,7 @@ function band_booking_performance_default_fe_block_settings() {
     ),
     'pages' => '',
     'roles' => array(
-      'administrator' => 3,
+      'administrateur' => 3,
       'Gérant' => 4,
     ),
     'themes' => array(
@@ -108,7 +108,7 @@ function band_booking_performance_default_fe_block_settings() {
     ),
     'pages' => '',
     'roles' => array(
-      'administrator' => 3,
+      'administrateur' => 3,
       'Gérant' => 4,
     ),
     'themes' => array(
@@ -151,7 +151,7 @@ function band_booking_performance_default_fe_block_settings() {
     ),
     'pages' => '',
     'roles' => array(
-      'administrator' => 3,
+      'administrateur' => 3,
       'Gérant' => 4,
     ),
     'themes' => array(

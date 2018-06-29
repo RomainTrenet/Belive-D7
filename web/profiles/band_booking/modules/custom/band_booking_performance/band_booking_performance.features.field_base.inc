@@ -29,7 +29,7 @@ function band_booking_performance_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'pending' => 'en attente',
+        'pending' => 'en option',
         'confirmed' => 'confirmée',
         'canceled' => 'annulée',
       ),

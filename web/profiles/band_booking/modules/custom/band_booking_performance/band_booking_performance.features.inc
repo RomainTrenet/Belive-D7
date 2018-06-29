@@ -31,8 +31,8 @@ function band_booking_performance_default_Workflow() {
       "refused_to_accepted" : {"roles":{"4":4},"name":"refused_to_accepted","label":"","rdf_mapping":[],"start_state":"refused","end_state":"accepted"},
       "refused_to_refused" : {"roles":{"-1":-1,"3":3,"4":4,"5":5},"name":"refused_to_refused","label":"","rdf_mapping":[],"start_state":"refused","end_state":"refused"},
       "refused_to_waiting" : {"roles":{"4":4},"name":"refused_to_waiting","label":"","rdf_mapping":[],"start_state":"refused","end_state":"waiting"},
-      "waiting_to_accepted" : {"roles":{"4":4},"name":"waiting_to_accepted","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"accepted"},
-      "waiting_to_refused" : {"roles":{"4":4},"name":"waiting_to_refused","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"refused"},
+      "waiting_to_accepted" : {"roles":{"4":4,"5":5},"name":"waiting_to_accepted","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"accepted"},
+      "waiting_to_refused" : {"roles":{"4":4,"5":5},"name":"waiting_to_refused","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"refused"},
       "waiting_to_waiting" : {"roles":{"-1":-1,"3":3,"4":4,"5":5},"name":"waiting_to_waiting","label":"","rdf_mapping":[],"start_state":"waiting","end_state":"waiting"}
     },
     "label" : "bb_confirmation_workflow",

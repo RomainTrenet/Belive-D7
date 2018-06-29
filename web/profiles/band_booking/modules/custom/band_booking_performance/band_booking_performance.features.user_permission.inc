@@ -14,7 +14,7 @@ function band_booking_performance_user_default_permissions() {
   $permissions['create field_inscriptions'] = array(
     'name' => 'create field_inscriptions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -23,7 +23,7 @@ function band_booking_performance_user_default_permissions() {
   $permissions['edit field_inscriptions'] = array(
     'name' => 'edit field_inscriptions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -32,7 +32,7 @@ function band_booking_performance_user_default_permissions() {
   $permissions['edit own field_inscriptions'] = array(
     'name' => 'edit own field_inscriptions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -41,7 +41,7 @@ function band_booking_performance_user_default_permissions() {
   $permissions['view field_inscriptions'] = array(
     'name' => 'view field_inscriptions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
@@ -50,7 +50,7 @@ function band_booking_performance_user_default_permissions() {
   $permissions['view own field_inscriptions'] = array(
     'name' => 'view own field_inscriptions',
     'roles' => array(
-      'administrator' => 'administrator',
+      'administrateur' => 'administrateur',
     ),
     'module' => 'field_permissions',
   );
