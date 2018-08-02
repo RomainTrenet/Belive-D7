@@ -14,6 +14,7 @@ function band_booking_rights_user_default_permissions() {
   $permissions['access administration menu'] = array(
     'name' => 'access administration menu',
     'roles' => array(
+      'Artiste' => 'Artiste',
       'Gérant' => 'Gérant',
       'administrateur' => 'administrateur',
     ),

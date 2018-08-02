@@ -10,9 +10,47 @@ define('BB_MANAGER_RID', 4);
  * Drupal needs this blank file.
  */
 
+function band_booking_user_menu() {
+  return [
+    // Artist edit account redirection.
+    'artist/edit-account' => array(
+      'title' => 'Add performance',
+      'page callback' => '_band_booking_user_goto_edit_page',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    ),
+  ];
+}
+
+function _band_booking_user_goto_edit_page() {
+  global $user;
+  $edit_path = 'user/' . $user->uid . '/edit';
+  drupal_goto($edit_path);
+}
+
+function band_booking_user_form_user_pass_alter(&$form, &$form_state, $form_id) {
+  $form['actions'][] = array(
+    '#markup' => l(t('Log in'),'/user')
+  );
+}
+
+/**
+ * Implements hook_block_form_FORM_ID_alter().
+ * Add a "request password" link
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ */
+function band_booking_user_form_user_login_alter(&$form, &$form_state, $form_id) {
+  $form['actions'][] = array(
+    '#markup' => l(t('Request new password'),'/user/password')
+  );
+}
+
 /**
  * Implements hook_theme().
  */
+/*
 function band_booking_user_theme($existing, $type, $theme, $path) {
   $path = drupal_get_path('module', 'band_booking_user') . '/theme';
   // @todo: repair.
@@ -24,10 +62,11 @@ function band_booking_user_theme($existing, $type, $theme, $path) {
     ),
   );
 }
+*/
 
 /**
  * Implements hook_block_info().
- */
+ * /
 function band_booking_user_block_info() {
   $blocks['user_quick_access'] = array(
     'info' => t('User quick access'),
@@ -37,10 +76,11 @@ function band_booking_user_block_info() {
   );
   return $blocks;
 }
+ * */
 
 /**
  * Implements hook_block_view().
- */
+ * /
 function band_booking_user_block_view($delta = '') {
   $block = array();
 
@@ -54,12 +94,13 @@ function band_booking_user_block_view($delta = '') {
   }
   return $block;
 }
+*/
 
 /**
  * Get export links
  *
  * @code $link = array('text' => 'link text', 'path' => 'drupal path', 'options' => array());
- */
+ * /
 function band_booking_user_user_quick_access_block_content() {
   global $user;
   global $base_url;
@@ -85,22 +126,4 @@ function band_booking_user_user_quick_access_block_content() {
 
   return theme('user_quick_access_block', array('links' => $links));
 }
-
-function band_booking_user_form_user_pass_alter(&$form, &$form_state, $form_id) {
-  $form['actions'][] = array(
-    '#markup' => l(t('Log in'),'/user')
-  );
-}
-
-/**
- * Implements hook_block_form_FORM_ID_alter().
- * Add a "request password" link
- * @param $form
- * @param $form_state
- * @param $form_id
- */
-function band_booking_user_form_user_login_alter(&$form, &$form_state, $form_id) {
-  $form['actions'][] = array(
-    '#markup' => l(t('Request new password'),'/user/password')
-  );
-}
+ * */

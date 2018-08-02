@@ -28,7 +28,7 @@ function band_booking_install() {
   // Disable Baltik.
   theme_disable(array('bartik'));
 
-  // Rebuild permission to avoid drupal error message
+  // Rebuild permission to avoid drupal error message.
   node_access_rebuild();
 }
 
