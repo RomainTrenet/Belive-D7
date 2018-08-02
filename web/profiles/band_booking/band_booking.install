@@ -88,9 +88,13 @@ function band_booking_update_7103(&$sandbox) {
 }
 
 /**
- * Disable messaging.
+ * Enable logintoboggan and disable messaging.
  */
 function band_booking_update_7104(&$sandbox) {
+  module_enable(array(
+    'logintoboggan'
+  ), TRUE);
+
   $modules_to_uninstall = array(
     'messaging'
   );
