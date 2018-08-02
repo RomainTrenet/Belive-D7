@@ -49,7 +49,6 @@ dependencies[] = markdown
 dependencies[] = media
 dependencies[] = menu_firstchild
 dependencies[] = menu_item_visibility
-dependencies[] = messaging
 dependencies[] = metatag
 dependencies[] = module_filter
 dependencies[] = node

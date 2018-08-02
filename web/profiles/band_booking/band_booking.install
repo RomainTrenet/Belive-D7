@@ -86,3 +86,14 @@ function band_booking_update_7103(&$sandbox) {
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 }
+
+/**
+ * Disable messaging.
+ */
+function band_booking_update_7104(&$sandbox) {
+  $modules_to_uninstall = array(
+    'messaging'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+}

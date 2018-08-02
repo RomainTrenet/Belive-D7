@@ -297,15 +297,6 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'menu',
   );
 
-  // Exported permission: 'administer messaging'.
-  $permissions['administer messaging'] = array(
-    'name' => 'administer messaging',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'messaging',
-  );
-
   // Exported permission: 'administer module filter'.
   $permissions['administer module filter'] = array(
     'name' => 'administer module filter',
