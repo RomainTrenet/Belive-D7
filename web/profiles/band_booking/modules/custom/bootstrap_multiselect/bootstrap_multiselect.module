@@ -24,27 +24,40 @@ function bootstrap_multiselect_theme($existing, $type, $theme, $path) {
 }
 
 function bootstrap_multiselect_element_info() {
+  $path_to_js = drupal_get_path('module', 'bootstrap_multiselect') . '/js/bootstrap-multiselect.js';
+  $path_to_css = drupal_get_path('module', 'bootstrap_multiselect') . '/css/bootstrap-multiselect.css';
+
 	$types['bootstrap_multiselect_field'] = array(
-	    '#input' => TRUE,
-	    '#multiple' => TRUE,
-	    '#title' => 'Mon champs perso',
+    '#input' => TRUE,
+    '#multiple' => TRUE,
+    '#title' => 'Mon champs perso',
 		'#title_display' => 'before',
-	    '#process' => array('form_process_select', 'ajax_process_form'),
-	    '#theme' => 'select',
-	    '#theme_wrappers' => array('bootstrap_multiselect_inline_form_element'),
-	    '#attributes' => array(
+    '#process' => array(
+      'form_process_select',
+      'ajax_process_form'
+    ),
+    '#theme' => 'select',
+    '#theme_wrappers' => array(
+      'bootstrap_multiselect_inline_form_element'
+    ),
+    '#attributes' => array(
 			'class' => array('jquery-multiselect'),
 		),
-	    '#attached' => array(
-			'js' => array(
-				drupal_get_path('module', 'bootstrap_multiselect') . '/js/bootstrap_multiselect.js' => array(
-					'scope' => 'footer',
-				),
-			),
-			'libraries_load' => array(
-		    	0 => array('bootstrap_multiselect'),
-		    ),
-		),
+    '#attached' => array(
+      'js' => array(
+        $path_to_js => array(
+          'scope' => 'footer',
+        ),
+      ),
+      'css' => array(
+        $path_to_css => array(
+          //'scope' => 'footer',
+        ),
+      ),
+      'libraries_load' => array(
+        0 => array('bootstrap_multiselect'),
+      ),
+    ),
 	);
 	return $types;
 }
@@ -62,7 +75,7 @@ function bootstrap_multiselect_libraries_info() {
 		  'pattern' => '/Bootstrap Multiselect v(\d+\.+\d+)/',//Example : Bootstrap Multiselect v2.1
 		  'lines' => 2,
 		),
-    	'path' => 'dist',
+    'path' => 'dist',
 		'files' => array(
 			'js' => array(
 				'js/bootstrap-multiselect.js' => array(
@@ -73,9 +86,10 @@ function bootstrap_multiselect_libraries_info() {
 				'css/bootstrap-multiselect.css',
 			),
 		),
+		/*
 		'dependencies' => array(
 			0 => 'bootstrap',
-		),
+		),*/
 	);
 
 	return $libraries;
@@ -112,7 +126,7 @@ function bootstrap_multiselect_library() {
 /**
  * Implements hook_libraries_info_alter().
  *
- * Set the bootstrap library to the footer
+ * Set the bootstrap library to the footer.
  */
 function bootstrap_multiselect_libraries_info_alter(&$libraries) {
 	foreach ($libraries['bootstrap']['files']['js'] as $key => $value) {
@@ -163,6 +177,8 @@ function bootstrap_multiselect_menu() {
  *   set this to FALSE and videojs_add() will only return the needed array
  *   suitable for use as an #attached property.
  */
+/*
+ * Not used.
 function bootstrap_multiselect_add($add = TRUE) {
 	static $added = FALSE;
 	if (!isset($added)) {
@@ -171,8 +187,10 @@ function bootstrap_multiselect_add($add = TRUE) {
 
 	if ($add && !$added) {
 		//Add bootstrap library (normally in dependencies...)
-		libraries_load('bootstrap');
+    // @todo remove.
+		//libraries_load('bootstrap');
 		drupal_add_library('bootstrap_multiselect', 'bootstrap_multiselect', FALSE);
 		$added = TRUE;
 	}
 }
+*/

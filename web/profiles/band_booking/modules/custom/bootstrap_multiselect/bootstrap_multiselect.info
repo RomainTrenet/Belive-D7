@@ -4,7 +4,7 @@ core = 7.x
 package = Media
 version = 7.x-1.0
 dependencies[] = file
-dependencies[] = bootstrap_library
-dependencies[] = libraries (>=2.x)
+;dependencies[] = bootstrap_library
+;dependencies[] = libraries (>=2.x)
 configure = admin/config/media/bootstrap-multiselect
 files[] = includes/bootstrap_multiselect.admin.inc

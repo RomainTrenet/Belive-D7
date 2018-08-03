@@ -1,0 +1,7 @@
+name = Multiple select library
+description = Add the Multiple Select librairy available to other modules or themes in the project
+core = 7.x
+package = Media
+version = 7.x-1.0
+dependencies[] = file
+dependencies[] = libraries (>=2.x)

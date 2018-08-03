@@ -4,6 +4,8 @@
     attach: function (context, settings) {
 
       //Only on add form
+      /*
+      @todo.
       $('#edit-position').multiselect({
         includeSelectAllOption: true,
         selectAllText: ' Sélectionner tout',
@@ -22,11 +24,13 @@
         enableFiltering: true,
         filterPlaceholder: 'Chercher'
       });
+      */
     }
   };
 
   Drupal.ajax.prototype.commands.afterAjaxCallbackExample = function(ajax, response, status) {
     //auto open users dropwdown
+    // @todo : use with multiple select library.
     $('#register_many_users button.multiselect').trigger( "click" );
 
     var $select = $("#register_many_users");

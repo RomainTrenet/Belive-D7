@@ -72,7 +72,7 @@ function band_booking_registration_unregister_many_users_form($form, &$form_stat
       '#value' => $registered_musicians_options,
   );
   $registration_form['remove_users'] = array(
-      '#type' => 'bootstrap_multiselect_field',
+      '#type' => 'multiple_select_field',
       '#required' => TRUE,
       '#multiple' => TRUE,
       '#title' => t('Remove musicians'),

@@ -1,0 +1,152 @@
+<?php
+/**
+ * @file
+ * A light-weight, select form item style plugin for Drupal based on jQuery and Bootstrap
+ */
+
+define("MULTIPLE_SELECT_VERSION", variable_get('multiple_select_version', '1.2.1'));
+// @todo class name, pass it to the js.
+//define("MULTIPLE_SELECT_CLASS_NAME", variable_get('multiple_select_version', '1.2.1'));
+//define("BOOTSTRAP_MULTISELECT_DEBUG", variable_get('multiple_select_debug', FALSE));
+
+/**
+ * Called by multiple_select_theme() to provide hook_theme().
+ *
+ * This is kept in this file so it can be with the theme functions it presents.
+ * Otherwise it would get lonely.
+ */
+function multiple_select_theme($existing, $type, $theme, $path) {
+ 	$path = 'includes/';
+	return array(
+		'multiple_select_inline_form_element' => array(
+			'render element' => 'element',
+			'file' => $path . 'multiple_select.elements.inc',
+		),
+	);
+}
+
+function multiple_select_element_info() {
+  $path_to_js = drupal_get_path('module', 'multiple_select') . '/js/multiple-select.js';
+  $path_to_css = drupal_get_path('module', 'multiple_select') . '/css/multiple-select.css';
+
+	$types['multiple_select_field'] = array(
+    '#input' => TRUE,
+    '#multiple' => TRUE,
+    '#title' => 'Multiple select',
+		'#title_display' => 'before',
+    '#process' => array(
+      'form_process_select',
+      'ajax_process_form'
+    ),
+    '#theme' => 'select',
+    '#theme_wrappers' => array(
+      'multiple_select_inline_form_element'
+    ),
+    '#attributes' => array(
+      // @todo dynamic class name.
+			'class' => array('multiple-select'),
+		),
+    '#attached' => array(
+      'js' => array(
+        $path_to_js => array(
+          'scope' => 'footer',
+        ),
+      ),
+      // @todo : resolve conflict.
+      /*'css' => array(
+        $path_to_css => array(
+          //'scope' => 'footer',
+        ),
+      ),*/
+      'libraries_load' => array(
+        0 => array('multiple_select'),
+      ),
+    ),
+	);
+	return $types;
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function multiple_select_libraries_info() {
+	$libraries['multiple_select'] = array(
+		'name' => 'Multiple select',
+		'vendor url' => 'http://wenzhixin.net.cn',
+		'download url' => 'https://github.com/wenzhixin/multiple-select',
+		'version arguments' => array(
+		  'file' => 'multiple-select.js',
+		  'pattern' => '/@version (\d+\.+\d+)/',
+		  'lines' => 3,
+		),
+    // @todo : check.
+    'path' => '',
+		'files' => array(
+			'js' => array(
+				'multiple-select.js' => array(
+				    'scope' => 'footer',
+				),
+			),
+			'css' => array(
+				'multiple-select.css',
+			),
+		),
+	);
+
+	return $libraries;
+}
+
+/**
+ * Implements hook_library().
+ *
+ * We also define FlexSlider through the core library callbacks
+ */
+function multiple_select_library() {
+	$library_path = libraries_get_path('multiple_select');
+  
+	$libraries['multiple_select'] = array(
+		'title' => 'Multiple select',
+		'website' => 'http://wenzhixin.net.cn/p/multiple-select/',
+		'version' => MULTIPLE_SELECT_VERSION,
+		'js' => array(
+		  $library_path . '/multiple-select.js' => array(
+		    'scope' => 'footer',
+		  ),
+		),
+		'css' => array(
+		  $library_path . '/multiple-select.css' => array(
+		    'type' => 'file',
+		    'media' => 'screen',
+		  ),
+		),
+	);
+
+	return $libraries;
+}
+
+/**
+ * Add the Video.js library to the page.
+ *
+ * @param $add
+ *   By default this function will add videojs to the page JavaScript array
+ *   directly. If wanting to store the Video.js file as an #attached property,
+ *   set this to FALSE and videojs_add() will only return the needed array
+ *   suitable for use as an #attached property.
+ */
+/*
+ * Not used.
+function multiple_select_add($add = TRUE) {
+	static $added = FALSE;
+	if (!isset($added)) {
+		$added = &drupal_static(__FUNCTION__);
+	}
+
+	if ($add && !$added) {
+		//Add bootstrap library (normally in dependencies...)
+    // @todo remove.
+		//libraries_load('bootstrap');
+		drupal_add_library('multiple_select', 'multiple_select', FALSE);
+		$added = TRUE;
+	}
+}
+*/

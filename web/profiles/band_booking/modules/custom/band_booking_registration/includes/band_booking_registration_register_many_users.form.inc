@@ -85,7 +85,7 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
       '#value' => _get_taxonomy_terms_options_formatted(2),
   );
   $position_form['position'] = array(
-      '#type' => 'bootstrap_multiselect_field',
+      '#type' => 'multiple_select_field',
       '#required' => FALSE,
       '#multiple' => TRUE,
       '#title' => t('Filter by position'),
@@ -118,7 +118,7 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
   );
 
   $registration_form['add_users'] = array(
-      '#type' => 'bootstrap_multiselect_field',
+      '#type' => 'multiple_select_field',
       '#required' => TRUE,
       '#multiple' => TRUE,
       '#title' => t('Add musicians'),
