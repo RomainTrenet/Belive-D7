@@ -33,8 +33,8 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => 'sidebar_right',
-        'status' => 1,
+        'region' => '',
+        'status' => 0,
         'theme' => 'band_booking_admin',
         'weight' => -19,
       ),
@@ -76,8 +76,8 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => 'sidebar_right',
-        'status' => 1,
+        'region' => '',
+        'status' => 0,
         'theme' => 'band_booking_admin',
         'weight' => -18,
       ),
@@ -119,8 +119,8 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => 'sidebar_right',
-        'status' => 1,
+        'region' => '',
+        'status' => 0,
         'theme' => 'band_booking_admin',
         'weight' => -17,
       ),
