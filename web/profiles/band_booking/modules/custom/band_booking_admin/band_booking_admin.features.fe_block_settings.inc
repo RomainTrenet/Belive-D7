@@ -81,7 +81,7 @@ function band_booking_admin_default_fe_block_settings() {
         'region' => 'sidebar_right',
         'status' => 1,
         'theme' => 'band_booking_front',
-        'weight' => -15,
+        'weight' => -17,
       ),
       'band_booking_global' => array(
         'region' => '',
@@ -122,7 +122,7 @@ function band_booking_admin_default_fe_block_settings() {
         'region' => 'sidebar_right',
         'status' => 1,
         'theme' => 'band_booking_front',
-        'weight' => -15,
+        'weight' => -16,
       ),
       'band_booking_global' => array(
         'region' => '',
