@@ -44,7 +44,7 @@ function band_booking_performance_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '4',
+          'weight' => '7',
         ),
         'metatags' => array(
           'weight' => '9',

@@ -4,3 +4,15 @@ version = 1.0
 core = 7.x
 engine = phptemplate
 base theme = band_booking_global
+
+regions[hidden] = Hidden
+regions[header] = Header
+regions[menu] = Menu
+regions[content_before] = Before Content
+regions[sidebar_left] = Sidebar Left
+regions[content] = Content
+regions[sidebar_right] = Sidebar Right
+regions[content_after] = After Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom

@@ -18,7 +18,7 @@ function band_booking_admin_default_rules_configuration() {
       "IF" : [
         { "user_has_role" : { "account" : [ "account" ], "roles" : { "value" : { "4" : "4" } } } }
       ],
-      "DO" : [ { "redirect" : { "url" : "admin\\/dashboard" } } ]
+      "DO" : [ { "redirect" : { "url" : "admin\\/band_booking_dashboard" } } ]
     }
   }');
   $items['rules_on_musician_login'] = entity_import('rules_config', '{ "rules_on_musician_login" : {

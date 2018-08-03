@@ -33,10 +33,10 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'sidebar_right',
+        'status' => 1,
         'theme' => 'band_booking_admin',
-        'weight' => 0,
+        'weight' => -19,
       ),
       'band_booking_front' => array(
         'region' => 'sidebar_right',
@@ -76,10 +76,10 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'sidebar_right',
+        'status' => 1,
         'theme' => 'band_booking_admin',
-        'weight' => 0,
+        'weight' => -18,
       ),
       'band_booking_front' => array(
         'region' => 'sidebar_right',
@@ -119,10 +119,10 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'sidebar_right',
+        'status' => 1,
         'theme' => 'band_booking_admin',
-        'weight' => 0,
+        'weight' => -17,
       ),
       'band_booking_front' => array(
         'region' => 'sidebar_right',
@@ -165,11 +165,11 @@ function band_booking_performance_default_fe_block_settings() {
         'region' => '',
         'status' => 0,
         'theme' => 'band_booking_admin',
-        'weight' => -17,
+        'weight' => 10,
       ),
       'band_booking_front' => array(
-        'region' => 'content',
-        'status' => 1,
+        'region' => '',
+        'status' => 0,
         'theme' => 'band_booking_front',
         'weight' => -19,
       ),

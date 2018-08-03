@@ -31,10 +31,10 @@ function band_booking_admin_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'content',
+        'status' => 1,
         'theme' => 'band_booking_admin',
-        'weight' => -18,
+        'weight' => -17,
       ),
       'band_booking_front' => array(
         'region' => 'content',
@@ -72,7 +72,7 @@ function band_booking_admin_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => 'sidebar_second',
+        'region' => 'sidebar_right',
         'status' => 1,
         'theme' => 'band_booking_admin',
         'weight' => -16,
@@ -101,7 +101,10 @@ function band_booking_admin_default_fe_block_settings() {
     'module' => 'views',
     'node_types' => array(),
     'pages' => 'admin/band_booking_dashboard',
-    'roles' => array(),
+    'roles' => array(
+      'administrateur' => 3,
+      'Gérant' => 4,
+    ),
     'themes' => array(
       'adminimal' => array(
         'region' => '',
@@ -110,8 +113,8 @@ function band_booking_admin_default_fe_block_settings() {
         'weight' => 0,
       ),
       'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'sidebar_right',
+        'status' => 1,
         'theme' => 'band_booking_admin',
         'weight' => -15,
       ),
