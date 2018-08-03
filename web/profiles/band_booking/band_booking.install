@@ -101,3 +101,27 @@ function band_booking_update_7104(&$sandbox) {
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 }
+
+/**
+ * @todo : delete after production deployement.
+ *
+ * Ensure RID front page settings.
+ */
+function band_booking_update_7105(&$sandbox) {
+  db_update('front_page')
+    ->fields(array('data' => 'user/login',))
+    ->condition('rid', 1)
+    ->execute();
+  db_update('front_page')
+    ->fields(array('data' => 'admin/band_booking_dashboard',))
+    ->condition('rid', 3)
+    ->execute();
+  db_update('front_page')
+    ->fields(array('data' => 'admin/band_booking_dashboard',))
+    ->condition('rid', 4)
+    ->execute();
+  db_update('front_page')
+    ->fields(array('data' => 'mes-prestations',))
+    ->condition('rid', 5)
+    ->execute();
+}
