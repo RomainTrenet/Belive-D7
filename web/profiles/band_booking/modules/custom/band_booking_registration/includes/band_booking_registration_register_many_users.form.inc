@@ -118,18 +118,18 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
   );
 
   $registration_form['add_users'] = array(
-      '#type' => 'multiple_select_field',
-      '#required' => TRUE,
-      '#multiple' => TRUE,
-      '#title' => t('Add musicians'),
-      '#description' => t('Select the musicians you want to add. Musicians already registered wont appear.'),
-      '#default_value' => $default_users,
-      '#size' => 5,
-      '#weight' => 20,
-      '#options' => $users_list['#value'],
-      '#element_validate' => array('band_booking_registration_form_users_validate'),
-      '#prefix' => '<div id="register_many_users">',
-      '#suffix' => '</div>',
+    '#type' => 'multiple_select_field',
+    '#required' => TRUE,
+    '#multiple' => TRUE,
+    '#title' => t('Add musicians'),
+    '#description' => t('Select the musicians you want to add. Musicians already registered wont appear.'),
+    '#default_value' => $default_users,
+    '#size' => 5,
+    '#weight' => 20,
+    '#options' => $users_list['#value'],
+    '#element_validate' => array('band_booking_registration_form_users_validate'),
+    '#prefix' => '<div id="register_many_users">',
+    '#suffix' => '</div>',
   );
   $form['markup_form'] = $markup_form;
   $form['position_filter_form'] = $position_form;
@@ -164,22 +164,18 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
  * array of commands), we can just return a piece of the form.
  */
 function band_booking_registration_register_users_filter_position_callback($form, $form_state) {
-    $available_musicians_options = $form['registration_user_form']['available_musicians']['#value'];//$form['registration_user_form']['add_users']['#options'];
-    $registered_musicians = $form['registration_user_form']['registered_musicians']['#value'];
-    $musicians_with_position = _get_node_available_users_id_with_position( $registered_musicians, $form_state['values']['position']);
-    $musicians_to_hide=array_diff_key($available_musicians_options,$musicians_with_position);
+  $available_musicians_options = $form['registration_user_form']['available_musicians']['#value'];//$form['registration_user_form']['add_users']['#options'];
+  $registered_musicians = $form['registration_user_form']['registered_musicians']['#value'];
+  $musicians_with_position = _get_node_available_users_id_with_position( $registered_musicians, $form_state['values']['position']);
+  $musicians_to_hide=array_diff_key($available_musicians_options,$musicians_with_position);
 
-//    dpm($available_musicians_options);
-//    dpm($musicians_with_position);
-//    dpm($musicians_to_hide);
+  $commands[] = array(
+    'command' => 'afterAjaxCallbackExample',
+    'musicians_with_position' => $musicians_with_position,
+    'musicians_to_hide' => $musicians_to_hide,
+  );
 
-    $commands[] = array(
-        'command' => 'afterAjaxCallbackExample',
-        'musicians_with_position' => $musicians_with_position,
-        'musicians_to_hide' => $musicians_to_hide,
-    );
-
-    return array('#type' => 'ajax','#commands' => $commands);
+  return array('#type' => 'ajax','#commands' => $commands);
 }
 
 /**

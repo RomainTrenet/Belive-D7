@@ -32,3 +32,9 @@ msgstr "Ajouter une prestation"
 
 msgid "Add artist"
 msgstr "Ajouter un artiste"
+
+msgid "All selected"
+msgstr "Tout sélectionné"
+
+msgid "No available option."
+msgstr "Aucune option disponible."

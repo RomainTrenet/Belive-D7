@@ -27,7 +27,7 @@ function multiple_select_theme($existing, $type, $theme, $path) {
 
 function multiple_select_element_info() {
   $path_to_js = drupal_get_path('module', 'multiple_select') . '/js/multiple-select.js';
-  $path_to_css = drupal_get_path('module', 'multiple_select') . '/css/multiple-select.css';
+  $path_to_css = drupal_get_path('module', 'multiple_select') . '/css/multiple-select-patch.css';
 
 	$types['multiple_select_field'] = array(
     '#input' => TRUE,
@@ -52,12 +52,12 @@ function multiple_select_element_info() {
           'scope' => 'footer',
         ),
       ),
-      // @todo : resolve conflict.
-      /*'css' => array(
+      // @todo : resolve conflict if file has the same name as library one's.
+      'css' => array(
         $path_to_css => array(
           //'scope' => 'footer',
         ),
-      ),*/
+      ),
       'libraries_load' => array(
         0 => array('multiple_select'),
       ),

@@ -87,6 +87,9 @@ function band_booking_language_list_po_files($folder_path) {
  *   Language code.
  */
 function _band_booking_language_import_translations_po_files(array $po_files_list, $folder, $langcode) {
+  // Load "locale" functions.
+  require_once DRUPAL_ROOT . '/includes/locale.inc';
+
   // Add language to the drupal language list if it is not already set.
   // @todo : test.
   /*$languages = language_list();

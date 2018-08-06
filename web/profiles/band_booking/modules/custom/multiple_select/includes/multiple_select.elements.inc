@@ -5,6 +5,7 @@
  */
 function theme_multiple_select_inline_form_element($variables) {
   $element = $variables['element'];
+
   // Add element #id for #type 'item'.
   if (isset($element['#markup']) && !empty($element['#id'])) {
     $attributes['id'] = $element['#id'];
@@ -34,25 +35,27 @@ function theme_multiple_select_inline_form_element($variables) {
   if (!isset($element['#title'])) {
     $element['#title_display'] = 'none';
   }
+
+  // Prepare HTML values.
   $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
   $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
+  $label = theme('form_element_label', $variables);
+  $children = empty($element['#options']) ? t('No available option.') : $element['#children'];
 
   switch ($element['#title_display']) {
     case 'before':
-      $output .= ' ' . theme('form_element_label', $variables);
-      $output .= ' ' . '<div class="container-users">' . $prefix . $element['#children'] . $suffix . "</div>\n";
+      $output .= $label . ' ' . $prefix . $children . $suffix;
       break;
 
     case 'invisible':
     case 'after':
-      $output .= ' ' . $prefix . $element['#children'] . $suffix;
-      $output .= ' ' . theme('form_element_label', $variables) . "\n";
+      $output .= ' ' . $prefix . $children . $suffix . ' ' . $label . "\n";
       break;
 
     case 'none':
     case 'attribute':
       // Output no label and no required marker, only the children.
-      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      $output .= ' ' . $prefix . $children . $suffix . "\n";
       break;
   }
 

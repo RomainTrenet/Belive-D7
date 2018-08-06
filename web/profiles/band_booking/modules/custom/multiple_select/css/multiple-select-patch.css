@@ -1,0 +1,11 @@
+/**
+ * Patch against Adminimal theme.
+ */
+body.adminimal-theme .ms-search,
+body.adminimal-theme .ms-search input {
+  -webkit-box-sizing: border-box;
+  -khtml-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}

@@ -15,6 +15,6 @@ function band_booking_language_install() {
 /**
  * Auto update language.
  */
-function band_booking_language_update_7101(&$sandbox) {
+function band_booking_language_update_7102(&$sandbox) {
   band_booking_language_auto_update_files();
 }
