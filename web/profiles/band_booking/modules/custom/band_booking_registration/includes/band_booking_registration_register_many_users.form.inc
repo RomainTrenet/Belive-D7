@@ -25,136 +25,147 @@ module_load_include('inc', 'band_booking_registration', 'includes/band_booking_r
  */
 
 function band_booking_registration_register_many_users_view ($node) {
-  drupal_set_title($node->title);
+  //drupal_set_title($node->title);
   return drupal_get_form('band_booking_registration_register_many_users_form', $node);
 }
 
-function band_booking_registration_register_many_users_form($form, &$form_state, $node) {//, $register_type = 'auth') {
-  // Attached custom js.
-  // @todo : check the placement of js.
-  $form['#attached'] = array(
-    'js' => array(
-      drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
-        'scope' => 'footer',
-        'weight' => 101
-      ),
-    ),
-  );
+/**
+ * @param $form
+ * @param $form_state
+ * @param $node
+ *
+ * @return mixed
+ */
+function band_booking_registration_register_many_users_form($form, &$form_state, $node) {
 
-  //Default values
-  $default_users = !empty($form_state['input']['add_users']) ? $form_state['input']['add_users'] : array();
-
-  // Vars.
-  $registered_musicians = _get_node_registered_users($node->nid);
-  $available_musicians = _get_node_available_users($registered_musicians);
-  $available_musicians_options = array();
-  foreach ($available_musicians as $uid => $available_musician) {
-      $available_musicians_options[$uid] = $available_musician->name;
+  // Prepare variables.
+  $registered_artists = _get_node_registered_users($node->nid);
+  $total_registered_artists = count($registered_artists);
+  $available_artists = _get_node_available_users($registered_artists);
+  $available_artists_options = array();
+  foreach ($available_artists as $uid => $available_artist) {
+      $available_artists_options[$uid] = $available_artist->name;
   }
 
-  //Construct form
-  $markup_form = array();
-  $position_form = array();
-  $registration_form = array();
-
-  global $user;
-
-  $entity_type = 'node';
-  $nid = $node->nid;
-  $registration_type = $node->field_inscriptions['und'][0]['registration_type'];
-  $registration_default_state = band_booking_registration_get_registration_type_default_state($registration_type);
-
-  //Registered users markup
-  $total_registered_musicians = count($registered_musicians);
-  $registered_musicians_markup = $total_registered_musicians == 0 ? t('None') : '';
-  $count = 1;
-  foreach ($registered_musicians as $uid => $registered_user) {
-      $registered_musicians_markup .= $registered_user->name . ($total_registered_musicians != $count ? ', ' : '.');
+  // Registered artists.
+  $registered_artists_text = '';
+  if ($total_registered_artists == 0) {
+    $registered_artists_text = t('None');
+  } else {
+    $count = 1;
+    foreach ($registered_artists as $uid => $registered_user) {
+      $registered_artists_text .= $registered_user->name . ($total_registered_artists != $count ? ', ' : '.');
       $count++;
+    }
   }
-  $markup_form['registered_musicians'] = array(
-      '#type' => 'item',
-      '#title' => t('Musicians already registered') . ' :',
-      '#weight' => 0,
-      '#markup' => '<p>' . $registered_musicians_markup . '</p>',
-  );
+  $form['markup_form']['registered_artists'] = [
+    '#type' => 'item',
+    '#title' => t('Artists already registered') . ' :',
+    '#weight' => 0,
+    '#markup' => '<p>' . $registered_artists_text . '</p>',
+  ];
 
-  //Users list values and users form field
-  $positions_list = array(
+  // If all artists are already booked.
+  if (empty($available_artists)) {
+    $form['markup_form']['no_users'] = [
+      '#type' => 'item',
+      '#weight' => 0,
+      '#markup' => '<p>' . t('All artists are already registered.') . '</p>',
+    ];
+  } else {
+
+    // User position form element.
+    $positions_list = array(
       '#type' => 'value',
       '#value' => _get_taxonomy_terms_options_formatted(2),
-  );
-  $position_form['position'] = array(
+    );
+    $form['position_filter_form']['position'] = array(
       '#type' => 'multiple_select_field',
       '#required' => FALSE,
       '#multiple' => TRUE,
       '#title' => t('Filter by position'),
-      '#description' => t('Select the musicians position to filter artists list.'),
+      '#description' => t('Select the artists position to filter artists list.'),
       '#size' => 5,
       '#weight' => 0,
       '#options' => $positions_list['#value'],
       '#ajax' => array(
-          'callback' => 'band_booking_registration_register_users_filter_position_callback',
-          'event' => 'change',
+        'callback' => 'band_booking_registration_register_users_filter_position_callback',
+        'event' => 'change',
       ),
-  );
+    );
 
-  //Pass available musicians to form validate to prevent adding fake users
-  $registration_form['available_musicians'] = array(
-    '#type' => 'value',
-    '#value' => $available_musicians_options,
-  );
-
-  //Pass registered musicians to form validate
-  $registration_form['registered_musicians'] = array(
+    // Registration user form element.
+    // Prepare users list and default users values.
+    $users_list = array(
       '#type' => 'value',
-      '#value' => $registered_musicians,
-  );
+      '#value' => $available_artists_options,
+    );
+    $default_users = !empty($form_state['input']['add_users']) ? $form_state['input']['add_users'] : array();
 
-  //Users list values and users form field
-  $users_list = array(
-      '#type' => 'value',
-      '#value' => $available_musicians_options,
-  );
+    $form['registration_user_form'] = [
+      // Pass available artists to form validate to prevent adding fake users.
+      'available_artists' => [
+        '#type' => 'value',
+        '#value' => $available_artists_options,
+      ],
+      'registered_artists' => [
+        '#type' => 'value',
+        '#value' => $registered_artists,
+      ],
+      'add_users' => [
+        '#type' => 'multiple_select_field',
+        '#required' => TRUE,
+        '#multiple' => TRUE,
+        '#title' => t('Add artists'),
+        '#description' => t('Select the artists you want to add. Artists already registered wont appear.'),
+        '#default_value' => $default_users,
+        '#size' => 5,
+        '#weight' => 20,
+        '#options' => $users_list['#value'],
+        '#element_validate' => array('band_booking_registration_form_users_validate'),
+        '#prefix' => '<div id="register_many_users">',
+        '#suffix' => '</div>',
+      ]
+    ];
 
-  $registration_form['add_users'] = array(
-    '#type' => 'multiple_select_field',
-    '#required' => TRUE,
-    '#multiple' => TRUE,
-    '#title' => t('Add musicians'),
-    '#description' => t('Select the musicians you want to add. Musicians already registered wont appear.'),
-    '#default_value' => $default_users,
-    '#size' => 5,
-    '#weight' => 20,
-    '#options' => $users_list['#value'],
-    '#element_validate' => array('band_booking_registration_form_users_validate'),
-    '#prefix' => '<div id="register_many_users">',
-    '#suffix' => '</div>',
-  );
-  $form['markup_form'] = $markup_form;
-  $form['position_filter_form'] = $position_form;
-  $form['registration_user_form'] = $registration_form;
-
-  //The base registration array, used to create each registration object
-  $registration_base = array(
-    'entity_type' => $entity_type,
-    'entity_id' => $nid,
-    'type' => $registration_type,
-    'count' => 1,//Only one user by registration
-    'author_uid' => $user->uid,
-    'state' => $registration_default_state,
-    'is_new' => TRUE,
-  );
-
-  //Attach registration object to form
-  $form_state['registration_base'] = $registration_base;
-  field_attach_form('registration_base', $registration_base, $form, $form_state);
-
-
-  $form['submit'] = array(
+    // Submit.
+    $form['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Register users'),
-  );
+    );
+
+    // The base registration array, used to create each registration object.
+    global $user;
+    $entity_type = 'node';
+    $nid = $node->nid;
+    $registration_type = $node->field_inscriptions['und'][0]['registration_type'];
+    $registration_default_state = band_booking_registration_get_registration_type_default_state($registration_type);
+
+    $registration_base = array(
+      'entity_type' => $entity_type,
+      'entity_id' => $nid,
+      'type' => $registration_type,
+      'count' => 1,//Only one user by registration
+      'author_uid' => $user->uid,
+      'state' => $registration_default_state,
+      'is_new' => TRUE,
+    );
+
+    //Attach registration object to form
+    $form_state['registration_base'] = $registration_base;
+    field_attach_form('registration_base', $registration_base, $form, $form_state);
+
+    // Attached custom js.
+    $form['#attached'] = array(
+      'js' => array(
+        drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
+          'scope' => 'footer',
+          'weight' => 101
+        ),
+      ),
+    );
+  }
+
   return $form;
 }
 
@@ -164,18 +175,21 @@ function band_booking_registration_register_many_users_form($form, &$form_state,
  * array of commands), we can just return a piece of the form.
  */
 function band_booking_registration_register_users_filter_position_callback($form, $form_state) {
-  $available_musicians_options = $form['registration_user_form']['available_musicians']['#value'];//$form['registration_user_form']['add_users']['#options'];
-  $registered_musicians = $form['registration_user_form']['registered_musicians']['#value'];
-  $musicians_with_position = _get_node_available_users_id_with_position( $registered_musicians, $form_state['values']['position']);
-  $musicians_to_hide=array_diff_key($available_musicians_options,$musicians_with_position);
+  $available_artists_options = $form['registration_user_form']['available_artists']['#value'];
+  $registered_artists = $form['registration_user_form']['registered_artists']['#value'];
+  $artists_with_position = _get_node_available_users_id_with_position( $registered_artists, $form_state['values']['position']);
+  $artists_to_hide=array_diff_key($available_artists_options,$artists_with_position);
 
   $commands[] = array(
     'command' => 'afterAjaxCallbackExample',
-    'musicians_with_position' => $musicians_with_position,
-    'musicians_to_hide' => $musicians_to_hide,
+    'artists_with_position' => $artists_with_position,
+    'artists_to_hide' => $artists_to_hide,
   );
 
-  return array('#type' => 'ajax','#commands' => $commands);
+  return array(
+    '#type' => 'ajax',
+    '#commands' => $commands
+  );
 }
 
 /**
@@ -195,11 +209,11 @@ function band_booking_registration_form_users_validate($element, &$form_state, $
 		return;
 	}
 	$users_to_add = $form_state['values']['add_users'];
-	$available_musicians_options = $form_state['values']['available_musicians'];
+	$available_artists_options = $form_state['values']['available_artists'];
 
 	// Set Error if users selected aren't in availables users list
 	foreach ($users_to_add as $key => $value) {
-		if (!array_key_exists($value, $available_musicians_options)) {
+		if (!array_key_exists($value, $available_artists_options)) {
 			form_error($element, t('This field is faulty.'));
 			form_set_error($element['#id'], t('One user does not exist.'));
 		}
@@ -227,7 +241,7 @@ function band_booking_registration_register_many_users_form_submit($form, &$form
 
 	if (isset($form_state['values']['add_users'])) {
 		$registration_base = $form_state['registration_base'];
-		$nid = $registration_base['entity_id'];
+		//$nid = $registration_base['entity_id'];
 		$accounts = user_load_multiple( $form_state['values']['add_users'] );
 
 		$registrations = array();

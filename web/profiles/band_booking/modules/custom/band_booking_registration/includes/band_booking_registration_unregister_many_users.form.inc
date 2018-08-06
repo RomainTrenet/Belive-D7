@@ -25,70 +25,60 @@ module_load_include('inc', 'band_booking_registration', 'includes/band_booking_r
  */
 
 function band_booking_registration_unregister_many_users_view ($node) {
-    drupal_set_title($node->title);
-    return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);//, 'admin', FALSE);
+  //drupal_set_title($node->title);
+  return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);
 }
 
-function band_booking_registration_unregister_many_users_form($form, &$form_state, $node) {//, $register_type = 'auth') {
-  //Attached custom js
-  /*$form['#attached'] = array(
-      'js' => array(
-          drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
-              'scope' => 'footer',
-          ),
-      ),
-  );*/
-  // @todo : clean.
-  $form['#attached'] = array(
-    'js' => array(
-      drupal_get_path('module', 'band_booking_registration') . '/js/band_booking_registration.js' => array(
-        'scope' => 'footer',
-        'weight' => 101
-      ),
-    ),
-  );
+function band_booking_registration_unregister_many_users_form($form, &$form_state, $node) {
+  // Get registered artists.
+  $registered_artists = _get_node_registered_users($node->nid);
 
-  //Default values
-  $default_users = !empty($form_state['input']['remove_users']) ? $form_state['input']['remove_users'] : array();
+  if (empty($registered_artists)) {
+    $form['markup_form']['no_users'] = [
+      '#type' => 'item',
+      '#weight' => 0,
+      '#markup' => '<p>' . t('No registered artist.') . '</p>',
+    ];
+  } else {
+    $registered_artists_options = array();
+    foreach ($registered_artists as $uid => $registered_artist) {
+      $registered_artists_options[$uid] = $registered_artist->name;
+    }
+    // Users list values and users form field
+    $users_list = array(
+      '#type' => 'value',
+      '#value' => $registered_artists_options,
+    );
+    // Default values.
+    $default_users = !empty($form_state['input']['remove_users']) ? $form_state['input']['remove_users'] : array();
 
-  //Vars
-  $registered_musicians = _get_node_registered_users( $node->nid );
-  //$available_musicians = _get_node_available_users( $registered_musicians );
-
-  $registered_musicians_options = array();
-  foreach ($registered_musicians as $uid => $registered_musician) {
-      $registered_musicians_options[$uid] = $registered_musician->name;
+    // Construct form.
+    $form = [
+      'registration_user_form' => [
+        'registered_artists' => [
+          '#type' => 'value',
+          '#value' => $registered_artists_options,
+        ],
+        'remove_users' => [
+          '#type' => 'multiple_select_field',
+          '#required' => TRUE,
+          '#multiple' => TRUE,
+          '#title' => t('Remove artists'),
+          '#description' => t('Select the artists you want to remove from performance. Only artists already registered will appear.'),
+          '#default_value' => $default_users,
+          '#size' => 5,
+          '#weight' => 0,
+          '#options' => $users_list['#value'],
+          '#element_validate' => array('band_booking_registration_unregister_many_users_form_users_validate'),
+        ]
+      ],
+      'submit' => [
+        '#type' => 'submit',
+        '#value' => t('Unregister users'),
+      ]
+    ];
   }
 
-	//Construct form
-	$registration_form = array();
-  $registration_form['registered_musicians'] = array(
-      '#type' => 'value',
-      '#value' => $registered_musicians_options,
-  );
-  //Users list values and users form field
-  $users_list = array(
-      '#type' => 'value',
-      '#value' => $registered_musicians_options,
-  );
-  $registration_form['remove_users'] = array(
-      '#type' => 'multiple_select_field',
-      '#required' => TRUE,
-      '#multiple' => TRUE,
-      '#title' => t('Remove musicians'),
-      '#description' => t('Select the musicians you want to remove from performance. Only musicians already registered will appear.'),
-      '#default_value' => $default_users,
-      '#size' => 5,
-      '#weight' => 0,
-      '#options' => $users_list['#value'],
-      '#element_validate' => array('band_booking_registration_unregister_many_users_form_users_validate'),
-  );
-  $form['registration_user_form'] = $registration_form;
-
-  $form['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Unregister users'),
-  );
   return $form;
 }
 
@@ -109,11 +99,11 @@ function band_booking_registration_unregister_many_users_form_users_validate($el
 		return;
 	}
 	$users_to_delete = $form_state['values']['remove_users'];
-	$registered_musicians = $form_state['values']['registered_musicians'];
+	$registered_artists = $form_state['values']['registered_artists'];
 
 	// Set Error if users selected aren't in availables users list
 	foreach ($users_to_delete as $key => $value) {
-		if (!array_key_exists($value, $registered_musicians)) {
+		if (!array_key_exists($value, $registered_artists)) {
 			form_error($element, t('This field is faulty.'));
 			form_set_error($element['#id'], t('One user does not exist.'));
 		}

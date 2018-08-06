@@ -15,6 +15,24 @@ msgstr ""
 
 # Home blocks
 
+msgid "Artists already registered"
+msgstr "Artistes déjà inscrits"
+
+msgid "Select the artists position to filter artists list."
+msgstr "Sélectionnez les postes des artistes pour filtrer la liste des artistes."
+
+msgid "Relaunch waiting registrations"
+msgstr "Relancer les inscriptions en attente"
+
+msgid "Relaunch waiting registrations for this event"
+msgstr "Relancer les inscriptions en attente pour cette prestation"
+
+msgid "Relaunch waiting registrations for today"
+msgstr "Relancez les inscriptions en attente pour aujourd'hui"
+
+msgid "Relaunch waiting registrations for everyday"
+msgstr "Relancez les inscriptions en attente pour tous les jours"
+
 msgid "Artists"
 msgstr "Artistes"
 
@@ -38,3 +56,18 @@ msgstr "Tout sélectionné"
 
 msgid "No available option."
 msgstr "Aucune option disponible."
+
+msgid "All artists are already registered."
+msgstr "Tous les artistes sont déjà inscrits."
+
+msgid "Add artists"
+msgstr "Aucun artiste inscrit."
+
+msgid "Select the artists you want to add. Artists already registered wont appear."
+msgstr "Sélectionnez les artistes que vous souhaitez ajouter. Les artistes déjà ajoutés n'apparaitrons pas."
+
+msgid "Remove artists"
+msgstr "Aucun artiste inscrit."
+
+msgid "Select the artists you want to remove from performance. Only artists already registered will appear."
+msgstr "Sélectionnez les artistes que vous souhaitez retirer de la prestation. Seuls les artistes déjà ajoutés apparaitrons."

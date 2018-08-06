@@ -4,9 +4,6 @@
  * Drupal needs this blank file.
  */
 
-//Load functions
-//module_load_include('inc', 'belive_registration_relaunch', 'includes/band_booking_registration_reminder_relaunch_waiting_users_registration.form');
-
 //Variables
 define("BATCH_LIMIT", 20);
 
@@ -54,6 +51,7 @@ function band_booking_registration_reminder_block_info() {
     'info' => t('Band booking - Performance reminder'),
     'status' => 1,
     'region' => 'sidebar_right',
+    // @todo.
     //'cache' => DRUPAL_CACHE_PER_USER,
   );
   return $blocks;
@@ -67,8 +65,7 @@ function band_booking_registration_reminder_block_view($delta = '') {
 
   switch ($delta) {
     case 'bbrr_performance_reminder':
-      //global $user;
-      $block['subject'] = 'Relaunch waiting registrations';
+      $block['subject'] = t('Relaunch waiting registrations');
       $block['content'] = band_booking_registration_reminder_performance_reminder_block_content();
       $block['block_html_id'] = drupal_html_id('block-band-booking-registration-reminder-performance');
       break;

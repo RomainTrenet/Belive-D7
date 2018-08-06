@@ -5,7 +5,7 @@
 
       //Only on add form
       /*
-      @todo.
+      @todo remove old code.
       $('#edit-position').multiselect({
         includeSelectAllOption: true,
         selectAllText: ' Sélectionner tout',
@@ -29,9 +29,9 @@
   };
 
   /*
+  // @todo : remove old code.
   Drupal.ajax.prototype.commands.afterAjaxCallbackExample = function(ajax, response, status) {
     //auto open users dropwdown
-    // @todo : use with multiple select library.
     $('#register_many_users button.multiselect').trigger( "click" );
 
     var $select = $("#register_many_users");
@@ -54,29 +54,31 @@
     }
   };
   */
+
   Drupal.ajax.prototype.commands.afterAjaxCallbackExample = function(ajax, response, status) {
     // Temporary desactivated, Auto open users dropwdown.
     // @todo.
     // $('#register_many_users button.multiselect').trigger( "click" );
 
-    var $select = $("#register_many_users");
     console.log(response);
 
-    // Show musicians, only if they are not already hide by the search input
-    for (var musician_id in response.musicians_with_position){
-      if (response.musicians_with_position.hasOwnProperty(musician_id)) {
+    var $select = $("#register_many_users");
 
-        var $li_parent = $select.find('input[value="' + musician_id + '"]').parents('li');
+    // Show artists, only if they are not already hide by the search input
+    for (var artist_id in response.artists_with_position){
+      if (response.artists_with_position.hasOwnProperty(artist_id)) {
+
+        var $li_parent = $select.find('input[value="' + artist_id + '"]').parents('li');
         if (!$li_parent.hasClass("multiselect-filter-hidden")) {
-          $select.find('input[value="' + musician_id + '"]').parents('li').addClass('show-'+musician_id).show();
+          $select.find('input[value="' + artist_id + '"]').parents('li').addClass('show-'+artist_id).show();
         }
       }
     }
 
-    //Hide unwated musicians
-    for (var musician_id in response.musicians_to_hide){
-      if (response.musicians_to_hide.hasOwnProperty(musician_id)) {
-        $select.find('input[value="' + musician_id + '"]').parents('li').hide();
+    //Hide unwated artists
+    for (var artist_id in response.artists_to_hide){
+      if (response.artists_to_hide.hasOwnProperty(artist_id)) {
+        $select.find('input[value="' + artist_id + '"]').parents('li').hide();
       }
     }
   };
