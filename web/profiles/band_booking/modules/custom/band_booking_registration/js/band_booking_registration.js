@@ -68,7 +68,10 @@
     for (var artist_id in response.artists_with_position){
       if (response.artists_with_position.hasOwnProperty(artist_id)) {
 
+        //var $li_parent = $select.find('input[value="' + artist_id + '"]').parents('li');
         var $li_parent = $select.find('input[value="' + artist_id + '"]').parents('li');
+        console.log(artist_id);
+        console.log($li_parent);
         if (!$li_parent.hasClass("multiselect-filter-hidden")) {
           $select.find('input[value="' + artist_id + '"]').parents('li').addClass('show-'+artist_id).show();
         }
