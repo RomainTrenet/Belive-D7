@@ -13,7 +13,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Home blocks
+msgid "A default user image was set."
+msgstr "Une image utilisateur par défaut a été définie."
 
 msgid "Artists already registered"
 msgstr "Artistes déjà inscrits"
@@ -54,6 +55,12 @@ msgstr "Ajouter un artiste"
 msgid "All selected"
 msgstr "Tout sélectionné"
 
+msgid "# of % selected"
+msgstr "# de % selectionné(s)"
+
+msgid "No matches found"
+msgstr "Aucun résultat"
+
 msgid "No available option."
 msgstr "Aucune option disponible."
 
@@ -61,13 +68,13 @@ msgid "All artists are already registered."
 msgstr "Tous les artistes sont déjà inscrits."
 
 msgid "Add artists"
-msgstr "Aucun artiste inscrit."
+msgstr "Ajouter des artistes."
 
 msgid "Select the artists you want to add. Artists already registered wont appear."
 msgstr "Sélectionnez les artistes que vous souhaitez ajouter. Les artistes déjà ajoutés n'apparaitrons pas."
 
 msgid "Remove artists"
-msgstr "Aucun artiste inscrit."
+msgstr "Retirer des artistes."
 
 msgid "Select the artists you want to remove from performance. Only artists already registered will appear."
 msgstr "Sélectionnez les artistes que vous souhaitez retirer de la prestation. Seuls les artistes déjà ajoutés apparaitrons."

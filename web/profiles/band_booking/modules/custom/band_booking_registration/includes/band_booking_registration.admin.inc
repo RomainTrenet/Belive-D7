@@ -46,7 +46,7 @@ function band_booking_registration_settings_form($form, &$form_state) {
 //   // dpm( is_dir($dir) );
 
 //   // if (!$form_state['band_booking_registration_version']) {
-//   //   form_error($form['band_booking_registration_directory'], t('The directory specified does not seem to contain the Multiselect.js library. Check to make sure that the video.js file is located within this directory.'));
+//   //   form_error($form['band_booking_registration_directory'], t('Bla bla'));
 //   // }
 // }
 

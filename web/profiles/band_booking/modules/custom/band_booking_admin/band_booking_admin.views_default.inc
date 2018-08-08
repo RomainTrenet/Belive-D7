@@ -193,11 +193,12 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['fields']['status']['table'] = 'users';
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['not'] = 0;
-  /* Champ: Utilisateur : Rôles */
-  $handler->display->display_options['fields']['rid']['id'] = 'rid';
-  $handler->display->display_options['fields']['rid']['table'] = 'users_roles';
-  $handler->display->display_options['fields']['rid']['field'] = 'rid';
-  $handler->display->display_options['fields']['rid']['type'] = 'ul';
+  /* Champ: Utilisateur : Poste de l'artiste */
+  $handler->display->display_options['fields']['field_poste_de_l_artiste']['id'] = 'field_poste_de_l_artiste';
+  $handler->display->display_options['fields']['field_poste_de_l_artiste']['table'] = 'field_data_field_poste_de_l_artiste';
+  $handler->display->display_options['fields']['field_poste_de_l_artiste']['field'] = 'field_poste_de_l_artiste';
+  $handler->display->display_options['fields']['field_poste_de_l_artiste']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_poste_de_l_artiste']['delta_offset'] = '0';
   /* Champ: Utilisateur : Date de création */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'users';
@@ -327,7 +328,7 @@ function band_booking_admin_views_default_views() {
     t('Send e-mail'),
     t('Nom'),
     t('Actif'),
-    t('Rôles'),
+    t('Poste de l\'artiste'),
     t('Membre depuis'),
     t('Dernier accès'),
     t('Actions'),
@@ -387,11 +388,12 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['style_options']['columns'] = array(
     'views_bulk_operations' => 'views_bulk_operations',
     'title' => 'title',
+    'field_place' => 'field_place',
     'field_date' => 'field_date',
     'changed' => 'changed',
     'timestamp' => 'title',
-    'name' => 'name',
     'status' => 'status',
+    'field_confirm' => 'field_confirm',
     'edit_node' => 'edit_node',
     'delete_node' => 'edit_node',
   );
@@ -409,9 +411,16 @@ function band_booking_admin_views_default_views() {
       'separator' => '&nbsp;',
       'empty_column' => 0,
     ),
+    'field_place' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'field_date' => array(
       'sortable' => 1,
-      'default_sort_order' => 'desc',
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -428,16 +437,16 @@ function band_booking_admin_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'name' => array(
+    'status' => array(
       'sortable' => 1,
-      'default_sort_order' => 'asc',
+      'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'status' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'desc',
+    'field_confirm' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,

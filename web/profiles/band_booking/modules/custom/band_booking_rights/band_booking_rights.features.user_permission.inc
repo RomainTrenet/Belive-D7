@@ -198,15 +198,6 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'block',
   );
 
-  // Exported permission: 'administer bootstrap multiselect'.
-  $permissions['administer bootstrap multiselect'] = array(
-    'name' => 'administer bootstrap multiselect',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'bootstrap_multiselect',
-  );
-
   // Exported permission: 'administer content types'.
   $permissions['administer content types'] = array(
     'name' => 'administer content types',
@@ -443,15 +434,6 @@ function band_booking_rights_user_default_permissions() {
       'administrateur' => 'administrateur',
     ),
     'module' => 'search',
-  );
-
-  // Exported permission: 'administer shortcuts'.
-  $permissions['administer shortcuts'] = array(
-    'name' => 'administer shortcuts',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'shortcut',
   );
 
   // Exported permission: 'administer site configuration'.
@@ -691,15 +673,6 @@ function band_booking_rights_user_default_permissions() {
       'administrateur' => 'administrateur',
     ),
     'module' => 'administerusersbyrole',
-  );
-
-  // Exported permission: 'customize shortcut links'.
-  $permissions['customize shortcut links'] = array(
-    'name' => 'customize shortcut links',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'shortcut',
   );
 
   // Exported permission: 'delete any page content'.
@@ -1082,15 +1055,6 @@ function band_booking_rights_user_default_permissions() {
       'administrateur' => 'administrateur',
     ),
     'module' => 'workflow',
-  );
-
-  // Exported permission: 'switch shortcut sets'.
-  $permissions['switch shortcut sets'] = array(
-    'name' => 'switch shortcut sets',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'shortcut',
   );
 
   // Exported permission: 'translate admin strings'.

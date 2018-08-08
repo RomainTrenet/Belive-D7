@@ -9,3 +9,29 @@ body.adminimal-theme .ms-search input {
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+/* Option list margin */
+body.adminimal-theme .ms-drop ul {
+  margin: 0.25em 0;
+}
+body.adminimal-theme .ms-drop ul > li label,
+body.adminimal-theme .ms-drop ul > li.ms-no-results{
+  padding: 0.25em 0.5em;
+  margin: 0;
+}
+body.adminimal-theme .ms-drop ul > li label:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+body.adminimal-theme .ms-drop ul > li input[type=checkbox],
+body.adminimal-theme .ms-drop ul > li span {
+  vertical-align: middle;
+}
+
+body.adminimal-theme .ms-drop ul > li input[type=checkbox] {
+  top: auto;
+  margin-right: 0.5em;
+}
+body.adminimal-theme .ms-drop ul > li.ms-select-all input[type=checkbox] {
+  margin-right: 0.1em;
+}

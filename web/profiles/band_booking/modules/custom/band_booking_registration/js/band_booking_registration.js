@@ -56,33 +56,35 @@
   */
 
   Drupal.ajax.prototype.commands.afterAjaxCallbackExample = function(ajax, response, status) {
-    // Temporary desactivated, Auto open users dropwdown.
-    // @todo.
-    // $('#register_many_users button.multiselect').trigger( "click" );
-
-    console.log(response);
-
     var $select = $("#register_many_users");
+    var $select_options = $select.find('li').not('.ms-select-all, .ms-no-results');
+    var $select_option_all = $select.find('li.ms-select-all');
 
-    // Show artists, only if they are not already hide by the search input
-    for (var artist_id in response.artists_with_position){
-      if (response.artists_with_position.hasOwnProperty(artist_id)) {
+    // If there are artists to hide.
+    if(Object.keys(response.artists_to_hide).length) {
+      // Hide the 'All option".
+      $select_option_all.find('label').hide();
 
-        //var $li_parent = $select.find('input[value="' + artist_id + '"]').parents('li');
-        var $li_parent = $select.find('input[value="' + artist_id + '"]').parents('li');
-        console.log(artist_id);
-        console.log($li_parent);
-        if (!$li_parent.hasClass("multiselect-filter-hidden")) {
-          $select.find('input[value="' + artist_id + '"]').parents('li').addClass('show-'+artist_id).show();
-        }
-      }
+      // Hide options to hide.
+      Object.keys(response.artists_to_hide).map(function(artist_id, index) {
+        $select_options.find('input[value="' + artist_id + '"]').parents('li').hide();
+      });
+
+      // Show options to show.
+      Object.keys(response.artists_with_position).map(function(artist_id, index) {
+        $select_options.find('input[value="' + artist_id + '"]').parents('li').show();
+      });
+
     }
+    // If there are no artist to hide.
+    else {
+      // Show the "All option".
+      $select_option_all.find('label').show();
 
-    //Hide unwated artists
-    for (var artist_id in response.artists_to_hide){
-      if (response.artists_to_hide.hasOwnProperty(artist_id)) {
-        $select.find('input[value="' + artist_id + '"]').parents('li').hide();
-      }
+      // If some options are hidden.
+      Object.keys(response.artists_with_position).map(function(artist_id, index) {
+        $select_options.find('input[value="' + artist_id + '"]').parents('li').show();
+      });
     }
   };
 
