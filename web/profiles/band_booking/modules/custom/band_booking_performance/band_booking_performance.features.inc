@@ -39,7 +39,7 @@ function band_booking_performance_default_Workflow() {
     "typeMap" : [],
     "rdf_mapping" : [],
     "system_roles" : {
-      "-1" : "(author)",
+      "-1" : "(auteur)",
       "3" : "administrateur",
       "4" : "G\\u00e9rant",
       "5" : "Artiste"

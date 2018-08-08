@@ -15,7 +15,7 @@ function band_booking_admin_views_default_views() {
   $view->description = 'List, add, and edit artists.';
   $view->tag = 'admin, band booking';
   $view->base_table = 'users';
-  $view->human_name = 'Band booking Administration: Artists';
+  $view->human_name = 'Band booking | Administration: Artists';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -344,7 +344,7 @@ function band_booking_admin_views_default_views() {
   $view->description = 'Find and manage content.';
   $view->tag = 'admin';
   $view->base_table = 'node';
-  $view->human_name = 'Band booking Administration: Performances';
+  $view->human_name = 'Band booking | Administration: Performances';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */

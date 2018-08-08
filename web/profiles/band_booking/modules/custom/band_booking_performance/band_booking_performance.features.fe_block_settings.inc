@@ -141,48 +141,5 @@ function band_booking_performance_default_fe_block_settings() {
     'visibility' => 0,
   );
 
-  $export['views-cf718b93cff366c7b87daf0ea4c6fe2c'] = array(
-    'cache' => -1,
-    'custom' => 0,
-    'delta' => 'cf718b93cff366c7b87daf0ea4c6fe2c',
-    'module' => 'views',
-    'node_types' => array(
-      0 => 'performance',
-    ),
-    'pages' => '',
-    'roles' => array(
-      'administrateur' => 3,
-      'Gérant' => 4,
-    ),
-    'themes' => array(
-      'adminimal' => array(
-        'region' => '',
-        'status' => 0,
-        'theme' => 'adminimal',
-        'weight' => 0,
-      ),
-      'band_booking_admin' => array(
-        'region' => '',
-        'status' => 0,
-        'theme' => 'band_booking_admin',
-        'weight' => 10,
-      ),
-      'band_booking_front' => array(
-        'region' => 'content',
-        'status' => 1,
-        'theme' => 'band_booking_front',
-        'weight' => -19,
-      ),
-      'band_booking_global' => array(
-        'region' => '',
-        'status' => 0,
-        'theme' => 'band_booking_global',
-        'weight' => -20,
-      ),
-    ),
-    'title' => '',
-    'visibility' => 0,
-  );
-
   return $export;
 }

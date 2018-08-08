@@ -37,6 +37,7 @@ function band_booking_performance_default_rules_configuration() {
   $items['rules_on_performance_creation'] = entity_import('rules_config', '{ "rules_on_performance_creation" : {
       "LABEL" : "On performance creation",
       "PLUGIN" : "reaction rule",
+      "ACTIVE" : false,
       "OWNER" : "rules",
       "REQUIRES" : [ "rules" ],
       "ON" : { "node_insert--performance" : { "bundle" : "performance" } },
