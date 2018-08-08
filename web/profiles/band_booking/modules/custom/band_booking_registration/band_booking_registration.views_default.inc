@@ -267,6 +267,7 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['sorts']['state']['id'] = 'state';
   $handler->display->display_options['sorts']['state']['table'] = 'registration';
   $handler->display->display_options['sorts']['state']['field'] = 'state';
+  $handler->display->display_options['sorts']['state']['order'] = 'DESC';
   /* Critère de tri: Contenu : Date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
@@ -350,7 +351,7 @@ function band_booking_registration_views_default_views() {
     'name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
-      'align' => '',
+      'align' => 'views-align-left',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -376,7 +377,7 @@ function band_booking_registration_views_default_views() {
       'empty_column' => 0,
     ),
     'accept_link' => array(
-      'align' => '',
+      'align' => 'views-align-right',
       'separator' => '',
       'empty_column' => 0,
     ),
@@ -420,25 +421,28 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['state']['table'] = 'registration';
   $handler->display->display_options['fields']['state']['field'] = 'state';
   $handler->display->display_options['fields']['state']['label'] = '';
+  $handler->display->display_options['fields']['state']['exclude'] = TRUE;
   $handler->display->display_options['fields']['state']['element_label_colon'] = FALSE;
   /* Champ: Utilisateur : Nom */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'user_uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Utilisateur inscrit';
+  $handler->display->display_options['fields']['name']['label'] = 'Artiste';
   /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['relationship'] = 'registration_related_node';
   $handler->display->display_options['fields']['title']['label'] = 'Prestation';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   /* Champ: Contenu : Lieu */
   $handler->display->display_options['fields']['field_place']['id'] = 'field_place';
   $handler->display->display_options['fields']['field_place']['table'] = 'field_data_field_place';
   $handler->display->display_options['fields']['field_place']['field'] = 'field_place';
   $handler->display->display_options['fields']['field_place']['relationship'] = 'registration_related_node';
   $handler->display->display_options['fields']['field_place']['label'] = '';
+  $handler->display->display_options['fields']['field_place']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_place']['element_type'] = 'h5';
   $handler->display->display_options['fields']['field_place']['element_label_colon'] = FALSE;
   /* Champ: Contenu : Date */
@@ -446,11 +450,13 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['field_date']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_date']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_date']['alter']['text'] = ' ([field_date])';
   $handler->display->display_options['fields']['field_date']['element_type'] = 'div';
   $handler->display->display_options['fields']['field_date']['settings'] = array(
     'format_type' => 'medium',
+    'custom_date_format' => '',
     'fromto' => 'both',
     'multiple_number' => '',
     'multiple_from' => '',
@@ -461,17 +467,17 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['accept_link']['id'] = 'accept_link';
   $handler->display->display_options['fields']['accept_link']['table'] = 'registration';
   $handler->display->display_options['fields']['accept_link']['field'] = 'accept_link';
-  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut de l\'inscription';
   /* Champ: Inscription : User: Refuse registration */
   $handler->display->display_options['fields']['refuse_link']['id'] = 'refuse_link';
   $handler->display->display_options['fields']['refuse_link']['table'] = 'registration';
   $handler->display->display_options['fields']['refuse_link']['field'] = 'refuse_link';
-  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut de l\'inscription';
   /* Champ: Inscription : User: Postpone registration */
   $handler->display->display_options['fields']['postpone_link']['id'] = 'postpone_link';
   $handler->display->display_options['fields']['postpone_link']['table'] = 'registration';
   $handler->display->display_options['fields']['postpone_link']['field'] = 'postpone_link';
-  $handler->display->display_options['fields']['postpone_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['postpone_link']['label'] = 'Changer le statut de l\'inscription';
   /* Champ: Inscription : User: Wait registration */
   $handler->display->display_options['fields']['wait_link']['id'] = 'wait_link';
   $handler->display->display_options['fields']['wait_link']['table'] = 'registration';
@@ -493,22 +499,6 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Critère de filtrage: Inscription : State entity */
-  $handler->display->display_options['filters']['state']['id'] = 'state';
-  $handler->display->display_options['filters']['state']['table'] = 'registration';
-  $handler->display->display_options['filters']['state']['field'] = 'state';
-  $handler->display->display_options['filters']['state']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['state']['expose']['operator_id'] = 'state_op';
-  $handler->display->display_options['filters']['state']['expose']['label'] = 'Filtrer par statut';
-  $handler->display->display_options['filters']['state']['expose']['operator'] = 'state_op';
-  $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
-  $handler->display->display_options['filters']['state']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    5 => 0,
-  );
   $translatables['band_booking_administration_registrations'] = array(
     t('Master'),
     t('plus'),
@@ -538,6 +528,8 @@ function band_booking_registration_views_default_views() {
     t('Bock | Performance admin registrations block'),
     t('All registrations for a certain nid'),
     t('Aucune inscription pour le moment.'),
+    t('Artiste'),
+    t('Changer le statut de l\'inscription'),
     t('Tout'),
     t('Inscriptions à "%1"'),
   );
@@ -1013,19 +1005,31 @@ function band_booking_registration_views_default_views() {
   );
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'nothing',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
   $handler->display->display_options['style_options']['row_class'] = 'blv-evt-[state_id]';
   $handler->display->display_options['style_options']['columns'] = array(
+    'nothing' => 'nothing',
     'state_id' => 'state_id',
     'state' => 'state',
-    'name' => 'name',
+    'field_date' => 'field_date',
     'title' => 'title',
     'field_place' => 'title',
-    'field_date' => 'title',
     'accept_link' => 'accept_link',
     'refuse_link' => 'accept_link',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'field_date';
   $handler->display->display_options['style_options']['info'] = array(
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'state_id' => array(
       'align' => '',
       'separator' => '',
@@ -1038,7 +1042,7 @@ function band_booking_registration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'name' => array(
+    'field_date' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -1053,13 +1057,6 @@ function band_booking_registration_views_default_views() {
       'empty_column' => 0,
     ),
     'field_place' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_date' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -1081,13 +1078,6 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Entête: Global : Zone de texte */
-  $handler->display->display_options['header']['area']['id'] = 'area';
-  $handler->display->display_options['header']['area']['table'] = 'views';
-  $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = '<h3>Inscriptions en attente</h3>
-<p>Pensez à prévenir de vos disponibilités.</p>';
-  $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* Comportement en l'absence de résultats: Global : Zone de texte */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -1098,6 +1088,15 @@ function band_booking_registration_views_default_views() {
 <p>Vous n\'avez aucune inscription en attente à des évènements.</p>';
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Champ: Global : Texte personnalisé */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Inscriptions en attente<br>
+<em>Pensez à prévenir de vos disponibilités.</em>';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Champ: Inscription : Registration: State id */
   $handler->display->display_options['fields']['state_id']['id'] = 'state_id';
   $handler->display->display_options['fields']['state_id']['table'] = 'registration';
@@ -1111,14 +1110,20 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['state']['field'] = 'state';
   $handler->display->display_options['fields']['state']['label'] = '';
   $handler->display->display_options['fields']['state']['element_label_colon'] = FALSE;
-  /* Champ: Utilisateur : Nom */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'users';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['relationship'] = 'user_uid';
-  $handler->display->display_options['fields']['name']['label'] = '';
-  $handler->display->display_options['fields']['name']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  /* Champ: Contenu : Date */
+  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
+  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['field_date']['settings'] = array(
+    'format_type' => 'long',
+    'custom_date_format' => '',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+  );
   /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -1133,32 +1138,16 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['field_place']['label'] = '';
   $handler->display->display_options['fields']['field_place']['element_type'] = 'h5';
   $handler->display->display_options['fields']['field_place']['element_label_colon'] = FALSE;
-  /* Champ: Contenu : Date */
-  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
-  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
-  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
-  $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
-  $handler->display->display_options['fields']['field_date']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_date']['alter']['text'] = ' ([field_date])';
-  $handler->display->display_options['fields']['field_date']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_date']['settings'] = array(
-    'format_type' => 'medium',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_remaining_days' => 0,
-  );
   /* Champ: Inscription : User: Accept registration */
   $handler->display->display_options['fields']['accept_link']['id'] = 'accept_link';
   $handler->display->display_options['fields']['accept_link']['table'] = 'registration';
   $handler->display->display_options['fields']['accept_link']['field'] = 'accept_link';
-  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut de mon inscription';
   /* Champ: Inscription : User: Refuse registration */
   $handler->display->display_options['fields']['refuse_link']['id'] = 'refuse_link';
   $handler->display->display_options['fields']['refuse_link']['table'] = 'registration';
   $handler->display->display_options['fields']['refuse_link']['field'] = 'refuse_link';
-  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut de mon inscription';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Critère de tri: Inscription : State entity */
   $handler->display->display_options['sorts']['state']['id'] = 'state';
@@ -1224,22 +1213,31 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'nothing',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
   $handler->display->display_options['style_options']['row_class'] = 'blv-evt-[state_id]';
   $handler->display->display_options['style_options']['columns'] = array(
+    'nothing' => 'nothing',
     'state_id' => 'state_id',
     'state' => 'state',
-    'name' => 'name',
+    'field_date' => 'field_date',
     'title' => 'title',
     'field_place' => 'title',
-    'field_date' => 'title',
-    'view_registration' => 'view_registration',
-    'delete_registration' => 'delete_registration',
-    'wait_link' => 'wait_link',
     'accept_link' => 'accept_link',
     'refuse_link' => 'accept_link',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'field_date';
   $handler->display->display_options['style_options']['info'] = array(
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'state_id' => array(
       'align' => '',
       'separator' => '',
@@ -1252,7 +1250,7 @@ function band_booking_registration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'name' => array(
+    'field_date' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -1273,28 +1271,6 @@ function band_booking_registration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_date' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'view_registration' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'delete_registration' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'wait_link' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'accept_link' => array(
       'align' => '',
       'separator' => '',
@@ -1310,12 +1286,6 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Entête: Global : Zone de texte */
-  $handler->display->display_options['header']['area']['id'] = 'area';
-  $handler->display->display_options['header']['area']['table'] = 'views';
-  $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = '<h3>Inscriptions déjà statuées</h3>';
-  $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* Comportement en l'absence de résultats: Global : Zone de texte */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -1326,6 +1296,14 @@ function band_booking_registration_views_default_views() {
 <p>Vous n\'avez aucune inscription statuée à des évènements.</p>';
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Champ: Global : Texte personnalisé */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Inscriptions déjà statuées';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   /* Champ: Inscription : Registration: State id */
   $handler->display->display_options['fields']['state_id']['id'] = 'state_id';
   $handler->display->display_options['fields']['state_id']['table'] = 'registration';
@@ -1339,6 +1317,21 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['state']['field'] = 'state';
   $handler->display->display_options['fields']['state']['label'] = '';
   $handler->display->display_options['fields']['state']['element_label_colon'] = FALSE;
+  /* Champ: Contenu : Date */
+  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
+  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
+  $handler->display->display_options['fields']['field_date']['type'] = 'date_plain';
+  $handler->display->display_options['fields']['field_date']['settings'] = array(
+    'format_type' => 'long',
+    'custom_date_format' => '',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+  );
   /* Champ: Contenu : Titre */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -1353,32 +1346,16 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['fields']['field_place']['label'] = '';
   $handler->display->display_options['fields']['field_place']['element_type'] = 'h5';
   $handler->display->display_options['fields']['field_place']['element_label_colon'] = FALSE;
-  /* Champ: Contenu : Date */
-  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
-  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
-  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
-  $handler->display->display_options['fields']['field_date']['relationship'] = 'registration_related_node';
-  $handler->display->display_options['fields']['field_date']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_date']['alter']['text'] = ' ([field_date])';
-  $handler->display->display_options['fields']['field_date']['element_type'] = 'div';
-  $handler->display->display_options['fields']['field_date']['settings'] = array(
-    'format_type' => 'medium',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_remaining_days' => 0,
-  );
   /* Champ: Inscription : User: Accept registration */
   $handler->display->display_options['fields']['accept_link']['id'] = 'accept_link';
   $handler->display->display_options['fields']['accept_link']['table'] = 'registration';
   $handler->display->display_options['fields']['accept_link']['field'] = 'accept_link';
-  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['accept_link']['label'] = 'Changer le statut de mon inscription';
   /* Champ: Inscription : User: Refuse registration */
   $handler->display->display_options['fields']['refuse_link']['id'] = 'refuse_link';
   $handler->display->display_options['fields']['refuse_link']['table'] = 'registration';
   $handler->display->display_options['fields']['refuse_link']['field'] = 'refuse_link';
-  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut';
+  $handler->display->display_options['fields']['refuse_link']['label'] = 'Changer le statut de mon inscription';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Critère de tri: Contenu : Date (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
@@ -1486,15 +1463,16 @@ function band_booking_registration_views_default_views() {
     t('Filtrer par statut'),
     t('Page | Waiting registrations'),
     t('<h3>Inscriptions en attente</h3>
-<p>Pensez à prévenir de vos disponibilités.</p>'),
-    t('<h3>Inscriptions en attente</h3>
 <p>Vous n\'avez aucune inscription en attente à des évènements.</p>'),
+    t('Inscriptions en attente<br>
+<em>Pensez à prévenir de vos disponibilités.</em>'),
+    t('Changer le statut de mon inscription'),
     t('Tout'),
     t('Inscriptions de %1 aux prestations'),
     t('Block | Registrations page, user accepted/refused'),
-    t('<h3>Inscriptions déjà statuées</h3>'),
     t('<h3>Inscriptions déjà statuées</h3>
 <p>Vous n\'avez aucune inscription statuée à des évènements.</p>'),
+    t('Inscriptions déjà statuées'),
     t('Block | Performance user registrations block'),
     t('User registration for a certain nid'),
     t('Inscriptions à "%1"'),

@@ -5,9 +5,7 @@
  */
 
 function band_booking_registration_views_determine_form($form, &$form_state, $op, $rid) {
-  $unique_key = 'determine_registration_' . $rid;
-
-  //TODO Idea = create automatic workflow state for band_booking, and add a textfield for icon
+  // @TODO Idea = create automatic workflow state for band_booking, and add a textfield for icon
   $icons = array(
     'wait' => '',//'&#xe804',
     'postpone' => '',//'&#xe800',
@@ -15,34 +13,39 @@ function band_booking_registration_views_determine_form($form, &$form_state, $op
     'refuse' => '',//&#xe803
   );
 
-  $form['#prefix'] = '<div id="' . $unique_key . '">';
-  $form['#suffix'] = '</div>';
-  
-  $form['#attributes'] = array(
-    'class' => array(
-      'determine-form',
-      $op
-    )
-  );
-  $form['operation'] = array(
-    '#type' => 'value',
-    '#value' => $op,
-  );
-  $form['rid'] = array(
-    '#type' => 'value',
-    '#value' => $rid,
-  );
-  
-  $form['actions']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => $icons[$op],
-    '#ajax' => array(
-      'wrapper' => $unique_key,
-      //TODO set a custom callback to regenarate page part
-      // DO not call the submit who "determine registration"
-      //'callback' => 'band_booking_registration_views_determine_form_submit',
+  // Generate a unique key.
+  $unique_key = 'determine_registration_' . $op . '_' . $rid;
+
+  $form = [
+    '#prefix' => '<div class="determine-registration" id="' . $unique_key .'">',
+    '#suffix' => '</div>',
+    '#attributes' => array(
+      'class' => array(
+        'determine-form',
+        $op
+      )
     ),
-  );
+    'operation' => array(
+      '#type' => 'value',
+      '#value' => $op,
+    ),
+    'rid' => array(
+      '#type' => 'value',
+      '#value' => $rid,
+    ),
+    'actions' => [
+      'submit' => array(
+        '#type' => 'submit',
+        '#value' => $icons[$op],
+        '#ajax' => array(
+          'wrapper' => $unique_key,
+          //TODO set a custom callback to regenarate page part
+          // DO not call the submit who "determine registration"
+          //'callback' => 'band_booking_registration_views_determine_form_submit',
+        )
+      )
+    ],
+  ];
 
   return $form;
 }
