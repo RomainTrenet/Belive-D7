@@ -40,6 +40,7 @@ features[field_base][] = field_mail_content
 features[field_base][] = field_objet_du_mail
 features[field_base][] = field_place
 features[field_base][] = field_relaunch
+features[field_group][] = group_main|node|performance|full
 features[field_group][] = group_relaunch|node|performance|form
 features[field_instance][] = node-performance-body
 features[field_instance][] = node-performance-field_confirm

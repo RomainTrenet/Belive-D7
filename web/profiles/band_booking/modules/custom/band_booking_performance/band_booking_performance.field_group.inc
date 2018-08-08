@@ -13,6 +13,40 @@ function band_booking_performance_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_main|node|performance|full';
+  $field_group->group_name = 'group_main';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'performance';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Main',
+    'weight' => '1',
+    'children' => array(
+      0 => 'body',
+      1 => 'field_date',
+      2 => 'field_place',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Main',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-main field-group-div',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'none',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_main|node|performance|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_relaunch|node|performance|form';
   $field_group->group_name = 'group_relaunch';
   $field_group->entity_type = 'node';
@@ -43,6 +77,7 @@ function band_booking_performance_field_group_info() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Main');
   t('Relances');
 
   return $field_groups;

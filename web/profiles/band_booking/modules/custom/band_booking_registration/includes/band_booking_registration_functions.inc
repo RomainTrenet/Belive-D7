@@ -110,7 +110,9 @@ function _get_node_available_users($excepted_users) {
     $query=db_select('users','u');
     $query->fields('u',array('uid', 'name'));
     $query->join('users_roles', 'ur', 'ur.uid = u.uid');
+    $query->orderBy('name', 'ASC');
     $query->condition('u.status', 1, '=');
+
     !empty($rolesId) ? $query->condition('ur.rid', $rolesId, 'IN') : NULL;
     !empty($excepted_users_ids) ? $query->condition('u.uid', $excepted_users_ids, 'NOT IN') : NULL;
     $rep = $query->execute()->fetchAll();
@@ -140,6 +142,7 @@ function _get_node_available_users_id_with_position($excepted_users, $positions)
     $query=db_select('users','u');
     $query->fields('u',array('uid', 'name'));
     $query->join('users_roles', 'ur', 'ur.uid = u.uid');
+    $query->orderBy('name', 'ASC');
     $query->condition('u.status', 1, '=');
     !empty($rolesId) ? $query->condition('ur.rid', $rolesId, 'IN') : NULL;
     !empty($excepted_users_ids) ? $query->condition('u.uid', $excepted_users_ids, 'NOT IN') : NULL;
@@ -290,6 +293,7 @@ function _get_taxonomy_terms_options_formatted($vid) {
     $terms = db_select('taxonomy_term_data', 't')
         ->condition('t.vid', $vid, '=')
         ->fields('t', array('tid', 'name'))
+        ->orderBy('name', 'ASC')
         ->execute()
         ->fetchAllKeyed();
     return $terms;

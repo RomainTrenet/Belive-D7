@@ -15,3 +15,24 @@
 .field-name-field-confirm span.icon-perf-canceled {
     color: #df4530;
 }
+
+
+
+
+.node-performance .group-main .field {
+    display: block;
+}
+
+.node-performance .group-main .field:after {
+    display: none;
+}
+
+.node-performance .group-main .field-label,
+.node-performance .group-main .field-items {
+    float: none;
+    display: inline-block;
+}
+.node-performance .group-main .field-name-body {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}

@@ -44,6 +44,10 @@ function band_booking_registration_unregister_many_users_form($form, &$form_stat
     foreach ($registered_artists as $uid => $registered_artist) {
       $registered_artists_options[$uid] = $registered_artist->name;
     }
+
+    // Alphabetically sort results.
+    asort($registered_artists_options);
+
     // Users list values and users form field
     $users_list = array(
       '#type' => 'value',
