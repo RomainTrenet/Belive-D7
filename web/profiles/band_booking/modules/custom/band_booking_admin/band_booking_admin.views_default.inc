@@ -249,7 +249,7 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['filters']['name']['expose']['identifier'] = 'name';
   $handler->display->display_options['filters']['name']['expose']['remember'] = TRUE;
   $handler->display->display_options['filters']['name']['expose']['remember_roles'] = array(
-    2 => '2',
+    2 => 0,
     5 => '5',
     1 => 0,
     3 => 0,
