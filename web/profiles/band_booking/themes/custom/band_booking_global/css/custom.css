@@ -115,7 +115,7 @@ tr.blv-evt-refused:first-child { border-top: none; }
 
 
 /*Admin full registration list VIEWS*/
-.adm-regist-lst table caption { text-align: left; font-size: 20px; padding: 10px 0; margin: 50px 0 30px; font-family: "Open Sans", "Segoe UI", "Helvetica", sans-serif; }
+.adm-regist-lst table caption { text-align: left; font-size: 20px; padding: 10px 0; margin: 30px 0 10px; font-family: "Open Sans", "Segoe UI", "Helvetica", sans-serif; }
 .adm-regist-lst .views-field-state { width: 10%; }
 .adm-regist-lst .views-field-name { width: 20%; }
 .adm-regist-lst .views-field-title { width: 30%; }

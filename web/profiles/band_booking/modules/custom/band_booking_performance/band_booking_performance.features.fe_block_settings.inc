@@ -168,8 +168,8 @@ function band_booking_performance_default_fe_block_settings() {
         'weight' => 10,
       ),
       'band_booking_front' => array(
-        'region' => '',
-        'status' => 0,
+        'region' => 'content',
+        'status' => 1,
         'theme' => 'band_booking_front',
         'weight' => -19,
       ),
