@@ -146,3 +146,5 @@ function band_booking_update_7106(&$sandbox) {
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 }
+
+//keditor
