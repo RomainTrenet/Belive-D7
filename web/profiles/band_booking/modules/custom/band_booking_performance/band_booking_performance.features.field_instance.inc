@@ -242,12 +242,12 @@ function band_booking_performance_field_default_field_instances() {
     'bundle' => 'performance',
     'default_value' => array(
       0 => array(
-        'value' => 'Bonjour [user:name],
+        'value' => '<p>Bonjour [user:name],</p>
 
-Votre inscription à "[node:title]"est en attente, pensez à donner votre disponibilité <a href="[site:url]node/[node:nid]/state_registration/[user:uid]">ici</a>.
+<p>Votre inscription à "[node:title]"est en attente, pensez à donner votre disponibilité <a href="[site:url]node/[node:nid]/state_registration/[user:uid]">ici</a>.</p>
 
-Merci d\'avance.
-Benjamin',
+<p>Merci d\'avance. Benjamin</p>
+',
         'format' => 'full_html',
       ),
     ),
@@ -273,6 +273,11 @@ Benjamin',
     'label' => 'Contenu du mail',
     'required' => 1,
     'settings' => array(
+      'linkit' => array(
+        'button_text' => 'Rechercher',
+        'enable' => 0,
+        'profile' => '',
+      ),
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),

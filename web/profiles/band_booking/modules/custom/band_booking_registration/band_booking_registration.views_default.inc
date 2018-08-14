@@ -1084,8 +1084,9 @@ function band_booking_registration_views_default_views() {
   $handler->display->display_options['empty']['area']['table'] = 'views';
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = '<h3>Inscriptions en attente</h3>
-<p>Vous n\'avez aucune inscription en attente à des évènements.</p>';
+  $handler->display->display_options['empty']['area']['content'] = '<table class="views-table">
+<caption>Inscriptions en attente<br><em>Vous n\'avez aucune inscription en attente à des évènements.</em></caption>
+</table>';
   $handler->display->display_options['empty']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Champ: Global : Texte personnalisé */
@@ -1462,8 +1463,9 @@ function band_booking_registration_views_default_views() {
     t('Changer le statut'),
     t('Filtrer par statut'),
     t('Page | Waiting registrations'),
-    t('<h3>Inscriptions en attente</h3>
-<p>Vous n\'avez aucune inscription en attente à des évènements.</p>'),
+    t('<table class="views-table">
+<caption>Inscriptions en attente<br><em>Vous n\'avez aucune inscription en attente à des évènements.</em></caption>
+</table>'),
     t('Inscriptions en attente<br>
 <em>Pensez à prévenir de vos disponibilités.</em>'),
     t('Changer le statut de mon inscription'),
