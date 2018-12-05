@@ -1,10 +1,10 @@
-# French translation of Drupal core (7.59)
+# French translation of Drupal core (7.61)
 # Copyright (c) 2018 by the French translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Drupal core (7.59)\n"
-"POT-Creation-Date: 2018-04-25 17:11+0000\n"
+"Project-Id-Version: Drupal core (7.61)\n"
+"POT-Creation-Date: 2018-11-08 13:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -14357,7 +14357,7 @@ msgid ""
 "This field has been disabled because you do not have sufficient "
 "permissions to edit it."
 msgstr ""
-"Ce champ a été desactivé car vous n'avez pas les droits suffisants "
+"Ce champ a été désactivé car vous n'avez pas les droits suffisants "
 "pour le modifier."
 msgid "Select a forum."
 msgstr "Sélectionner un forum."
