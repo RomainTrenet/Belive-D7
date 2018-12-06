@@ -65,7 +65,7 @@ function band_booking_registration_unregister_many_users_form($form, &$form_stat
         ],
         'remove_users' => [
           '#type' => 'multiple_select_field',
-          '#required' => TRUE,
+          '#required' => FALSE,
           '#multiple' => TRUE,
           '#title' => t('Remove artists'),
           '#description' => t('Select the artists you want to remove from performance. Only artists already registered will appear.'),

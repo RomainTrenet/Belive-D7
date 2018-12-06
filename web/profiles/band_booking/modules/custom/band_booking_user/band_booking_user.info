@@ -10,6 +10,7 @@ dependencies[] = strongarm
 dependencies[] = taxonomy
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
+features[field_base][] = field_poste_de_l_artiste
 features[field_base][] = field_postition
 features[taxonomy][] = position
 features[user_role][] = Artiste

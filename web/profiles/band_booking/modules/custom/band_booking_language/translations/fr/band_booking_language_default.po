@@ -78,3 +78,6 @@ msgstr "Retirer des artistes."
 
 msgid "Select the artists you want to remove from performance. Only artists already registered will appear."
 msgstr "Sélectionnez les artistes que vous souhaitez retirer de la prestation. Seuls les artistes déjà ajoutés apparaitrons."
+
+msgid "No registered artist."
+msgstr "Aucun artiste inscrit."

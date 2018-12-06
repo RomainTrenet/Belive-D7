@@ -86,6 +86,8 @@ function performance_node_menu_load($nid) {
 
 /**
  * Implements hook_block_info().
+ *
+ * @todo : delete.
  */
 function band_booking_registration_block_info() {
   $blocks['bbr_register_many'] = array(
