@@ -25,7 +25,7 @@
         "ext-xml": "*",
         "composer/installers": "^1.2",
         "composer/semver": "^1.4",
-        "cweagans/composer-patches": "^1.6.4",
+        "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/preserve-paths": "^0.1",
         "drupal/admin_views": "^1.6",
         "drupal/adminimal_admin_menu": "^1.9",
@@ -40,7 +40,7 @@
         "drupal/ctools": "^1.15",
         "drupal/date": "^2.10",
         "drupal/datepicker": "^1.0",
-        "drupal/drupal": "^7.58",
+        "drupal/drupal": "^7.62",
         "drupal/entity": "^1.9",
         "drupal/fe_block": "^1.0",
         "drupal/features": "^2.11",
@@ -133,6 +133,7 @@
             "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "web/profiles/band_booking/libraries/{$name}/": ["type:drupal-library"],
             "web/profiles/band_booking/modules/contrib/{$name}/": ["type:drupal-module"],
+            "web/profiles/band_booking/modules/custom/{$name}": ["type:drupal-custom-module"],
             "web/profiles/band_booking/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
         "patches": {
@@ -141,7 +142,10 @@
             }
         },
         "preserve-paths": [
-            "web/sites"
+            "web/sites",
+            "web/profiles/band_booking/modules/custom",
+            "web/profiles/band_booking/themes/custom",
+            "web/profiles/band_booking/ttranslation"
         ]
     },
     "require-dev": {
