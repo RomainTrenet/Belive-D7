@@ -16,7 +16,6 @@ exclusive = true
 ; Core modules
 dependencies[] = block
 dependencies[] = contextual
-dependencies[] = dashboard
 dependencies[] = help
 dependencies[] = image
 dependencies[] = list

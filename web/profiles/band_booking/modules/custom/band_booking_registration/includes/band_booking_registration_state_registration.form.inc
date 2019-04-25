@@ -35,7 +35,7 @@ function band_booking_registration_state_registration_form($form, &$form_state, 
   $registration_author = user_load($registration->author_uid);
   $status_combinations = band_booking_registration_get_status_combinations();
 
-  $workflow = workflow_load_single('workflow_band_booking_booking');
+  $workflow = workflow_load_single(BB_REGISTRATION_WORKFLOW);
   $registration_state_id = _get_workflow_status_id_from_machine_name($workflow->states, $registration->state);
   $statuses = _get_band_booking_registration_worklflow_possible_statuses($workflow->transitions, $registration_state_id, $registration_user->roles );
 

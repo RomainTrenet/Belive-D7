@@ -1,0 +1,42 @@
+name = Belive booking profile
+description = Profile for Belive booking website.
+core = 7.x
+
+;Installation profile is exclusive, the installer will auto-select it.
+exclusive = true
+
+;configure = admin/config/structure/belive
+
+; ----------
+; Variables
+; ----------
+;variables[date_api_version] = '7.2'
+;variables[date_default_timezone] = 'Europe/Paris'
+
+; Core modules
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+dependencies[] = syslog
+dependencies[] = update
+
+; Will activate every dependencies
+dependencies[] = belive_base
+
+;@todo : create a belive_dev module.
+dependencies[] = devel
+dependencies[] = search_krumo

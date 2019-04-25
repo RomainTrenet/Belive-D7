@@ -146,3 +146,16 @@ function band_booking_update_7107(&$sandbox) {
   drupal_uninstall_modules($modules_to_uninstall);
   module_disable($modules_to_uninstall);
 }
+
+
+/**
+ * Disable dashboard.
+ */
+function band_booking_update_7108(&$sandbox) {
+  $modules_to_uninstall = array(
+    'dashboard'
+  );
+  drupal_uninstall_modules($modules_to_uninstall);
+  module_disable($modules_to_uninstall);
+}
+

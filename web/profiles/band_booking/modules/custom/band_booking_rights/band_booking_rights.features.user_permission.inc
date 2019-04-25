@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_rights.features.user_permission.inc
@@ -86,15 +87,6 @@ function band_booking_rights_user_default_permissions() {
       'administrateur' => 'administrateur',
     ),
     'module' => 'contextual',
-  );
-
-  // Exported permission: 'access dashboard'.
-  $permissions['access dashboard'] = array(
-    'name' => 'access dashboard',
-    'roles' => array(
-      'administrateur' => 'administrateur',
-    ),
-    'module' => 'dashboard',
   );
 
   // Exported permission: 'access private fields'.

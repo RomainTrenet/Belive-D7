@@ -21,7 +21,6 @@ dependencies[] = calendar
 dependencies[] = ckeditor
 dependencies[] = content_access
 dependencies[] = ctools
-dependencies[] = dashboard
 dependencies[] = date
 dependencies[] = datepicker
 dependencies[] = dblog
