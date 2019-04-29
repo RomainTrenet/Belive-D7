@@ -812,7 +812,6 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'edit mimemail user settings',
     'roles' => array(
       'administrateur' => 'administrateur',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'mimemail',
   );
