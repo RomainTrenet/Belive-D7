@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_base.features.filter.inc
@@ -41,6 +42,7 @@ function band_booking_base_filter_default_formats() {
         'settings' => array(
           'local_paths' => '',
           'protocol_style' => 'full',
+          'settings_source' => 'global',
         ),
       ),
     ),

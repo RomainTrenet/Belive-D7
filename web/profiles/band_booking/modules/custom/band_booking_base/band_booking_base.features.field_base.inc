@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_base.features.field_base.inc

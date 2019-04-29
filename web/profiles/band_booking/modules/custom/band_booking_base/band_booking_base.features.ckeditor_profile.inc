@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_base.features.ckeditor_profile.inc
