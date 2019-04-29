@@ -21,12 +21,12 @@ function band_booking_registration_default_rules_configuration() {
             "USING" : {
               "key" : "node_registration",
               "to" : "[registration:mail]",
-              "from_name" : [ "" ],
-              "from_mail" : [ "registration:author:name" ],
-              "reply_to" : [ "registration:author:mail" ],
+              "from_name" : [ "site:name" ],
+              "from_mail" : [ "site:mail" ],
+              "reply_to" : [ "site:mail" ],
               "list_unsubscribe" : "[site:url]node\\/[registration:entity-id]\\/state_registration\\/[registration:user-uid]",
               "subject" : "[site:name] | [registration:author] vous a inscrit \\u00e0 l\\u0027\\u00e9v\\u00e8nement [registration:entity:title]",
-              "body" : "Bonjour [registration:user:name], HTML\\r\\n\\r\\nVous avez \\u00e9t\\u00e9 ajout\\u00e9(e) \\u00e0 la prestation \\u0022[registration:entity:title]\\u0022.\\r\\nVeuillez me pr\\u00e9venir de votre pr\\u00e9sence \\u003Ca href=\\u0022[site:url]node\\/[registration:entity-id]\\/state_registration\\/[registration:user-uid]\\u0022\\u003E\\u00e0 cette adresse\\u003C\\/a\\u003E.\\r\\n\\r\\nMerci d\\u0027avance,\\r\\n[registration:author]."
+              "body" : "Bonjour [registration:user:name],\\r\\n\\r\\nVous avez \\u00e9t\\u00e9 ajout\\u00e9(e) \\u00e0 la prestation \\u0022[registration:entity:title]\\u0022.\\r\\nVeuillez me pr\\u00e9venir de votre pr\\u00e9sence \\u003Ca href=\\u0022[site:url]node\\/[registration:entity-id]\\/state_registration\\/[registration:user-uid]\\u0022\\u003E\\u00e0 cette adresse\\u003C\\/a\\u003E.\\r\\n\\r\\nMerci d\\u0027avance,\\r\\n[registration:author]."
             },
             "PROVIDE" : { "send_status" : { "send_status" : "Send status" } }
           }
@@ -58,15 +58,21 @@ function band_booking_registration_default_rules_configuration() {
       "LABEL" : "On unregistration",
       "PLUGIN" : "reaction rule",
       "OWNER" : "rules",
-      "REQUIRES" : [ "rules", "registration" ],
+      "REQUIRES" : [ "rules", "mimemail", "registration" ],
       "ON" : { "registration_delete" : [] },
       "DO" : [
-        { "mail" : {
-            "to" : "[registration:mail]",
-            "subject" : "[site:name] | [registration:author] vous a retir\\u00e9 de l\\u0027\\u00e9v\\u00e8nement [registration:entity:title]",
-            "message" : "Bonjour [registration:user:name],\\r\\n\\r\\nVous avez \\u00e9t\\u00e9 retir\\u00e9(e) de la prestation \\u0022[registration:entity:title]\\u0022.\\r\\n\\r\\nCordialement,\\r\\n[registration:author].",
-            "from" : "[site:mail]",
-            "language" : [ "site:current-user:language" ]
+        { "mimemail" : {
+            "USING" : {
+              "key" : "node_unregistration",
+              "to" : "[registration:mail]",
+              "from_name" : [ "site:name" ],
+              "from_mail" : [ "site:mail" ],
+              "reply_to" : [ "site:mail" ],
+              "list_unsubscribe" : [ "site:mail" ],
+              "subject" : "[site:name] | [registration:author] vous a retir\\u00e9 de l\\u0027\\u00e9v\\u00e8nement [registration:entity:title]",
+              "body" : "Bonjour [registration:user:name],\\r\\n\\r\\nVous avez \\u00e9t\\u00e9 retir\\u00e9(e) de la prestation \\u0022[registration:entity:title]\\u0022.\\r\\n\\r\\nCordialement,\\r\\n[registration:author]."
+            },
+            "PROVIDE" : { "send_status" : { "send_status" : "Send status" } }
           }
         },
         { "drupal_message" : { "message" : "[registration:user:name] a bien \\u00e9t\\u00e9 retir\\u00e9 de l\\u0027\\u00e9v\\u00e8nement \\u0022[registration:entity:title]\\u0022." } }
