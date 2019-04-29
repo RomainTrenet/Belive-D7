@@ -271,6 +271,15 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'locale',
   );
 
+  // Exported permission: 'administer mailsystem'.
+  $permissions['administer mailsystem'] = array(
+    'name' => 'administer mailsystem',
+    'roles' => array(
+      'administrateur' => 'administrateur',
+    ),
+    'module' => 'mailsystem',
+  );
+
   // Exported permission: 'administer menu'.
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
@@ -798,6 +807,16 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'profile2',
   );
 
+  // Exported permission: 'edit mimemail user settings'.
+  $permissions['edit mimemail user settings'] = array(
+    'name' => 'edit mimemail user settings',
+    'roles' => array(
+      'administrateur' => 'administrateur',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'mimemail',
+  );
+
   // Exported permission: 'edit own page content'.
   $permissions['edit own page content'] = array(
     'name' => 'edit own page content',
@@ -1039,6 +1058,15 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'user',
   );
 
+  // Exported permission: 'send arbitrary files'.
+  $permissions['send arbitrary files'] = array(
+    'name' => 'send arbitrary files',
+    'roles' => array(
+      'administrateur' => 'administrateur',
+    ),
+    'module' => 'mimemail',
+  );
+
   // Exported permission: 'show workflow state form'.
   $permissions['show workflow state form'] = array(
     'name' => 'show workflow state form',
@@ -1137,6 +1165,15 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'view any profil_musicien profile',
     'roles' => array(),
     'module' => 'profile2',
+  );
+
+  // Exported permission: 'view mimemail user settings'.
+  $permissions['view mimemail user settings'] = array(
+    'name' => 'view mimemail user settings',
+    'roles' => array(
+      'administrateur' => 'administrateur',
+    ),
+    'module' => 'mimemail',
   );
 
   // Exported permission: 'view own performance registration'.
