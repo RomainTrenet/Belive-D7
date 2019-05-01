@@ -16,7 +16,7 @@ function band_booking_registration_reminder_menu() {
   // Common path.
   $path = drupal_get_path('module', 'band_booking_registration_reminder') . '/includes';
 
-  return [
+  return array(
     // Page to relaunch node waiting registrations today/everyday
     'admin/relaunch_waiting' => array(
       'title' => 'Reminders',
@@ -28,7 +28,7 @@ function band_booking_registration_reminder_menu() {
       'file' => 'band_booking_registration_reminder_relaunch_waiting_users_registration.form.inc',
       'file path' => $path,
     ),
-  ];
+  );
 }
 
 /**
