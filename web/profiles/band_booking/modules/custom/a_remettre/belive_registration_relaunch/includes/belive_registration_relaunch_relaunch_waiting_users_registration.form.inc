@@ -3,7 +3,7 @@
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 
 function belive_registration_relaunch_node_relaunch_waiting_users_registration_view ($node) {
-	global $base_url;
+  global $base_url;
 	global $base_path;
 	$destination = current_path();
 	$content = '<p>' . l(t('Relaunch waiting registrations for this event'), $base_url . $base_path . 'relaunch_batch_manually/' . $node->nid, $options = array('query' => array('destination' => $destination))) . '</p>';
@@ -11,17 +11,17 @@ function belive_registration_relaunch_node_relaunch_waiting_users_registration_v
 	return ($content);
 }
 
-/**
- * Setup batch and operations to perform
+/** 2019 */
+/* Setup batch and operations to perform
  * We create a list of batch operations
- */
+ * /
 function belive_registration_relaunch_setup_batch($nid = 'NULL', $manual = FALSE, $today = TRUE)
 {
 	$operations = array();
 	$operations[] = array(
 		'belive_registration_relaunch_batch_process', array($nid, $manual, $today)
 	);
-	
+
 	// Batch declaration
 	$batch = array(
 		'operations' => $operations,
@@ -30,25 +30,26 @@ function belive_registration_relaunch_setup_batch($nid = 'NULL', $manual = FALSE
 		'error_message' => t('An error occurred'),
 		'finished' => 'belive_registration_relaunch_finished_method',
 	);
-	
+
 	// Batch initialization
 	batch_set($batch);
 	$batch =& batch_get();
-	
+
 	// Execution du batch and redirection to menu item
 	if ($manual == FALSE) {
 		//Progressive = false : no progress bar, and dpm
 		$batch['progressive'] = FALSE;//For cron for example
 	}
-	
+
 	batch_process();
 	//return('<p>Uncomment that line to have a page view with dpm.</p>');
-}
+}*/
 
+/*
 function belive_registration_relaunch_batch_process($nid, $manual, $today, &$context) {
 	/*dpm($nid);
 	dpm($manual ? 'manuel' : 'auto');
-	dpm($today ? 'today' : 'everyday');*/
+	dpm($today ? 'today' : 'everyday');* /
 	
 	//INIT of the batch.
 	if (!isset($context['sandbox']['progress'])) {
@@ -138,7 +139,7 @@ function belive_registration_relaunch_batch_process($nid, $manual, $today, &$con
 			
 			//TODO if manual : drupal set message; if auto = send mail
 			/*$test = 'romain.trenet@gmail.com';
-			$to = 'romain.trenet@gmail.com';*/
+			$to = 'romain.trenet@gmail.com';* /
 			
 			if (drupal_mail('belive_registration_relaunch', 'send_relaunch_mail', $to, language_default(), $params, $from, TRUE)) {
 				global $base_url;
@@ -150,7 +151,7 @@ function belive_registration_relaunch_batch_process($nid, $manual, $today, &$con
 					drupal_set_message('Relance envoyée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
 				//If auto (cron), send mail to site
 				} else {
-					/*//Send mail to website email and set message to website
+					/* //Send mail to website email and set message to website
 					//$body = 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation <a href="' .$base_url . $base_path . 'node/'.  $relaunch->nid . '">' . $relaunch->title . '</a>.';
 					$body = '<html><body>Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()) . '.</body></html>';
 					
@@ -158,7 +159,7 @@ function belive_registration_relaunch_batch_process($nid, $manual, $today, &$con
 						'body' => $body,
 						'subject' => 'Relance effectuée à '.$relaunch->name .' pour la prestation ' . $relaunch->title,
 					);
-					drupal_mail('belive_registration_relaunch', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);*/
+					drupal_mail('belive_registration_relaunch', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);* /
 					watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
 				}
 			}
@@ -181,7 +182,7 @@ function belive_registration_relaunch_batch_process($nid, $manual, $today, &$con
  * @param $success
  * @param $results
  * @param $operations
- */
+ * /
 function belive_registration_relaunch_finished_method($success, $results, $operations) {
 	drupal_set_message(t('Relaunch proceeding succesfully applied'));
-}
+}*/

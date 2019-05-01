@@ -1,7 +1,0 @@
-name = Belive user
-description = This module is used to add more options to the user
-package = Belive
-dependencies[] = user
-core = 7.x
-
-version = "7.x-1"

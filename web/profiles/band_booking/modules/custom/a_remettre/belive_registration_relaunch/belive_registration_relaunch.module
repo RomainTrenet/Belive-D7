@@ -18,7 +18,7 @@ function belive_registration_relaunch_menu() {
 	return array(
 		//menu entrie, page to relaunch specific node waiting registrations
 		/* TEMPORARY DESACTIVATED.
-        'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
+    'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
 			'title' => 'Relaunch waiting registrations',
 			'page callback' => 'belive_registration_relaunch_node_relaunch_waiting_users_registration_view',
 			'page arguments' => array(1),
@@ -119,7 +119,7 @@ function belive_registration_relaunch_mail($key, &$message, $params) {
  *
  * @return bool
  *   TRUE if the operation should be permitted, otherwise FALSE.
- */
+ * /
 function _belive_registration_relaunch_node_relaunch_waiting_users_registration_access($node, $permission) {
   if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
     return TRUE;
@@ -131,7 +131,7 @@ function _belive_registration_relaunch_node_relaunch_waiting_users_registration_
  * Implements hook_permission().
  *
  * @ingroup registration_core
- */
+ * /
 function belive_registration_relaunch_permission() {
   $permissions = array(
     'relaunch waiting users registration' =>  array(
@@ -141,7 +141,7 @@ function belive_registration_relaunch_permission() {
 
   return $permissions;
 }
-
+ *
 function belive_registration_relaunch_cron() {
   belive_registration_relaunch_setup_batch('NULL', FALSE);
-}
+}**/

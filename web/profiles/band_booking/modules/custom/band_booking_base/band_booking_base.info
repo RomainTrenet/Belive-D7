@@ -12,6 +12,7 @@ dependencies[] = band_booking_admin
 dependencies[] = band_booking_language
 dependencies[] = band_booking_performance
 dependencies[] = band_booking_registration
+dependencies[] = band_booking_registration_relaunch
 dependencies[] = band_booking_registration_reminder
 dependencies[] = band_booking_registration_views
 dependencies[] = band_booking_rights

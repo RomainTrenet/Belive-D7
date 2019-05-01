@@ -1,0 +1,11 @@
+name = Band booking registration relaunch
+description = Relaunch for band booking registrations
+core = 7.x
+package = Band booking
+version = 7.x-1.0
+project path = profiles/band_booking/modules/custom
+dependencies[] = views
+dependencies[] = registration
+dependencies[] = band_booking_registration
+
+version = "7.x-1"
