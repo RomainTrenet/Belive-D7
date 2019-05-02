@@ -6,19 +6,43 @@
  */
 
 /**
- * Setup batch and operations to perform. We create a list of batch operations.
  *
- * @param string $nid
- *   The node id for which relaunch registrations.
+ *
+ * @param int $nid
+ *
  * @param bool $progressive
  *   Used to display progressive bar or not.
- * @param bool $today
+ * @param date $timestamp
  *   Is.
  */
-function _band_booking_registration_reminder_setup_batch($nid = NULL, $progressive = FALSE, $today = TRUE) {
-  //$nid = 2;
-  $progressive = FALSE;
-  $today = FALSE;
+
+/**
+ * Setup batch and operations to perform. We create a list of batch operations.
+ *
+ * @param bool $progressive
+ *   Used to display progressive bar or not.
+ * @param null $nid
+ *   The node id for which relaunch registrations.
+ * @param bool $today
+ *   Is the current day or not.
+ */
+function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL) {
+
+  //$timestamp = time();
+  //$timestamp = 1525273200;
+  //$timestamp = 'truc';
+  //$timestamp = NULL;
+  //$today = time();
+  $is_today = FALSE;
+  //$nid = 424;
+
+  dpm('ts avant : ' . $timestamp);
+  //dpm('today : ' . $today);
+
+  // Ensure timestamp.
+  $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
+
+  dpm('ts après : ' . $timestamp);
 
   // Batch declaration.
   $batch = array(
@@ -26,7 +50,7 @@ function _band_booking_registration_reminder_setup_batch($nid = NULL, $progressi
     'operations' => array(
       array(
         '_band_booking_registration_reminder_batch_process',
-        array($nid, $progressive, $today),
+        array($progressive, $nid, $is_today, $timestamp),
       ),
     ),
     'finished' => 'band_booking_registration_reminder_finished_method',
@@ -51,20 +75,67 @@ function _band_booking_registration_reminder_setup_batch($nid = NULL, $progressi
   return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
-function _bbrr_get_relaunches_amount() {
+/**
+ * Get the reminder amount.
+ *
+ * @param int $nid
+ *   The node id for which relaunch registrations.
+ * @param int $timestamp
+ *   Is the current day or not.
+ *
+ * @return int
+ *   The amount of reminder to send.
+ */
+function _bbrr_get_reminder_amount($nid = NULL, $timestamp = NULL) {
+  // Select tables.
+  $query = db_select('users', 'u');
+  $query->join('registration', 'r', 'r.user_uid = u.uid');
+  $query->join('node', 'n', 'n.nid = r.entity_id');
 
+  // Check if User and Node are active, and registration is waiting.
+  $query
+    ->condition('u.status', 1, '=')
+    ->condition('n.status', 1, '=')
+    ->condition('r.state', WAITING_SYSTEM_NAME, '=');
+
+  // If timestamp is set, filter by daily relaunches.
+  if (isset($timestamp) && is_numeric($timestamp)) {
+    $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
+    $min_day = date(REMINDER_DATE_FORMAT, $timestamp);
+    $max_day = date(REMINDER_DATE_FORMAT, strtotime('+1 day', $timestamp));
+    $query->condition('dr.field_relaunch_value', $min_day, '>=')
+      ->condition('dr.field_relaunch_value', $max_day, '<');
+  }
+
+  // If nid specified, filter by node id, to.
+  isset($nid) && is_numeric($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
+
+  // Only the registration id is needed.
+  $query->fields('r', array('registration_id'));
+
+  // Execute and return amount.
+  return $query->execute()->rowCount();
 }
 
-function _band_booking_registration_reminder_batch_process($nid = NULL, $progressive = FALSE, $today = TRUE, &$context = array()) {
-  dpm($nid);
-  dpm($today);
-  dpm($progressive);
-
+function _band_booking_registration_reminder_batch_process($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL, &$context = array()) {
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
 
-    // Get number of results to treat.
+    // Record amount of results.
+    $row_count = _bbrr_get_reminder_amount($nid, $timestamp);
+    $context['sandbox']['max'] = $row_count;
+    dpm('Résultats : ' . $row_count);
+  }
+  return;
+
+  // @todo : if max exist.
+  // If there are results, batch the operations.
+  if ($context['sandbox']['max'] > 0) {
+
+    // Limit is set in the begining of the .module file.
+    $limit = BATCH_LIMIT;
+
     $query = db_select('users', 'u');
     $query->join('registration', 'r', 'r.user_uid = u.uid');
     $query->join('node', 'n', 'n.nid = r.entity_id');
@@ -72,76 +143,33 @@ function _band_booking_registration_reminder_batch_process($nid = NULL, $progres
     $query->join('field_data_field_objet_du_mail', 'mo', 'mo.entity_id = n.nid');
 
     $query->fields('u', array('uid', 'name', 'mail'))
-      ->condition('u.status', 1, '=')
-      ->condition('n.status', 1, '=')
-      ->condition('r.state', 'waiting', '=');
-
-    // If today, filter by daily relaunches.
-    /*
-      $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
-      $startDate = time();
-      $min_day = date('Y-m-d 00:00:00', $startDate);
-      $max_day = date('Y-m-d 00:00:00', strtotime('+1 day', $startDate));
-      $query->condition('dr.field_relaunch_value', $min_day, '>=')
-        ->condition('dr.field_relaunch_value', $max_day, '<');
-    }*/
-
-    // If nid specified, filter by node id, to.
-    //isset($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
-
-
-    $result = $query->execute();
-    $row_count = $result->rowCount();
-
-    // Record amount of results.
-    $context['sandbox']['max'] = $row_count;
-    dpm($row_count);
-  }
-  dpm($context);
-  return;
-
-  //@todo : if max exist
-  //If there are results, batch the operations
-  if ($context['sandbox']['max'] > 0) {
-
-    // Limit is set in the begining of the .module file
-    $limit = BATCH_LIMIT;
-
-    $query=db_select('users','u');
-    $query->join('registration', 'r', 'r.user_uid = u.uid');
-    $query->join('node', 'n', 'n.nid = r.entity_id');
-    $query->join('field_data_field_mail_content', 'mc', 'mc.entity_id = n.nid');
-    $query->join('field_data_field_objet_du_mail', 'mo', 'mo.entity_id = n.nid');
-
-    $query->fields('u',array('uid', 'name', 'mail'))
-      ->fields('r',array('registration_id'))
-      ->fields('n',array('nid', 'title'))
-      ->fields('mc',array('field_mail_content_value'))
-      ->fields('mo',array('field_objet_du_mail_value'))
+      ->fields('r', array('registration_id'))
+      ->fields('n', array('nid', 'title'))
+      ->fields('mc', array('field_mail_content_value'))
+      ->fields('mo', array('field_objet_du_mail_value'))
 
       ->condition('u.status', 1, '=')
       ->condition('n.status', 1, '=')
       ->condition('r.state', 'waiting', '=');
 
-    //If today, filter by daily relaunches
-    if ($today) {
+    // If day, filter by daily relaunches.
+    if ($timestamp) {
       $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
       $startDate = time();
-      $min_day = date('Y-m-d 00:00:00', $startDate);
-      $max_day = date('Y-m-d 00:00:00', strtotime('+1 day', $startDate));
+      $min_day = date(REMINDER_DATE_FORMAT, $startDate);
+      $max_day = date(REMINDER_DATE_FORMAT, strtotime('+1 day', $startDate));
       $query->condition('dr.field_relaunch_value', $min_day, '>=')
         ->condition('dr.field_relaunch_value', $max_day, '<');
     }
-    //if nid specified, filter by node id, to
+    // If nid specified, filter by node id, to.
     ($nid != 'NULL') ? $query->condition('n.nid', $nid, '=') : NULL;
 
     $query->range($context['sandbox']['progress'], $limit);
     $result = $query->execute();
 
     while ($relaunch = $result->fetchObject()) {
-      //Treatment of the batch
-
-      //Send mail
+      // Treatment of the batch.
+      // Send mail.
       $node = node_load($relaunch->nid);
       $user = user_load($relaunch->uid);
       $subject = token_replace($relaunch->field_objet_du_mail_value, array('node' => $node));
@@ -154,7 +182,7 @@ function _band_booking_registration_reminder_batch_process($nid = NULL, $progres
         'subject' => $subject,
       );
 
-      //TODO if manual : drupal set message; if auto = send mail
+      // TODO if manual : drupal set message; if auto = send mail.
 
       // @todo : remove.
       $to = 'romain.trenet@gmail.com';
@@ -163,11 +191,11 @@ function _band_booking_registration_reminder_batch_process($nid = NULL, $progres
         global $base_url;
         global $base_path;
 
-        //if manual, print message
-        if($progressive) {
+        // If manual, print message.
+        if ($progressive) {
           //
           drupal_set_message('Relance envoyée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
-          //If auto (cron), send mail to site
+          // If auto (cron), send mail to site.
         } else {
           /*//Send mail to website email and set message to website
           //$body = 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation <a href="' .$base_url . $base_path . 'node/'.  $relaunch->nid . '">' . $relaunch->title . '</a>.';

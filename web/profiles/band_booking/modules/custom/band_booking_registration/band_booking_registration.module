@@ -8,6 +8,9 @@ include_once 'band_booking_registration.features.inc';
 
 define('BB_REGISTRATION_WORKFLOW', 'bb_confirmation_workflow');
 
+// @todo : unify statuses.
+define("WAITING_SYSTEM_NAME", 'waiting');
+
 // Load functions.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_determine.form');

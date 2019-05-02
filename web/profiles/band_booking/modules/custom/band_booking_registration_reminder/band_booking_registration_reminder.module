@@ -6,6 +6,7 @@
 
 //Variables
 define("BATCH_LIMIT", 20);
+define("REMINDER_DATE_FORMAT", 'Y-m-d 00:00:00');
 
 /**
  * Implements hook_menu().
@@ -34,7 +35,7 @@ function band_booking_registration_reminder_menu() {
       'title' => 'Batch relaunch all',
       'description' => 'Batch to auto relaunch all registrations',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(NULL, FALSE, TRUE),
+      'page arguments' => array(FALSE, NULL, TRUE, NULL),
       'access arguments' => array('relaunch waiting users registration'),
       'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
@@ -126,4 +127,22 @@ function _band_booking_registration_reminder_node_relaunch_waiting_users_registr
     return TRUE;
   }
   return FALSE;
+}
+
+/**
+ * Timestamp is more important than is_today.
+ * @param $timestamp
+ * @param $is_today
+ *
+ * @return int|null
+ */
+function _bbr_ensure_reminder_timestamp($timestamp, $is_today) {
+  // If timestamp is defined, check if it is numeric.
+  if (!empty($timestamp)) {
+    return is_numeric($timestamp) ? $timestamp : time();
+  }
+  // If timestamp is not defined, check today.
+  else {
+    return $is_today ? time() : NULL;
+  }
 }

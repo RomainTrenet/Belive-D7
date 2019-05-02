@@ -11,7 +11,7 @@ define('BB_MANAGER_RID', 4);
  */
 
 function band_booking_user_menu() {
-  return [
+  return array(
     // Artist edit account redirection.
     'artist/edit-account' => array(
       'title' => 'Add performance',
@@ -19,7 +19,7 @@ function band_booking_user_menu() {
       'access callback' => TRUE,
       'type' => MENU_NORMAL_ITEM,
     ),
-  ];
+  );
 }
 
 function _band_booking_user_goto_edit_page() {
