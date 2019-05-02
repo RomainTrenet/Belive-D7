@@ -2,6 +2,9 @@ name = Band booking registration reminder
 description = Reminder for band booking registrations
 core = 7.x
 package = Band booking
-version = 7.x-1.0
-features[features_api][] = api:2
 project path = profiles/band_booking/modules/custom
+dependencies[] = views
+dependencies[] = registration
+dependencies[] = band_booking_registration
+
+version = 7.x-1.0

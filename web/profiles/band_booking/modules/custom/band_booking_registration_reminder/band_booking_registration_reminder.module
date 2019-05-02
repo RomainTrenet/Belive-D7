@@ -17,7 +17,7 @@ function band_booking_registration_reminder_menu() {
   $path = drupal_get_path('module', 'band_booking_registration_reminder') . '/includes';
 
   return array(
-    // Page to relaunch node waiting registrations today/everyday
+    // Admin page with reminder links.
     'admin/relaunch_waiting' => array(
       'title' => 'Reminders',
       'page callback' => 'band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view',
@@ -27,6 +27,18 @@ function band_booking_registration_reminder_menu() {
       'type' => MENU_NORMAL_ITEM,
       'file' => 'band_booking_registration_reminder_relaunch_waiting_users_registration.form.inc',
       'file path' => $path,
+    ),
+
+    // Relaunch every nodes automatically with cron for the current day.
+    'relaunch_batch_cron' => array(
+      'title' => 'Batch relaunch all',
+      'description' => 'Batch to auto relaunch all registrations',
+      'page callback' => '_band_booking_registration_reminder_setup_batch',
+      'page arguments' => array(NULL, FALSE, TRUE),
+      'access arguments' => array('relaunch waiting users registration'),
+      'file' => 'band_booking_registration_reminder_batch.inc',
+      'file path' => $path,
+      'type' => MENU_CALLBACK,
     ),
   );
 }
@@ -78,4 +90,40 @@ function band_booking_registration_reminder_performance_reminder_block_content()
     module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_relaunch_waiting_users_registration.form');
     return belive_registration_relaunch_node_relaunch_waiting_users_registration_view($node);
   }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function band_booking_registration_reminder_permission() {
+  return array(
+    'relaunch waiting users registration' => array(
+      'title' => t('Relaunch band booking registrations'),
+    ),
+  );
+}
+
+/**
+ * Launch batch operations in hook_cron.
+ */
+function band_booking_registration_reminder_cron() {
+  module_load_include('inc', 'band_booking_registration_relaunch', 'includes/band_booking_registration_reminder_batch.inc');
+  _band_booking_registration_reminder_setup_batch(NULL, FALSE, TRUE);
+}
+
+/**
+ * @TODO.
+ *
+ * Define access right
+ *
+ * @param $node
+ * @param $permission
+ *
+ * @return bool
+ */
+function _band_booking_registration_reminder_node_relaunch_waiting_users_registration_access($node, $permission) {
+  if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
+    return TRUE;
+  }
+  return FALSE;
 }

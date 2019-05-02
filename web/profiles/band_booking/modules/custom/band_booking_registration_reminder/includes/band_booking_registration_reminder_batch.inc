@@ -15,17 +15,21 @@
  * @param bool $today
  *   Is.
  */
-function _band_booking_registration_relaunch_setup_batch($nid = 'NULL', $progressive = FALSE, $today = TRUE) {
+function _band_booking_registration_reminder_setup_batch($nid = NULL, $progressive = FALSE, $today = TRUE) {
+  //$nid = 2;
+  $progressive = FALSE;
+  $today = FALSE;
+
   // Batch declaration.
   $batch = array(
     // Declare operations.
     'operations' => array(
       array(
-        '_band_booking_registration_relaunch_batch_process',
-        array($nid, $$progressive, $today),
+        '_band_booking_registration_reminder_batch_process',
+        array($nid, $progressive, $today),
       ),
     ),
-    'finished' => 'band_booking_registration_relaunch_finished_method',
+    'finished' => 'band_booking_registration_reminder_finished_method',
     // @todo : title.
     'title' => t('Band booking relaunch batch'),
     'init_message' => t('Initialization of band booking relaunches'),
@@ -44,17 +48,17 @@ function _band_booking_registration_relaunch_setup_batch($nid = 'NULL', $progres
   // Finally process batch.
   batch_process();
 
-  // return('<p>Uncomment that line to have a page view with dpm.</p>');.
+  return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 function _bbrr_get_relaunches_amount() {
 
 }
 
-function _band_booking_registration_relaunch_batch_process($nid, $manual, $today, &$context) {
-  /*dpm($nid);
-  dpm($manual ? 'manuel' : 'auto');
-  dpm($today ? 'today' : 'everyday');*/
+function _band_booking_registration_reminder_batch_process($nid = NULL, $progressive = FALSE, $today = TRUE, &$context = array()) {
+  dpm($nid);
+  dpm($today);
+  dpm($progressive);
 
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
@@ -73,21 +77,30 @@ function _band_booking_registration_relaunch_batch_process($nid, $manual, $today
       ->condition('r.state', 'waiting', '=');
 
     // If today, filter by daily relaunches.
-    if ($today) {
+    /*
       $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
       $startDate = time();
       $min_day = date('Y-m-d 00:00:00', $startDate);
       $max_day = date('Y-m-d 00:00:00', strtotime('+1 day', $startDate));
       $query->condition('dr.field_relaunch_value', $min_day, '>=')
         ->condition('dr.field_relaunch_value', $max_day, '<');
-    }
+    }*/
 
     // If nid specified, filter by node id, to.
-    ($nid != 'NULL') ? $query->condition('n.nid', $nid, '=') : NULL;
+    //isset($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
 
-    $context['sandbox']['max'] = $query->execute()->rowCount();
+
+    $result = $query->execute();
+    $row_count = $result->rowCount();
+
+    // Record amount of results.
+    $context['sandbox']['max'] = $row_count;
+    dpm($row_count);
   }
+  dpm($context);
+  return;
 
+  //@todo : if max exist
   //If there are results, batch the operations
   if ($context['sandbox']['max'] > 0) {
 
@@ -146,12 +159,12 @@ function _band_booking_registration_relaunch_batch_process($nid, $manual, $today
       // @todo : remove.
       $to = 'romain.trenet@gmail.com';
 
-      if (drupal_mail('belive_registration_relaunch', 'send_relaunch_mail', $to, language_default(), $params, $from, TRUE)) {
+      if (drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $to, language_default(), $params, $from, TRUE)) {
         global $base_url;
         global $base_path;
 
         //if manual, print message
-        if($manual) {
+        if($progressive) {
           //
           drupal_set_message('Relance envoyée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
           //If auto (cron), send mail to site
@@ -164,7 +177,7 @@ function _band_booking_registration_relaunch_batch_process($nid, $manual, $today
             'body' => $body,
             'subject' => 'Relance effectuée à '.$relaunch->name .' pour la prestation ' . $relaunch->title,
           );
-          drupal_mail('belive_registration_relaunch', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);*/
+          drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);*/
           watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
         }
       }
@@ -189,6 +202,6 @@ function _band_booking_registration_relaunch_batch_process($nid, $manual, $today
  * @param $results
  * @param $operations
  */
-function band_booking_registration_relaunch_finished_method($success, $results, $operations) {
+function band_booking_registration_reminder_finished_method($success, $results, $operations) {
   drupal_set_message(t('Relaunch proceeding succesfully applied'));
 }

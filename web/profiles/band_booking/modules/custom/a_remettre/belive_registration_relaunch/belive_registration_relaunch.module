@@ -30,6 +30,7 @@ function belive_registration_relaunch_menu() {
 			'weight' => 5,
 		),
 		*/
+		/* 2019
 		//Relaunch all registrations with cron
 		'relaunch_batch_cron' => array(
 			'title' => 'Batch relaunch all',
@@ -40,7 +41,7 @@ function belive_registration_relaunch_menu() {
 			'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
 			'file path' => $path,
 			'type' => MENU_CALLBACK,
-		),
+		),*/
 		//Relaunch all registrations manually for today
 		'relaunch_batch_manually_today' => array(
 			'title' => 'Batch relaunch',
