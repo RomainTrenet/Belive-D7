@@ -24,7 +24,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   //$timestamp = NULL;
   //$today = time();
 
-  //$progressive = TRUE;
+  $progressive = TRUE;
   $is_today = FALSE;
   //$nid = 424;
 
@@ -62,7 +62,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   batch_process('admin');
   //batch_process();
 
-  return('<p>Uncomment that line to have a page view with dpm.</p>');
+  //return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**
@@ -85,7 +85,7 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
 
     // Record amount of results.
     $context['sandbox']['max'] = _bbrr_get_reminder_amount($nid, $timestamp);
-    dpm('max : ' . $context['sandbox']['max']);
+    // dpm('max : ' . $context['sandbox']['max']);
   }
 
   // If there are results, batch the operations.
@@ -108,8 +108,8 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
     if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
-    dpm('finish : ' . $context['finished']);
-    dpm('progress : ' . $context['sandbox']['progress']);
+    // dpm('finish : ' . $context['finished']);
+    // dpm('progress : ' . $context['sandbox']['progress']);
   }
 }
 
@@ -118,45 +118,44 @@ function _bbr_send_mail ($reminder, $progressive) {
   $node = node_load($reminder->nid);
   $user = user_load($reminder->uid);
   $subject = token_replace($reminder->field_objet_du_mail_value, array('node' => $node));
-  $message = token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
+  $body= token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
   $to = $reminder->mail;
   $from = variable_get('site_mail', '');
-
-  $params = array(
-    'body' => $message,
-    'subject' => $subject,
-  );
 
   // @TODO if manual : drupal set message; if auto = send mail.
   // @todo : remove.
   $to = 'romain.trenet@gmail.com';
 
-  if (drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $to, language_default(), $params, $from, TRUE)) {
+  // Send out the e-mail.
+  $message = array(
+    'module' => 'band_booking_registration_reminder',
+    'key' => '',
+    'to' => $to,
+    'from' => $from,
+    'subject' => $subject,
+    'body' => $body,
+  );
+  $message['headers']['MIME-Version'] = '1.0';
+  $message['headers']['Content-Type'] = 'multipart/mixed;';
+  $message['headers']['Content-Type'] = 'text/html;';
+
+  $message = mimemail_prepare_message($message);
+
+  if (mimemail_mailengine('send', $message)) {
     global $base_url;
     global $base_path;
 
+    // @todo : use t().
     drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
-
+    
     // If manual, print message.
     if ($progressive) {
-      //
-      //drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
       // If auto (cron), send mail to site.
     } else {
+      // @todo.
       //Send mail to website email and set message to website
-      //$body = 'Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation <a href="' .$base_url . $base_path . 'node/'.  $reminder->nid . '">' . $reminder->title . '</a>.';
-      //$body = '<html><body>Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()) . '.</body></html>';
-
-      //$params_mail_website = array(
-      //'body' => $body,
-      //'subject' => 'Relance effectuée à '.$reminder->name .' pour la prestation ' . $reminder->title,
-      //);
-      //drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);
       //watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
     }
-  }
-  else {
-    drupal_set_message("Une erreur s'est produite lors de l'envoi de votre email");
   }
 }
 
