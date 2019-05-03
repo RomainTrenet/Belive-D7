@@ -998,9 +998,8 @@ function band_booking_rights_user_default_permissions() {
     'name' => 'relaunch waiting users registration',
     'roles' => array(
       'Gérant' => 'Gérant',
-      'administrateur' => 'administrateur',
     ),
-    'module' => 'belive_registration_relaunch',
+    'module' => 'band_booking_registration_reminder',
   );
 
   // Exported permission: 'rename features'.

@@ -1,10 +1,10 @@
 # French translation of Field Group (7.x-1.6)
-# Copyright (c) 2017 by the French translation team
+# Copyright (c) 2019 by the French translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Field Group (7.x-1.6)\n"
-"POT-Creation-Date: 2017-11-03 23:43+0000\n"
+"POT-Creation-Date: 2019-04-10 18:23+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,7 @@ msgstr ""
 "multiples"
 msgid "Move additional settings to last multipage (if available)"
 msgstr ""
-"Déplacer les paramètres additionnels à la dernier page  (si "
+"Déplacer les paramètres additionnels à la dernière page  (si "
 "disponible) des pages multiples"
 msgid "Language settings for the user account."
 msgstr "Paramètres de langue pour le compte utilisateur."

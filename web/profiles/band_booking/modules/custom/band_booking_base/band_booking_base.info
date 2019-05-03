@@ -92,6 +92,7 @@ features[field_instance][] = node-page-body
 features[filter][] = full_html
 features[filter][] = plain_text
 features[node][] = page
+features[variable][] = l10n_update_download_store
 features[variable][] = language_content_type_page
 features[variable][] = mail_system
 features[variable][] = mailsystem_theme

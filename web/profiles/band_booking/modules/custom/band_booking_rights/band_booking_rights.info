@@ -9,6 +9,7 @@ dependencies[] = auto_nodetitle
 dependencies[] = backup_migrate
 dependencies[] = band_booking_admin
 dependencies[] = band_booking_registration
+dependencies[] = band_booking_registration_reminder
 dependencies[] = block
 dependencies[] = content_access
 dependencies[] = contextual

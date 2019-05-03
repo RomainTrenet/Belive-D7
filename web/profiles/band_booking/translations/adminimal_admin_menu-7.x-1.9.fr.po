@@ -1,10 +1,10 @@
 # French translation of Adminimal Administration Menu (7.x-1.9)
-# Copyright (c) 2018 by the French translation team
+# Copyright (c) 2019 by the French translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Adminimal Administration Menu (7.x-1.9)\n"
-"POT-Creation-Date: 2018-03-01 00:43+0000\n"
+"POT-Creation-Date: 2019-04-09 15:59+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -28,5 +28,7 @@ msgid "Shortcuts"
 msgstr "Raccourcis"
 msgid "Newline"
 msgstr "Nouvelle ligne"
+msgid "Exclusive"
+msgstr "Exclusif"
 msgid "Dropdown"
 msgstr "Liste déroulante"
