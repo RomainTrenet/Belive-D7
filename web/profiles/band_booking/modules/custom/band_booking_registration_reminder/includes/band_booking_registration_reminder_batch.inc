@@ -18,14 +18,11 @@
  *   Date specified or not.
  */
 function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL) {
-  //$timestamp = time();
   //$timestamp = 1525273200;
-  //$timestamp = 'truc';
   //$timestamp = NULL;
-  //$today = time();
 
-  $progressive = TRUE;
-  $is_today = FALSE;
+  //$progressive = TRUE;
+  //$is_today = FALSE;
   //$nid = 424;
 
   //dpm('ts avant : ' . $timestamp);
@@ -36,7 +33,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   //dpm('ts après : ' . $timestamp);
 
   // Batch declaration.
-  $batch = array(
+  $batch_definition = array(
     // Declare operations.
     'operations' => array(
       array(
@@ -52,14 +49,14 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   );
 
   // Batch initialization.
-  batch_set($batch);
-  $batch =& batch_get();
+  batch_set($batch_definition);
+  $batch_definition =& batch_get();
 
   // Add progress bar if batch is launched manualy.
-  $batch['progressive'] = $progressive;
+  $batch_definition['progressive'] = $progressive;
 
   // Finally process batch and redirect to admin.
-  batch_process('admin');
+  batch_process('admin/relaunch_waiting');
   //batch_process();
 
   //return('<p>Uncomment that line to have a page view with dpm.</p>');
@@ -128,6 +125,11 @@ function _bbr_send_mail ($reminder, $progressive) {
 
   // Send out the e-mail.
   $message = array(
+    'headers' => array(
+      'MIME-Version' => '1.0',
+      'Content-Type' => 'text/html;',
+      // 'multipart/mixed;'.
+    ),
     'module' => 'band_booking_registration_reminder',
     'key' => '',
     'to' => $to,
@@ -135,19 +137,16 @@ function _bbr_send_mail ($reminder, $progressive) {
     'subject' => $subject,
     'body' => $body,
   );
-  $message['headers']['MIME-Version'] = '1.0';
-  $message['headers']['Content-Type'] = 'multipart/mixed;';
-  $message['headers']['Content-Type'] = 'text/html;';
-
   $message = mimemail_prepare_message($message);
 
+  // Send mail with mimemail.
   if (mimemail_mailengine('send', $message)) {
     global $base_url;
     global $base_path;
 
     // @todo : use t().
     drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
-    
+
     // If manual, print message.
     if ($progressive) {
       // If auto (cron), send mail to site.
@@ -322,6 +321,7 @@ function _bbr_send_mail ($result, $progressive, &$context) {
  * @param $operations
  */
 function band_booking_registration_reminder_batch_finished($success, $results, $operations) {
+  //dpm($results);
   if ($success) {
     drupal_set_message(t('Relaunch proceeding succesfully applied'));
   }
@@ -335,47 +335,3 @@ function band_booking_registration_reminder_batch_finished($success, $results, $
   }
   drupal_set_message(l(t('Run again'), 'my_module/batch_fix'));
 }
-
-/**
- * @todo : delete.
- * Get the reminder amount.
- *
- * @param int $nid
- *   The node id specified or not.
- * @param int $timestamp
- *   Is the current day or not.
- *
- * @return int
- *   The amount of reminder to send.
- */
-/*
-function _bbrr_get_reminder_list($nid = NULL, $timestamp = NULL) {
-  // Select tables.
-  $query = db_select('users', 'u');
-  $query->join('registration', 'r', 'r.user_uid = u.uid');
-  $query->join('node', 'n', 'n.nid = r.entity_id');
-
-  // Check if User and Node are active, and registration is waiting.
-  $query
-    ->condition('u.status', 1, '=')
-    ->condition('n.status', 1, '=')
-    ->condition('r.state', WAITING_SYSTEM_NAME, '=');
-
-  // If timestamp is set, filter by daily relaunches.
-  if (isset($timestamp) && is_numeric($timestamp)) {
-    $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
-    $min_day = date(REMINDER_DATE_FORMAT, $timestamp);
-    $max_day = date(REMINDER_DATE_FORMAT, strtotime('+1 day', $timestamp));
-    $query->condition('dr.field_relaunch_value', $min_day, '>=')
-      ->condition('dr.field_relaunch_value', $max_day, '<');
-  }
-
-  // If nid specified, filter by node id, to.
-  isset($nid) && is_numeric($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
-
-  // Only the registration id is needed.
-  $query->fields('r', array('registration_id'));
-
-  // Execute and return.
-  return $query->execute();
-}*/
