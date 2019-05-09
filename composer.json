@@ -134,12 +134,12 @@
     "extra": {
         "installer-paths": {
             "web/": ["type:drupal-core"],
-            "web/profiles/{$name}/": ["type:drupal-profile"],
-            "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
-            "web/profiles/band_booking/libraries/{$name}/": ["type:drupal-library"],
             "web/profiles/band_booking/modules/contrib/{$name}/": ["type:drupal-module"],
+            "web/profiles/band_booking/themes/contrib/{$name}/": ["type:drupal-theme"],
+            "web/profiles/band_booking/libraries/{$name}/": ["type:drupal-library"],
+            "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "web/profiles/band_booking/modules/custom/{$name}": ["type:drupal-custom-module"],
-            "web/profiles/band_booking/themes/contrib/{$name}/": ["type:drupal-theme"]
+            "web/profiles/{$name}/": ["type:drupal-profile"]
         },
         "patches": {
             "cweagans/composer-patches": {
@@ -149,8 +149,11 @@
         "preserve-paths": [
             "web/sites",
             "web/profiles/band_booking",
+            "web/profiles/band_booking/libraries",
+            "web/profiles/band_booking/modules/contrib",
             "web/profiles/band_booking/modules/custom",
             "web/profiles/band_booking/themes/custom",
+            "web/profiles/band_booking/themes/contrib",
             "web/profiles/band_booking/translations"
         ]
     },
