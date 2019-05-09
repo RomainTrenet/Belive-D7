@@ -45,8 +45,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   $batch_definition['progressive'] = $progressive;
 
   // Finally process batch and redirect to admin.
-  batch_process('admin/relaunch_waiting');
-  //batch_process();
+  batch_process(REMINDER_ADMIN_PAGE);
 
   //return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
@@ -71,7 +70,6 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
 
     // Record amount of results.
     $context['sandbox']['max'] = _bbrr_get_reminder_amount($nid, $timestamp);
-    // dpm('max : ' . $context['sandbox']['max']);
   }
 
   // If there are results, batch the operations.
@@ -80,22 +78,18 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
     $reminders = _bbrr_get_reminder_list($nid, $timestamp, $context);
 
     foreach ($reminders as $reminder) {
-      //dpm($reminder);
-
       // Send mail.
-      _bbr_send_mail ($reminder, $progressive);
+      _bbr_send_mail($reminder, $progressive);
 
       // Record state.
       $context['sandbox']['progress']++;
       $context['sandbox']['current_rid'] = $reminder->registration_id;
     }
 
-    // Tant que l’on n’a pas traité tout le jeu de données on continue à exécuter notre batch.
+    // Record .
     if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
-    // dpm('finish : ' . $context['finished']);
-    // dpm('progress : ' . $context['sandbox']['progress']);
   }
 }
 
@@ -104,7 +98,7 @@ function _bbr_send_mail ($reminder, $progressive) {
   $node = node_load($reminder->nid);
   $user = user_load($reminder->uid);
   $subject = token_replace($reminder->field_objet_du_mail_value, array('node' => $node));
-  $body= token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
+  $body = token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
   $to = $reminder->mail;
   $from = variable_get('site_mail', '');
 

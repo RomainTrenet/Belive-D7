@@ -1,10 +1,17 @@
 <?php
 
 /**
-* @file
-* Code for the form to
+ * @file
+ * Code for Relaunch admin page.
 */
-function band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view () {
+
+/**
+ * View of Admin relaunch page.
+ *
+ * @return string
+ *   The HTML content.
+ */
+function _band_booking_registration_reminder_admin_relaunch_waiting_registration_view() {
   global $base_url;
   global $base_path;
   $destination = current_path();

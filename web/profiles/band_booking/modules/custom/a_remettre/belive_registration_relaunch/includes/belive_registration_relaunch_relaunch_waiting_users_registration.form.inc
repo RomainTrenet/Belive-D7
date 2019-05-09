@@ -6,7 +6,7 @@ function belive_registration_relaunch_node_relaunch_waiting_users_registration_v
   global $base_url;
 	global $base_path;
 	$destination = current_path();
-	$content = '<p>' . l(t('Relaunch waiting registrations for this event'), $base_url . $base_path . 'relaunch_batch_manually/' . $node->nid, $options = array('query' => array('destination' => $destination))) . '</p>';
+	$content = '<p>TEST' . l(t('Relaunch waiting registrations for this event'), $base_url . $base_path . 'relaunch_batch_manually/' . $node->nid, $options = array('query' => array('destination' => $destination))) . '</p>';
 	$content .= '<p>' . t('This does not figure the days scheduled for the relaunch.') . '</p>';
 	return ($content);
 }

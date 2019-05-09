@@ -7,6 +7,7 @@
 //Variables
 define("BATCH_LIMIT", 2);
 define("REMINDER_DATE_FORMAT", 'Y-m-d 00:00:00');
+define("REMINDER_ADMIN_PAGE", 'admin/relaunch_waiting');
 
 /**
  * Implements hook_menu().
@@ -19,10 +20,10 @@ function band_booking_registration_reminder_menu() {
 
   return array(
     // Admin page with reminder links.
-    'admin/relaunch_waiting' => array(
+    REMINDER_ADMIN_PAGE => array(
       'title' => 'Reminders',
       // @todo : too long name.
-      'page callback' => 'band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view',
+      'page callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_registration_view',
       'page arguments' => array(),
       'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
       'access arguments' => array('relaunch waiting users registration'),
@@ -146,7 +147,7 @@ function band_booking_registration_reminder_permission() {
  * Launch batch operations in hook_cron.
  */
 function band_booking_registration_reminder_cron() {
-  module_load_include('inc', 'band_booking_registration_relaunch', 'includes/band_booking_registration_reminder_batch.inc');
+  module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_batch');
   _band_booking_registration_reminder_setup_batch(FALSE, NULL, TRUE, NULL);
 }
 
