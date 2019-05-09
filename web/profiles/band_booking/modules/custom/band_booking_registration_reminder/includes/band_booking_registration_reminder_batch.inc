@@ -18,19 +18,8 @@
  *   Date specified or not.
  */
 function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL) {
-  //$timestamp = 1525273200;
-  //$timestamp = NULL;
-
-  //$progressive = TRUE;
-  //$is_today = FALSE;
-  //$nid = 424;
-
-  //dpm('ts avant : ' . $timestamp);
-
   // Ensure timestamp.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
-
-  //dpm('ts après : ' . $timestamp);
 
   // Batch declaration.
   $batch_definition = array(
