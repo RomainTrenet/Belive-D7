@@ -146,6 +146,7 @@
         },
         "preserve-paths": [
             "web/sites",
+            "web/profiles/band_booking",
             "web/profiles/band_booking/modules/custom",
             "web/profiles/band_booking/themes/custom",
             "web/profiles/band_booking/translations"
