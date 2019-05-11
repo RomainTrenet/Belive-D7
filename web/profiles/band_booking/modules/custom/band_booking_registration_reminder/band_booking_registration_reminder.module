@@ -79,25 +79,7 @@ function band_booking_registration_reminder_menu() {
       'file path' => $path,
       'type' => MENU_CALLBACK,
     ),
-
   );
-}
-
-/**
- * @todo
- * Access callback for admin/performances/relaunch_waiting.
- *
- * @param $permission
- *   A list of permissions to check.
- *
- * @return bool
- *   Access statement.
- */
-function _band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access($permission) {
-  if (user_access($permission)) {
-    return TRUE;
-  }
-  return FALSE;
 }
 
 /**
@@ -170,6 +152,23 @@ function band_booking_registration_reminder_cron() {
  */
 function _band_booking_registration_reminder_node_relaunch_waiting_users_registration_access($node, $permission) {
   if (user_access($permission) && !empty($node->field_inscriptions['und'][0]['registration_type'])) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * @todo
+ * Access callback for admin/performances/relaunch_waiting.
+ *
+ * @param $permission
+ *   A list of permissions to check.
+ *
+ * @return bool
+ *   Access statement.
+ */
+function _band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access($permission) {
+  if (user_access($permission)) {
     return TRUE;
   }
   return FALSE;

@@ -23,8 +23,6 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
-  $progressive = FALSE;
-
   // Batch declaration.
   $batch_definition = array(
     // Declare operations.
@@ -56,7 +54,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  return('<p>Uncomment that line to have a page view with dpm.</p>');
+  // return('<p>Uncomment that line to have a page view with dpm.</p>');.
 }
 
 /**
@@ -254,15 +252,12 @@ function _bbr_send_mail($reminder, $progressive) {
  * @param $operations
  */
 function _band_booking_registration_reminder_batch_finished($success, $results, $operations) {
-  dpm('finish');
-  watchdog('error', 'finish batch');
+  //watchdog('error', 'finish batch');
   //dpm($results);
   if ($success) {
-    dpm('WIZZZZ');
     drupal_set_message(t('Relaunch proceeding succesfully applied'));
   }
   else {
-    dpm('OOOOOOO');
     $error_operation = reset($operations);
     $message = t('An error occurred while processing %error_operation with arguments: @arguments', array(
       '%error_operation' => $error_operation[0],
