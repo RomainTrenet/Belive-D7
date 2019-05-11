@@ -1,12 +1,14 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Band booking registration reminder module.
  */
 
-//Variables
 define("BATCH_LIMIT", 2);
 define("REMINDER_DATE_FORMAT", 'Y-m-d 00:00:00');
+define("REMINDER_ADMIN_PAGE", 'admin/relaunch_waiting');
+define("REMINDER_MANUAL_EVERYDAY", 'admin/relaunch_batch_manually_everyday');
+define("REMINDER_MANUAL_TODAY", 'admin/relaunch_batch_manually_today');
 
 /**
  * Implements hook_menu().
@@ -17,37 +19,37 @@ function band_booking_registration_reminder_menu() {
   // Common path.
   $path = drupal_get_path('module', 'band_booking_registration_reminder') . '/includes';
 
+  // @todo : access argument pour tous les liens.
+
   return array(
     // Admin page with reminder links.
-    'admin/relaunch_waiting' => array(
+    REMINDER_ADMIN_PAGE => array(
       'title' => 'Reminders',
       // @todo : too long name.
-      'page callback' => 'band_booking_registration_reminder_admin_relaunch_waiting_users_registration_view',
+      'page callback' => '_band_booking_registration_reminder_admin_page_view',
       'page arguments' => array(),
       'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
       'access arguments' => array('relaunch waiting users registration'),
       'type' => MENU_NORMAL_ITEM,
-      'file' => 'band_booking_registration_reminder_relaunch_waiting_users_registration.form.inc',
+      'file' => 'band_booking_registration_reminder_admin_page_view.inc',
       'file path' => $path,
     ),
-
     // Equivalent of hook_cron.
     'relaunch_batch_cron' => array(
       'title' => 'Batch relaunch all',
       'description' => 'Batch to auto relaunch all registrations',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(FALSE, NULL, TRUE, NULL),
+      'page arguments' => array(FALSE, NULL, TRUE, NULL, NULL),
       'access arguments' => array('relaunch waiting users registration'),
       'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
       'type' => MENU_CALLBACK,
     ),
-
     // Relaunch a specific node, the date is not taken into account.
-    'node/%performance_node_menu/relaunch_waiting' => array(//Call belive_registration_menu_load
+    'node/%/relaunch_waiting' => array(
       'title' => 'Relaunch waiting registrations',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(TRUE, 1, FALSE, NULL),
+      'page arguments' => array(TRUE, 1, FALSE, NULL, 1),
       'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
       'access arguments' => array(1, 'relaunch waiting users registration'),
       'type' => MENU_LOCAL_TASK,
@@ -55,36 +57,41 @@ function band_booking_registration_reminder_menu() {
       'file path' => $path,
       'weight' => 5,
     ),
-/*
-    //Relaunch all registrations manually for today
-    'relaunch_batch_manually_today' => array(
-      'title' => 'Batch relaunch',
-      'description' => 'Batch to auto relaunch all registrations',
-      'page callback' => 'belive_registration_relaunch_setup_batch',
-      'page arguments' => array('NULL', TRUE, TRUE),//all, manuel, today
+    // Relaunch all registrations manually for everyday.
+    REMINDER_MANUAL_EVERYDAY => array(
+      'title' => 'Batch relaunch everyday',
+      'description' => 'Batch to auto relaunch all registrations for everyday',
+      'page callback' => '_band_booking_registration_reminder_setup_batch',
+      'page arguments' => array(TRUE, NULL, FALSE, NULL, REMINDER_ADMIN_PAGE),
       'access arguments' => array('relaunch waiting users registration'),
-      'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+      'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
       'type' => MENU_CALLBACK,
     ),
-    //Relaunch all registrations manually for everyday
-    'relaunch_batch_manually_everyday' => array(
-      'title' => 'Batch relaunch',
-      'description' => 'Batch to auto relaunch all registrations',
-      'page callback' => 'belive_registration_relaunch_setup_batch',
-      'page arguments' => array('NULL', TRUE, FALSE),//all, manuel, everyday
+    // Relaunch all registrations manually for today.
+    REMINDER_MANUAL_TODAY => array(
+      'title' => 'Batch relaunch today',
+      'description' => 'Batch to auto relaunch all registrations for today',
+      'page callback' => '_band_booking_registration_reminder_setup_batch',
+      'page arguments' => array(TRUE, NULL, TRUE, NULL, REMINDER_ADMIN_PAGE),
       'access arguments' => array('relaunch waiting users registration'),
-      'file' => 'belive_registration_relaunch_relaunch_waiting_users_registration.form.inc',
+      'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
       'type' => MENU_CALLBACK,
-    ),*/
+    ),
+
   );
 }
 
 /**
+ * @todo
  * Access callback for admin/performances/relaunch_waiting.
+ *
  * @param $permission
+ *   A list of permissions to check.
+ *
  * @return bool
+ *   Access statement.
  */
 function _band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access($permission) {
   if (user_access($permission)) {
@@ -95,39 +102,40 @@ function _band_booking_registration_reminder_admin_relaunch_waiting_users_regist
 
 /**
  * Implements hook_block_info().
+ *
+ * @return array
+ *   Array of blocks definitions.
  */
 function band_booking_registration_reminder_block_info() {
   $blocks['bbrr_performance_reminder'] = array(
     'info' => t('Band booking - Performance reminder'),
     'status' => 1,
     'region' => 'sidebar_right',
-    // @todo.
-    //'cache' => DRUPAL_CACHE_PER_USER,
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   return $blocks;
 }
 
 /**
  * Implements hook_block_view().
+ *
+ * @param string $delta
+ *   Blocks system name.
+ * @return array
+ *   Array of blocks definitions.
  */
 function band_booking_registration_reminder_block_view($delta = '') {
   $block = array();
 
   switch ($delta) {
     case 'bbrr_performance_reminder':
+      module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_admin_block_content');
       $block['subject'] = t('Relaunch waiting registrations');
-      $block['content'] = band_booking_registration_reminder_performance_reminder_block_content();
+      $block['content'] = _band_booking_registration_reminder_admin_block_content();
       $block['block_html_id'] = drupal_html_id('block-band-booking-registration-reminder-performance');
       break;
   }
   return $block;
-}
-
-function band_booking_registration_reminder_performance_reminder_block_content() {
-  if ($node = menu_get_object()) {
-    module_load_include('inc', 'belive_registration_relaunch', 'includes/belive_registration_relaunch_relaunch_waiting_users_registration.form');
-    return belive_registration_relaunch_node_relaunch_waiting_users_registration_view($node);
-  }
 }
 
 /**
@@ -146,7 +154,7 @@ function band_booking_registration_reminder_permission() {
  * Launch batch operations in hook_cron.
  */
 function band_booking_registration_reminder_cron() {
-  module_load_include('inc', 'band_booking_registration_relaunch', 'includes/band_booking_registration_reminder_batch.inc');
+  module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_batch');
   _band_booking_registration_reminder_setup_batch(FALSE, NULL, TRUE, NULL);
 }
 

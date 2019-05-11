@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * File that manage install and update states.
+ */
+
+/**
+ * Uninstall belive registration relaunch.
+ */
+function band_booking_base_update_7101(&$sandbox) {
+    drupal_uninstall_modules(array('belive_registration_relaunch'));
+}

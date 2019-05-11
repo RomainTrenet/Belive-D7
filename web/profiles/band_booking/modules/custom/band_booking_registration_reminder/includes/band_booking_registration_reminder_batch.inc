@@ -16,21 +16,14 @@
  *   Is the current day or not.
  * @param int $timestamp
  *   Date specified or not.
+ * @param string $redirect
+ *   Redirect path.
  */
-function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL) {
-  //$timestamp = 1525273200;
-  //$timestamp = NULL;
-
-  //$progressive = TRUE;
-  //$is_today = FALSE;
-  //$nid = 424;
-
-  //dpm('ts avant : ' . $timestamp);
-
-  // Ensure timestamp.
+function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL, $redirect = NULL) {
+  // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
-  //dpm('ts après : ' . $timestamp);
+  $progressive = FALSE;
 
   // Batch declaration.
   $batch_definition = array(
@@ -38,10 +31,10 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
     'operations' => array(
       array(
         '_band_booking_registration_reminder_batch_process',
-        array($progressive, $nid, $is_today, $timestamp),
+        array($progressive, $nid, $timestamp),
       ),
     ),
-    'finished' => 'band_booking_registration_reminder_batch_finished',
+    'finished' => '_band_booking_registration_reminder_batch_finished',
     'title' => t('Band booking relaunch batch'),
     'init_message' => t('Initialization of band booking relaunches'),
     'progress_message' => t('Processed @current out of @total.'),
@@ -55,11 +48,15 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Add progress bar if batch is launched manualy.
   $batch_definition['progressive'] = $progressive;
 
-  // Finally process batch and redirect to admin.
-  batch_process('admin/relaunch_waiting');
-  //batch_process();
+  // Manage redirect.
+  if (isset($nid)) {
+    $redirect = 'node/' . $nid;
+  }
 
-  //return('<p>Uncomment that line to have a page view with dpm.</p>');
+  // Finally process batch and redirect to admin.
+  batch_process($redirect);
+
+  return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**
@@ -69,12 +66,12 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
  *   Display progressive bar or not.
  * @param int $nid
  *   The node id specified or not.
- * @param bool $is_today
- *   Is the current day or not.
  * @param int $timestamp
  *   Date specified or not.
+ * @param array $context
+ *   The context variables.
  */
-function _band_booking_registration_reminder_batch_process($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL, &$context = array()) {
+function _band_booking_registration_reminder_batch_process($progressive = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
@@ -82,7 +79,6 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
 
     // Record amount of results.
     $context['sandbox']['max'] = _bbrr_get_reminder_amount($nid, $timestamp);
-    // dpm('max : ' . $context['sandbox']['max']);
   }
 
   // If there are results, batch the operations.
@@ -91,71 +87,58 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
     $reminders = _bbrr_get_reminder_list($nid, $timestamp, $context);
 
     foreach ($reminders as $reminder) {
-      //dpm($reminder);
-
       // Send mail.
-      _bbr_send_mail ($reminder, $progressive);
+      _bbr_send_mail($reminder, $progressive);
 
       // Record state.
       $context['sandbox']['progress']++;
       $context['sandbox']['current_rid'] = $reminder->registration_id;
     }
 
-    // Tant que l’on n’a pas traité tout le jeu de données on continue à exécuter notre batch.
+    // Record .
     if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
-    // dpm('finish : ' . $context['finished']);
-    // dpm('progress : ' . $context['sandbox']['progress']);
   }
 }
 
-function _bbr_send_mail ($reminder, $progressive) {
-  // Prepare mail parts.
-  $node = node_load($reminder->nid);
-  $user = user_load($reminder->uid);
-  $subject = token_replace($reminder->field_objet_du_mail_value, array('node' => $node));
-  $body= token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
-  $to = $reminder->mail;
-  $from = variable_get('site_mail', '');
+/**
+ * Get the reminder common query part.
+ *
+ * @param int $nid
+ *   The node id specified or not.
+ * @param int $timestamp
+ *   Is the current day or not.
+ *
+ * @return \SelectQuery
+ *   The common query part.
+ */
+function _bbr_get_common_reminder_query($nid = NULL, $timestamp = NULL) {
+  // Select tables.
+  $query = db_select('users', 'u');
+  $query->join('registration', 'r', 'r.user_uid = u.uid');
+  $query->join('node', 'n', 'n.nid = r.entity_id');
 
-  // @TODO if manual : drupal set message; if auto = send mail.
-  // @todo : remove.
-  $to = 'romain.trenet@gmail.com';
+  // Check if User and Node are active, and registration is waiting.
+  $query
+    ->condition('u.status', 1, '=')
+    ->condition('n.status', 1, '=')
+    ->condition('r.state', WAITING_SYSTEM_NAME, '=');
 
-  // Send out the e-mail.
-  $message = array(
-    'headers' => array(
-      'MIME-Version' => '1.0',
-      'Content-Type' => 'text/html;',
-      // 'multipart/mixed;'.
-    ),
-    'module' => 'band_booking_registration_reminder',
-    'key' => '',
-    'to' => $to,
-    'from' => $from,
-    'subject' => $subject,
-    'body' => $body,
-  );
-  $message = mimemail_prepare_message($message);
-
-  // Send mail with mimemail.
-  if (mimemail_mailengine('send', $message)) {
-    global $base_url;
-    global $base_path;
-
-    // @todo : use t().
-    drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
-
-    // If manual, print message.
-    if ($progressive) {
-      // If auto (cron), send mail to site.
-    } else {
-      // @todo.
-      //Send mail to website email and set message to website
-      //watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
-    }
+  // If timestamp is set, filter by daily relaunches.
+  if (isset($timestamp) && is_numeric($timestamp)) {
+    $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
+    $min_day = date(REMINDER_DATE_FORMAT, $timestamp);
+    $max_day = date(REMINDER_DATE_FORMAT, strtotime('+1 day', $timestamp));
+    $query->condition('dr.field_relaunch_value', $min_day, '>=')
+      ->condition('dr.field_relaunch_value', $max_day, '<');
   }
+
+  // If nid specified, filter by node id, to.
+  isset($nid) && is_numeric($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
+
+  // Return result query.
+  return $query;
 }
 
 /**
@@ -202,7 +185,7 @@ function _bbrr_get_reminder_list($nid, $timestamp, array &$context) {
   $query->join('field_data_field_mail_content', 'mc', 'mc.entity_id = n.nid');
   $query->join('field_data_field_objet_du_mail', 'mo', 'mo.entity_id = n.nid');
 
-  // Check if User and Node are active, and registration is waiting.
+  // Check if user and node are active, and registration is waiting.
   $query->fields('u', array('uid', 'name', 'mail'))
     ->fields('r', array('registration_id'))
     ->fields('n', array('nid', 'title'))
@@ -215,103 +198,53 @@ function _bbrr_get_reminder_list($nid, $timestamp, array &$context) {
   return $query->execute()->fetchAllAssoc('registration_id');
 }
 
-/**
- * Get the common reminder query part.
- *
- * @param int $nid
- *   The node id specified or not.
- * @param int $timestamp
- *   Is the current day or not.
- *
- * @return \SelectQuery
- *   The common query part.
- */
-function _bbr_get_common_reminder_query($nid = NULL, $timestamp = NULL) {
-  // Select tables.
-  $query = db_select('users', 'u');
-  $query->join('registration', 'r', 'r.user_uid = u.uid');
-  $query->join('node', 'n', 'n.nid = r.entity_id');
+function _bbr_send_mail($reminder, $progressive) {
+  // Prepare mail parts.
+  $node = node_load($reminder->nid);
+  $user = user_load($reminder->uid);
+  $subject = token_replace($reminder->field_objet_du_mail_value, array('node' => $node));
+  $body = token_replace($reminder->field_mail_content_value, array('node' => $node, 'user' => $user));
+  $to = $reminder->mail;
+  $from = variable_get('site_mail', '');
 
-  // Check if User and Node are active, and registration is waiting.
-  $query
-    ->condition('u.status', 1, '=')
-    ->condition('n.status', 1, '=')
-    ->condition('r.state', WAITING_SYSTEM_NAME, '=');
+  // @TODO if manual : drupal set message; if auto = send mail.
+  // @todo : remove.
+  $to = 'romain.trenet@gmail.com';
 
-  // If timestamp is set, filter by daily relaunches.
-  if (isset($timestamp) && is_numeric($timestamp)) {
-    $query->join('field_data_field_relaunch', 'dr', 'dr.entity_id = n.nid');
-    $min_day = date(REMINDER_DATE_FORMAT, $timestamp);
-    $max_day = date(REMINDER_DATE_FORMAT, strtotime('+1 day', $timestamp));
-    $query->condition('dr.field_relaunch_value', $min_day, '>=')
-      ->condition('dr.field_relaunch_value', $max_day, '<');
-  }
+  // Send out the e-mail.
+  $message = array(
+    'headers' => array(
+      'MIME-Version' => '1.0',
+      'Content-Type' => 'text/html;',
+      // 'multipart/mixed;'.
+    ),
+    'module' => 'band_booking_registration_reminder',
+    'key' => '',
+    'to' => $to,
+    'from' => $from,
+    'subject' => $subject,
+    'body' => $body,
+  );
+  $message = mimemail_prepare_message($message);
 
-  // If nid specified, filter by node id, to.
-  isset($nid) && is_numeric($nid) ? $query->condition('n.nid', $nid, '=') : NULL;
+  // Send mail with mimemail.
+  if (mimemail_mailengine('send', $message)) {
+    global $base_url;
+    global $base_path;
 
-  // Return result query.
-  return $query;
-}
+    // @todo : use t().
+    drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
 
-/*
-function _bbr_send_mail ($result, $progressive, &$context) {
-  while ($relaunch = $result->fetchObject()) {
-    // Treatment of the batch.
-    // Send mail.
-    $node = node_load($relaunch->nid);
-    $user = user_load($relaunch->uid);
-    $subject = token_replace($relaunch->field_objet_du_mail_value, array('node' => $node));
-    $message = token_replace($relaunch->field_mail_content_value, array('node' => $node, 'user' => $user));
-    $to = $relaunch->mail;
-    $from = variable_get('site_mail', '');
-
-    $params = array(
-      'body' => $message,
-      'subject' => $subject,
-    );
-
-    // TODO if manual : drupal set message; if auto = send mail.
-
-    // @todo : remove.
-    $to = 'romain.trenet@gmail.com';
-
-    if (drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $to, language_default(), $params, $from, TRUE)) {
-      global $base_url;
-      global $base_path;
-
-      // If manual, print message.
-      if ($progressive) {
-        //
-        drupal_set_message('Relance envoyée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
-        // If auto (cron), send mail to site.
-      } else {
-        //Send mail to website email and set message to website
-        //$body = 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation <a href="' .$base_url . $base_path . 'node/'.  $relaunch->nid . '">' . $relaunch->title . '</a>.';
-        //$body = '<html><body>Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()) . '.</body></html>';
-
-        //$params_mail_website = array(
-          //'body' => $body,
-          //'subject' => 'Relance effectuée à '.$relaunch->name .' pour la prestation ' . $relaunch->title,
-        //);
-        //drupal_mail('band_booking_registration_reminder_', 'send_relaunch_mail', $from, language_default(), $params_mail_website, $from, TRUE);
-        //watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$relaunch->name .' pour la prestation ' .l($relaunch->title, $base_url . $base_path . 'node/'.  $relaunch->nid, $options = array()));
-      }
+    // If manual, print message.
+    if ($progressive) {
+      // If auto (cron), send mail to site.
+    } else {
+      // @todo.
+      //Send mail to website email and set message to website
+      //watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
     }
-    else {
-      drupal_set_message("Une erreur s'est produite lors de l'envoi de votre email");
-    }
-
-    //Increment progress and record current subscription id.
-    $context['sandbox']['progress']++;
-  }
-
-  //If batch is not at the end, record progress (use for percentage of progression)
-  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
   }
 }
-*/
 
 /**
  * The batch finish handler.
@@ -320,12 +253,16 @@ function _bbr_send_mail ($result, $progressive, &$context) {
  * @param $results
  * @param $operations
  */
-function band_booking_registration_reminder_batch_finished($success, $results, $operations) {
+function _band_booking_registration_reminder_batch_finished($success, $results, $operations) {
+  dpm('finish');
+  watchdog('error', 'finish batch');
   //dpm($results);
   if ($success) {
+    dpm('WIZZZZ');
     drupal_set_message(t('Relaunch proceeding succesfully applied'));
   }
   else {
+    dpm('OOOOOOO');
     $error_operation = reset($operations);
     $message = t('An error occurred while processing %error_operation with arguments: @arguments', array(
       '%error_operation' => $error_operation[0],
