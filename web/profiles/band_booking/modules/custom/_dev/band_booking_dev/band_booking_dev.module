@@ -27,5 +27,15 @@ function _band_booking_dev_test_page_view() {
     '@name' => 'Name',
     '@perf' => 'Test google',
   ));
+
+  try {
+    mail('romain.trenet@gmail.com', 'Hello world', 'Testing Postfix');
+    dpm('ok');
+  }
+  catch (Exception $e) {
+    dpm('no ok');
+  }
+
+
   return $text;
 }

@@ -23,6 +23,9 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
+  // @todo remove.
+  $progressive = FALSE;
+
   // Manual = progressive.
   $manual = $progressive;
 
@@ -41,6 +44,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
       ),
     ),
     'finished' => '_band_booking_registration_reminder_batch_finished',
+    // @todo : translate.
     'title' => t('Band booking relaunch batch'),
     'init_message' => t('Initialization of band booking relaunches'),
     'progress_message' => t('Processed @current out of @total.'),
@@ -62,7 +66,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  //return('<p>Uncomment that line to have a page view with dpm.</p>');
+  return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**
@@ -78,11 +82,6 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
  *   The context variables.
  */
 function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
-
-
-  watchdog(WATCHDOG_DEBUG, 'ROMAINNNN');
-
-
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
@@ -91,6 +90,10 @@ function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid
     // Record amount of results.
     $context['sandbox']['max'] = _bbrr_get_reminder_amount($nid, $timestamp);
   }
+  if (!isset($context['results']['success'], $context['results']['failure'])) {
+    $context['results']['success'] = 0;
+    $context['results']['failure'] = 0;
+  }
 
   // If there are results, batch the operations.
   if ($context['sandbox']['max'] > 0) {
@@ -98,8 +101,13 @@ function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid
     $reminders = _bbrr_get_reminder_list($nid, $timestamp, $context);
 
     foreach ($reminders as $reminder) {
-      // Send mail.
-      _bbr_send_mail($reminder, $manual);
+      // Send mail and record state.
+      if (_bbr_send_mail($reminder, $manual)) {
+        $context['results']['success']++;
+      }
+      else {
+        $context['results']['failure']++;
+      }
 
       // Record state.
       $context['sandbox']['progress']++;
@@ -216,6 +224,9 @@ function _bbrr_get_reminder_list($nid, $timestamp, array &$context) {
  *   The curent remind.
  * @param bool $manual
  *   Is manual action or not.
+ *
+ * @return bool
+ *   Return send of mail status.
  */
 function _bbr_send_mail($reminder, $manual) {
   // Prepare mail parts.
@@ -260,7 +271,7 @@ function _bbr_send_mail($reminder, $manual) {
     $success = TRUE;
   }
   catch (Exception $e) {
-    $log_text = t('Could not send reminder to @name for performance  <a href="@perf_path" target="_blank">@perf_name</a>', array(
+    $log_text = t('Could not send reminder to @name for performance <a href="@perf_path" target="_blank">@perf_name</a>', array(
       '@name' => $reminder->name,
       '@perf_path' => $perf_path,
       '@perf_name' => $reminder->title,
@@ -270,6 +281,8 @@ function _bbr_send_mail($reminder, $manual) {
 
   // Log result.
   band_booking_base_log($log_text, $success, $manual);
+
+  return $success;
 }
 
 /**
@@ -280,21 +293,29 @@ function _bbr_send_mail($reminder, $manual) {
  * @param $operations
  */
 function _band_booking_registration_reminder_batch_finished($success, $results, $operations) {
-  dpm($success);
-  dpm($results);
-  dpm($operations);
+  //dpm($success);
+  //dpm($results);
+  //dpm($operations);
 
   if ($success) {
-    drupal_set_message(t('Relaunch proceeding succesfully applied'));
+    $message = t('Relaunch proceeding succesfully applied, with @success_amount success(es) and @failure_amount failure(s).', array(
+      '@success_amount' => $results['success'],
+      '@failure_amount' => $results['failure'],
+    ));
+    drupal_set_message($message);
   }
   else {
+    $message = t('Relaunch proceeding unsuccesfully applied, with @success_amount success(es) and @failure_amount failure(s).', array(
+      '@success_amount' => $results['success'],
+      '@failure_amount' => $results['failure'],
+    ));
     $error_operation = reset($operations);
-    $message = t('An error occurred while processing %error_operation with arguments: @arguments', array(
+    $message .= t('An error occurred while processing %error_operation with arguments: @arguments', array(
       '%error_operation' => $error_operation[0],
       '@arguments' => print_r($error_operation[1], TRUE),
     ));
     drupal_set_message($message, 'error');
+    ////@todo : path.
+    //drupal_set_message(l(t('Run again'), 'admin/relaunch_batch_manually_today'));
   }
-  //@todo : path.
-  drupal_set_message(l(t('Run again'), 'my_module/batch_fix'));
 }
