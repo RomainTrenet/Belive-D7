@@ -374,7 +374,7 @@ function _mimemail_expand_links($matches) {
  * HTML and plaintext. Each subsequent part is the required image or attachment.
  */
 function mimemail_html_body($body, $subject, $plain = FALSE, $plaintext = NULL, $attachments = array()) {
-  if (empty($plaintext)) {dpm($body);dpm($plaintext);
+  if (empty($plaintext)) {
     // @todo Remove once filter_xss() can handle direct descendant selectors in inline CSS.
     // @see http://drupal.org/node/1116930
     // @see http://drupal.org/node/370903

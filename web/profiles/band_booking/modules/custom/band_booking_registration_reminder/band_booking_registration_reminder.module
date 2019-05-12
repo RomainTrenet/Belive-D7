@@ -4,6 +4,8 @@
  * Band booking registration reminder module.
  */
 
+//module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_batch');
+
 define("BATCH_LIMIT", 2);
 define("REMINDER_DATE_FORMAT", 'Y-m-d 00:00:00');
 define("REMINDER_ADMIN_PAGE", 'admin/relaunch_waiting');

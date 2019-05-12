@@ -23,14 +23,13 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
-  $progressive = FALSE;
-
   // Manual = progressive.
   $manual = $progressive;
 
   // Batch declaration.
   $batch_definition = array(
     // Declare operations.
+    'file' => drupal_get_path('module', 'band_booking_registration_reminder') . '/includes/band_booking_registration_reminder_batch.inc',
     'operations' => array(
       array(
         '_band_booking_registration_reminder_batch_process',
@@ -46,7 +45,6 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
     'init_message' => t('Initialization of band booking relaunches'),
     'progress_message' => t('Processed @current out of @total.'),
     'error_message' => t('An error occurred trying to relaunch band booking registrations'),
-    'file' => drupal_get_path('module', 'band_booking_registration_reminder') . '/included/band_booking_registration_reminder_batch.inc',
   );
 
   // Batch initialization.
@@ -64,7 +62,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  return('<p>Uncomment that line to have a page view with dpm.</p>');
+  //return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**
@@ -80,7 +78,11 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
  *   The context variables.
  */
 function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
+
+
   watchdog(WATCHDOG_DEBUG, 'ROMAINNNN');
+
+
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
