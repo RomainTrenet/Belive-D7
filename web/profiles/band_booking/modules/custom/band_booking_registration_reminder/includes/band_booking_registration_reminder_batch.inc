@@ -23,7 +23,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
-  $progressive = TRUE;
+  $progressive = FALSE;
 
   // Manual = progressive.
   $manual = $progressive;
@@ -46,6 +46,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
     'init_message' => t('Initialization of band booking relaunches'),
     'progress_message' => t('Processed @current out of @total.'),
     'error_message' => t('An error occurred trying to relaunch band booking registrations'),
+    'file' => drupal_get_path('module', 'band_booking_registration_reminder') . '/included/band_booking_registration_reminder_batch.inc',
   );
 
   // Batch initialization.
