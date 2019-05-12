@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_admin.rules_defaults.inc

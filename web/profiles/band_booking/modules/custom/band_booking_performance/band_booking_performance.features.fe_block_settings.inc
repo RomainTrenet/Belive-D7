@@ -100,7 +100,7 @@ function band_booking_performance_default_fe_block_settings() {
   );
 
   $export['band_booking_registration_reminder-bbrr_performance_reminder'] = array(
-    'cache' => 1,
+    'cache' => 8,
     'custom' => 0,
     'delta' => 'bbrr_performance_reminder',
     'module' => 'band_booking_registration_reminder',

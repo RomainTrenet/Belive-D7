@@ -1,0 +1,7 @@
+name = Band booking DEV
+description = Dev for Band Booking
+core = 7.x
+package = Band booking
+version = 7.x-1.0
+dependencies[] = devel
+project path = profiles/band_booking/modules/custom/_dev

@@ -8,6 +8,16 @@
 /**
  * Uninstall belive registration relaunch.
  */
-function band_booking_base_update_7101(&$sandbox) {
+function band_booking_base_update_7101() {
+  if( module_exists('belive_registration_relaunch')) {
+    module_disable(array('belive_registration_relaunch'));
     drupal_uninstall_modules(array('belive_registration_relaunch'));
+  }
+}
+
+/**
+ * Unpdate old unconfirmed nodes.
+ */
+function band_booking_base_update_7102() {
+  _band_booking_base_update_old_unconfirmed_nodes();
 }

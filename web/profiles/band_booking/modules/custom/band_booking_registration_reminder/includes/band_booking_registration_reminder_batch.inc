@@ -23,13 +23,22 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
+  $progressive = TRUE;
+
+  // Manual = progressive.
+  $manual = $progressive;
+
   // Batch declaration.
   $batch_definition = array(
     // Declare operations.
     'operations' => array(
       array(
         '_band_booking_registration_reminder_batch_process',
-        array($progressive, $nid, $timestamp),
+        array(
+          $manual,
+          $nid,
+          $timestamp,
+        ),
       ),
     ),
     'finished' => '_band_booking_registration_reminder_batch_finished',
@@ -54,14 +63,14 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  // return('<p>Uncomment that line to have a page view with dpm.</p>');.
+  return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**
  * Setup batch and operations to perform. We create a list of batch operations.
  *
- * @param bool $progressive
- *   Display progressive bar or not.
+ * @param bool $manual
+ *   Is manual action or not.
  * @param int $nid
  *   The node id specified or not.
  * @param int $timestamp
@@ -69,7 +78,8 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
  * @param array $context
  *   The context variables.
  */
-function _band_booking_registration_reminder_batch_process($progressive = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
+function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
+  watchdog(WATCHDOG_DEBUG, 'ROMAINNNN');
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
@@ -86,7 +96,7 @@ function _band_booking_registration_reminder_batch_process($progressive = FALSE,
 
     foreach ($reminders as $reminder) {
       // Send mail.
-      _bbr_send_mail($reminder, $progressive);
+      _bbr_send_mail($reminder, $manual);
 
       // Record state.
       $context['sandbox']['progress']++;
@@ -196,7 +206,15 @@ function _bbrr_get_reminder_list($nid, $timestamp, array &$context) {
   return $query->execute()->fetchAllAssoc('registration_id');
 }
 
-function _bbr_send_mail($reminder, $progressive) {
+/**
+ * Send mail for remind.
+ *
+ * @param object $reminder
+ *   The curent remind.
+ * @param bool $manual
+ *   Is manual action or not.
+ */
+function _bbr_send_mail($reminder, $manual) {
   // Prepare mail parts.
   $node = node_load($reminder->nid);
   $user = user_load($reminder->uid);
@@ -205,7 +223,6 @@ function _bbr_send_mail($reminder, $progressive) {
   $to = $reminder->mail;
   $from = variable_get('site_mail', '');
 
-  // @TODO if manual : drupal set message; if auto = send mail.
   // @todo : remove.
   $to = 'romain.trenet@gmail.com';
 
@@ -214,7 +231,6 @@ function _bbr_send_mail($reminder, $progressive) {
     'headers' => array(
       'MIME-Version' => '1.0',
       'Content-Type' => 'text/html;',
-      // 'multipart/mixed;'.
     ),
     'module' => 'band_booking_registration_reminder',
     'key' => '',
@@ -225,22 +241,52 @@ function _bbr_send_mail($reminder, $progressive) {
   );
   $message = mimemail_prepare_message($message);
 
-  // Send mail with mimemail.
-  if (mimemail_mailengine('send', $message)) {
-    global $base_url;
-    global $base_path;
+  // Prepare log.
+  global $base_url;
+  global $base_path;
+  $remind_anchor = l($reminder->title, $base_url . $base_path . 'node/' . $reminder->nid);
 
-    // @todo : use t().
-    drupal_set_message('Relance envoyée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
+  // Try to send mail with mimemail.
+  try {
+    mimemail_mailengine('send', $message);
+    $log_text = t('Reminder sent to @name for performance "@perf"', array(
+      '@name' => $reminder->name,
+      '@perf' => $remind_anchor,
+    ));
+    $success = TRUE;
+  }
+  catch (Exception $e) {
+    $log_text = t('Could not send reminder to @name for performance "@perf"', array(
+      '@name' => $reminder->name,
+      '@perf' => $remind_anchor,
+    ));
+    $success = FALSE;
+  }
 
-    // If manual, print message.
-    if ($progressive) {
-      // If auto (cron), send mail to site.
-    } else {
-      // @todo.
-      //Send mail to website email and set message to website
-      //watchdog('Belive relaunch', 'Bonjour,<br>Relance effectuée à '.$reminder->name .' pour la prestation ' .l($reminder->title, $base_url . $base_path . 'node/'.  $reminder->nid, $options = array()));
-    }
+  // Log result.
+  _send_mail_log($log_text, $success, $manual);
+}
+
+/**
+ * Common log function.
+ *
+ * @param string $log_text
+ *   The translated text to log.
+ * @param bool $success
+ *   Is successfull operation or not.
+ * @param bool $manual
+ *   Is manual action or not.
+ */
+function _send_mail_log($log_text, $success, $manual) {
+  $watchdog_type = $success ? WATCHDOG_INFO : WATCHDOG_ERROR;
+
+  // If manual, print message.
+  if ($manual) {
+    drupal_set_message($log_text);
+  }
+  // If automatic, watchdog.
+  else {
+    watchdog($watchdog_type, $log_text);
   }
 }
 

@@ -81,3 +81,6 @@ msgstr "Sélectionnez les artistes que vous souhaitez retirer de la prestation. 
 
 msgid "No registered artist."
 msgstr "Aucun artiste inscrit."
+
+msgid "Reminder sent to @name for performance \"@perf\""
+msgstr "Relance envoyée à  @name pour la prestation \"@perf\""

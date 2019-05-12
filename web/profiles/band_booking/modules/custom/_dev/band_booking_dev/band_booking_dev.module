@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ * Code for the Band booking base feature.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * @ingroup signup_core
+ */
+function band_booking_dev_menu() {
+  return array(
+    // Admin page with reminder links.
+    'page-de-test' => array(
+      'title' => 'Page de test',
+      'page callback' => '_band_booking_dev_test_page_view',
+      'page arguments' => array(),
+      'access arguments' => array(TRUE),
+      'type' => MENU_NORMAL_ITEM,
+    ),
+  );
+}
+
+function _band_booking_dev_test_page_view() {
+  $text = t('Reminder sent to @name for performance "@perf"', array(
+    '@name' => 'Name',
+    '@perf' => 'Test google',
+  ));
+  return $text;
+}

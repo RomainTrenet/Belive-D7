@@ -5,3 +5,37 @@
  */
 
 include_once 'band_booking_base.features.inc';
+
+function _band_booking_base_update_old_unconfirmed_nodes() {
+  // Get list of unstated nodes.
+  $query = db_select('node', 'n');
+  $query->leftjoin('field_data_field_confirm', 'c', 'n.vid = c.entity_id');
+  $query->isNull('c.entity_id');
+  $query
+    ->condition('n.type', 'performance', '=');
+  $query->fields('n', array('vid'));
+  $result = $query->execute()->fetchCol();
+
+  // Change value.
+  $nodes = node_load_multiple($result);
+  foreach ($nodes as $nid => $node) {
+    if (empty($node->field_confirm)) {
+      $node->field_confirm = array(
+        LANGUAGE_NONE => array(
+          array(
+            'value' => 'confirmed'
+          )
+        )
+      );
+      try {
+        node_save($node);
+        drupal_set_message('Updated the node : ' . $nid);
+      }
+      catch (Exception $e) {
+        // Log the exception to watchdog.
+        watchdog_exception('type', $e);
+        drupal_set_message('Could not update the node : ' . $nid, 'error');
+      }
+    }
+  }
+}

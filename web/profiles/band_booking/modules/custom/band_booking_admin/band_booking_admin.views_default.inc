@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * band_booking_admin.views_default.inc
@@ -686,6 +687,28 @@ function band_booking_admin_views_default_views() {
     5 => 0,
   );
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'now';
+  /* Critère de filtrage: Contenu : Confirmation (field_confirm) */
+  $handler->display->display_options['filters']['field_confirm_value']['id'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['table'] = 'field_data_field_confirm';
+  $handler->display->display_options['filters']['field_confirm_value']['field'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['value'] = array(
+    'pending' => 'pending',
+    'confirmed' => 'confirmed',
+    'canceled' => 'canceled',
+  );
+  $handler->display->display_options['filters']['field_confirm_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator_id'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['label'] = 'Confirmation';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['identifier'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+  );
   $handler->display->display_options['path'] = 'admin/performances';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Liste des prestations';
@@ -842,13 +865,8 @@ function band_booking_admin_views_default_views() {
     t('terme'),
     t('- Choisir une opération -'),
     t('Unpublish'),
-    t('Change value'),
-    t('Promote to front page'),
     t('Publish'),
-    t('Demote from front page'),
-    t('Unstick'),
     t('Delete'),
-    t('Stick'),
     t('Titre'),
     t('Lieu'),
     t('Date'),
