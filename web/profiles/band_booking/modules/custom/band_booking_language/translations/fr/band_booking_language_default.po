@@ -82,5 +82,14 @@ msgstr "Sélectionnez les artistes que vous souhaitez retirer de la prestation. 
 msgid "No registered artist."
 msgstr "Aucun artiste inscrit."
 
-msgid "Reminder sent to @name for performance \"@perf\""
-msgstr "Relance envoyée à  @name pour la prestation \"@perf\""
+msgid "Relaunch proceeding succesfully applied"
+msgstr "Procédure de relance appliquée avec succès"
+
+msgid "An error occurred while processing %error_operation with arguments: @arguments"
+msgstr "Une erreur s'est produite lors du traitement de %error_operation avec les arguments: @arguments"
+
+msgid "Reminder sent to @name for performance <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"
+msgstr "Relance envoyée à @name pour la prestation <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"
+
+msgid "Could not send reminder to @name for performance  <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"
+msgstr "Impossble d'envoyer la relance à @name pour la prestation <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"

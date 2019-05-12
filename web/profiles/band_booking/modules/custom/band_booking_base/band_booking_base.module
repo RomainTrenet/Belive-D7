@@ -6,7 +6,33 @@
 
 include_once 'band_booking_base.features.inc';
 
-function _band_booking_base_update_old_unconfirmed_nodes() {
+/**
+ * Common BB log function.
+ *
+ * @param string $log_text
+ *   The translated text to log.
+ * @param bool $success
+ *   Is successfull operation or not.
+ * @param bool $manual
+ *   Is manual action or not.
+ */
+function band_booking_base_log($log_text, $success, $manual) {
+  // If manual, print message.
+  if ($manual) {
+    $dsm_type = $success ? 'status' : 'error';
+    drupal_set_message($log_text, $dsm_type);
+  }
+  // If automatic, watchdog.
+  else {
+    $watchdog_type = $success ? WATCHDOG_INFO : WATCHDOG_ERROR;
+    watchdog($watchdog_type, $log_text);
+  }
+}
+
+/**
+ * Set a status to old unconfirmed prestations.
+ */
+function _band_booking_base_update_old_unconfirmed_performances() {
   // Get list of unstated nodes.
   $query = db_select('node', 'n');
   $query->leftjoin('field_data_field_confirm', 'c', 'n.vid = c.entity_id');

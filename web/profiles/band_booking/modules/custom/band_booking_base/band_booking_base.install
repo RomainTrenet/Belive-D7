@@ -19,5 +19,5 @@ function band_booking_base_update_7101() {
  * Unpdate old unconfirmed nodes.
  */
 function band_booking_base_update_7102() {
-  _band_booking_base_update_old_unconfirmed_nodes();
+  _band_booking_base_update_old_unconfirmed_performances();
 }

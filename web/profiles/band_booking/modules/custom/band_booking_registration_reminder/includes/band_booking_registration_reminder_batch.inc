@@ -247,50 +247,29 @@ function _bbr_send_mail($reminder, $manual) {
   // Prepare log.
   global $base_url;
   global $base_path;
-  $remind_anchor = l($reminder->title, $base_url . $base_path . 'node/' . $reminder->nid);
+  $perf_path = $base_url . $base_path . 'node/' . $reminder->nid;
 
   // Try to send mail with mimemail.
   try {
     mimemail_mailengine('send', $message);
-    $log_text = t('Reminder sent to @name for performance "@perf"', array(
+    $log_text = t('Reminder sent to @name for performance <a href="@perf_path" target="_blank">@perf_name</a>', array(
       '@name' => $reminder->name,
-      '@perf' => $remind_anchor,
+      '@perf_path' => $perf_path,
+      '@perf_name' => $reminder->title,
     ));
     $success = TRUE;
   }
   catch (Exception $e) {
-    $log_text = t('Could not send reminder to @name for performance "@perf"', array(
+    $log_text = t('Could not send reminder to @name for performance  <a href="@perf_path" target="_blank">@perf_name</a>', array(
       '@name' => $reminder->name,
-      '@perf' => $remind_anchor,
+      '@perf_path' => $perf_path,
+      '@perf_name' => $reminder->title,
     ));
     $success = FALSE;
   }
 
   // Log result.
-  _send_mail_log($log_text, $success, $manual);
-}
-
-/**
- * Common log function.
- *
- * @param string $log_text
- *   The translated text to log.
- * @param bool $success
- *   Is successfull operation or not.
- * @param bool $manual
- *   Is manual action or not.
- */
-function _send_mail_log($log_text, $success, $manual) {
-  $watchdog_type = $success ? WATCHDOG_INFO : WATCHDOG_ERROR;
-
-  // If manual, print message.
-  if ($manual) {
-    drupal_set_message($log_text);
-  }
-  // If automatic, watchdog.
-  else {
-    watchdog($watchdog_type, $log_text);
-  }
+  band_booking_base_log($log_text, $success, $manual);
 }
 
 /**
@@ -301,8 +280,10 @@ function _send_mail_log($log_text, $success, $manual) {
  * @param $operations
  */
 function _band_booking_registration_reminder_batch_finished($success, $results, $operations) {
-  //watchdog('error', 'finish batch');
-  //dpm($results);
+  dpm($success);
+  dpm($results);
+  dpm($operations);
+
   if ($success) {
     drupal_set_message(t('Relaunch proceeding succesfully applied'));
   }
@@ -314,5 +295,6 @@ function _band_booking_registration_reminder_batch_finished($success, $results, 
     ));
     drupal_set_message($message, 'error');
   }
+  //@todo : path.
   drupal_set_message(l(t('Run again'), 'my_module/batch_fix'));
 }
