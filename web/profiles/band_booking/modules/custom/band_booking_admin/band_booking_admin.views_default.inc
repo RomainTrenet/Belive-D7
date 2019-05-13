@@ -630,8 +630,8 @@ function band_booking_admin_views_default_views() {
   );
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'now';
 
-  /* Display: A venir */
-  $handler = $view->new_display('page', 'A venir', 'page_1');
+  /* Display: /admin/performances */
+  $handler = $view->new_display('page', '/admin/performances', 'page_1');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Liste des prestations';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
@@ -718,8 +718,8 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
-  /* Display: Anciennes prestations */
-  $handler = $view->new_display('page', 'Anciennes prestations', 'page_2');
+  /* Display: /admin/former-performances */
+  $handler = $view->new_display('page', '/admin/former-performances', 'page_2');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Anciennes prestations';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
@@ -775,6 +775,28 @@ function band_booking_admin_views_default_views() {
     5 => 0,
   );
   $handler->display->display_options['filters']['field_date_value']['default_date'] = 'now';
+  /* Critère de filtrage: Contenu : Confirmation (field_confirm) */
+  $handler->display->display_options['filters']['field_confirm_value']['id'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['table'] = 'field_data_field_confirm';
+  $handler->display->display_options['filters']['field_confirm_value']['field'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['value'] = array(
+    'pending' => 'pending',
+    'confirmed' => 'confirmed',
+    'canceled' => 'canceled',
+  );
+  $handler->display->display_options['filters']['field_confirm_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator_id'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['label'] = 'Confirmation';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['identifier'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+  );
   $handler->display->display_options['path'] = 'admin/former-performances';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Anciennes prestations';
@@ -843,6 +865,28 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
   $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
   $handler->display->display_options['filters']['status']['expose']['remember'] = TRUE;
+  /* Critère de filtrage: Contenu : Confirmation (field_confirm) */
+  $handler->display->display_options['filters']['field_confirm_value']['id'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['table'] = 'field_data_field_confirm';
+  $handler->display->display_options['filters']['field_confirm_value']['field'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['value'] = array(
+    'pending' => 'pending',
+    'confirmed' => 'confirmed',
+    'canceled' => 'canceled',
+  );
+  $handler->display->display_options['filters']['field_confirm_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator_id'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['label'] = 'Confirmation';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['operator'] = 'field_confirm_value_op';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['identifier'] = 'field_confirm_value';
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_confirm_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+  );
   $handler->display->display_options['block_description'] = 'Prestations à venir';
   $translatables['band_booking_administration_performances'] = array(
     t('Defaults'),
@@ -876,8 +920,9 @@ function band_booking_admin_views_default_views() {
     t('Actions'),
     t('Type'),
     t('Date (field_date)'),
-    t('A venir'),
+    t('/admin/performances'),
     t('Liste des prestations'),
+    t('/admin/former-performances'),
     t('Anciennes prestations'),
     t('Bloc prestations à venir'),
   );

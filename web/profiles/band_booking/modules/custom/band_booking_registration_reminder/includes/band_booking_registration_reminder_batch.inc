@@ -66,7 +66,7 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  return('<p>Uncomment that line to have a page view with dpm.</p>');
+  //return('<p>Uncomment that line to have a page view with dpm.</p>');
 }
 
 /**

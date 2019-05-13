@@ -30,7 +30,12 @@ function band_booking_admin_default_rules_configuration() {
       "ON" : { "user_login" : [] },
       "IF" : [
         { "user_has_role" : { "account" : [ "account" ], "roles" : { "value" : { "5" : "5" } } } },
-        { "NOT pathrules_checkpath" : { "path" : "?destination" } }
+        { "NOT pathrules_checkpath" : { "path" : "?destination" } },
+        { "NOT user_has_role" : {
+            "account" : [ "account" ],
+            "roles" : { "value" : { "3" : "3", "4" : "4" } }
+          }
+        }
       ],
       "DO" : [ { "redirect" : { "url" : "mes-prestations" } } ]
     }
