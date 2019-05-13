@@ -1,10 +1,10 @@
-# French translation of Drupal core (7.66)
+# French translation of Drupal core (7.67)
 # Copyright (c) 2019 by the French translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Drupal core (7.66)\n"
-"POT-Creation-Date: 2019-04-29 12:00+0000\n"
+"Project-Id-Version: Drupal core (7.67)\n"
+"POT-Creation-Date: 2019-05-08 17:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
