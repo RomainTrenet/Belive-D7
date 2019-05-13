@@ -136,10 +136,12 @@ function band_booking_registration_reminder_permission() {
  * @todo.
  * Launch batch operations in hook_cron.
  */
+/*
 function band_booking_registration_reminder_cron() {
   module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_batch');
   _band_booking_registration_reminder_setup_batch(FALSE, NULL, TRUE, NULL, NULL, NULL);
 }
+*/
 
 /**
  * @TODO.
