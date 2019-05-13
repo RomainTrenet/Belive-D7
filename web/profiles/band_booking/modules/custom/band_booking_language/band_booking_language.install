@@ -13,14 +13,7 @@ function band_booking_language_install() {
 }
 
 /**
- * Auto update language.
- */
-function band_booking_language_update_7104(&$sandbox) {
-  band_booking_language_auto_update_files();
-}
-
-/**
- * Auto update language.
+ * Simply increment update numbre if you want to auto update language.
  */
 function band_booking_language_update_7105(&$sandbox) {
   band_booking_language_auto_update_files();

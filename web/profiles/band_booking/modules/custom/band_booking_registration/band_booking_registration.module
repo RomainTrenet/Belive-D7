@@ -48,31 +48,6 @@ function band_booking_registration_menu() {
       'description' => 'Configure the roles for Belive Registration',
       'file' => 'includes/band_booking_registration.admin.inc',
     ),
-    // Register many.
-    /*
-    'node/%performance_node_menu/register_many' => array(
-      'title' => 'Register many artists',
-      'page callback' => 'band_booking_registration_register_many_users_view',
-      'page arguments' => array(1),
-      'access callback' => '_band_booking_registration_menu_register_many_users_access',
-      'access arguments' => array(1, "registrate users to $type registration"),
-      'type' => MENU_LOCAL_TASK,
-      'file' => 'band_booking_registration_register_many_users.form.inc',
-      'file path' => $path,
-      'weight' => 3,
-    ),
-    //Unregister many
-    'node/%performance_node_menu/unregister_many' => array(
-      'title' => 'Unregister many musicians',
-      'page callback' => 'band_booking_registration_unregister_many_users_view',
-      'page arguments' => array(1),
-      'access callback' => '_band_booking_registration_menu_register_many_users_access',
-      'access arguments' => array(1, "registrate users to $type registration"),
-      'type' => MENU_LOCAL_TASK,
-      'file' => 'band_booking_registration_unregister_many_users.form.inc',
-      'file path' => $path,
-      'weight' => 4,
-    ),*/
     //States registration
     'node/%performance_node_menu/state_registration/%' => array(
       'title' => "State $type registration",
@@ -145,14 +120,12 @@ function band_booking_registration_block_view($delta = '') {
 
 function band_booking_registration_register_many_block_content() {
   if ($node = menu_get_object()) {
-    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
     return drupal_get_form('band_booking_registration_register_many_users_form', $node);
   }
 }
 
 function band_booking_registration_unregister_many_block_content() {
   if ($node = menu_get_object()) {
-    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
     return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);
   }
 }
@@ -166,24 +139,6 @@ function band_booking_registration_unregister_many_block_content() {
 function band_booking_registration_form_registration_entity_settings_form_alter(&$form, &$form_state, $form_id) {
   $form['reminder']['#collapsed'] = TRUE;
   $form['settings']['#collapsed'] = TRUE;
-}
-
-/**
- * Determine menu access callback for a specific signup.
- *
- * @param stdClass $signup
- *   The fully-loaded signup object that would be affected.
- * @param string $op
- *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
- *
- * @return bool
- *   TRUE if the operation should be permitted, otherwise FALSE.
- */
-function _band_booking_registration_menu_register_many_users_access($node, $permission) {
-  if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
-    return FALSE;
-  }
-  return TRUE;
 }
 
 /**

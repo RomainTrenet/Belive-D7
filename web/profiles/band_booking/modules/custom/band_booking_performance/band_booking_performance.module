@@ -45,9 +45,6 @@ function band_booking_performance_theme() {
   return array(
     // The theme function that our formatter uses:
     'band_booking_performance_formatter_band_booking_performance_confirmation_icon' => array(
-      // Don't forget that all Drupal 7 theme functions have only one argument,
-      // so you declare what variables get passed within that argument instead.
-      // See http://drupal.org/node/224333#theme_changes
       'variables' => array('element' => NULL),
     ),
   );
