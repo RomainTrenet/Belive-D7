@@ -27,7 +27,6 @@ function band_booking_registration_reminder_menu() {
     // Admin page with reminder links.
     REMINDER_ADMIN_PAGE => array(
       'title' => 'Reminders',
-      // @todo : too long name.
       'page callback' => '_band_booking_registration_reminder_admin_page_view',
       'page arguments' => array(),
       'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
@@ -41,7 +40,7 @@ function band_booking_registration_reminder_menu() {
       'title' => 'Batch relaunch all',
       'description' => 'Batch to auto relaunch all registrations',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(FALSE, NULL, TRUE, NULL, NULL),
+      'page arguments' => array(FALSE, NULL, TRUE, NULL, NULL, 'relaunch_batch_cron'),
       'access arguments' => array('relaunch waiting users registration'),
       'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
@@ -51,7 +50,7 @@ function band_booking_registration_reminder_menu() {
     'node/%/relaunch_waiting' => array(
       'title' => 'Relaunch waiting registrations',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(TRUE, 1, FALSE, NULL, 1),
+      'page arguments' => array(TRUE, 1, FALSE, NULL, 1, NULL),
       'access callback' => '_band_booking_registration_reminder_admin_relaunch_waiting_users_registration_access',
       'access arguments' => array(1, 'relaunch waiting users registration'),
       'type' => MENU_LOCAL_TASK,
@@ -64,7 +63,7 @@ function band_booking_registration_reminder_menu() {
       'title' => 'Batch relaunch everyday',
       'description' => 'Batch to auto relaunch all registrations for everyday',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(TRUE, NULL, FALSE, NULL, REMINDER_ADMIN_PAGE),
+      'page arguments' => array(TRUE, NULL, FALSE, NULL, REMINDER_ADMIN_PAGE, REMINDER_MANUAL_EVERYDAY),
       'access arguments' => array('relaunch waiting users registration'),
       'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
@@ -75,7 +74,7 @@ function band_booking_registration_reminder_menu() {
       'title' => 'Batch relaunch today',
       'description' => 'Batch to auto relaunch all registrations for today',
       'page callback' => '_band_booking_registration_reminder_setup_batch',
-      'page arguments' => array(TRUE, NULL, TRUE, NULL, REMINDER_ADMIN_PAGE),
+      'page arguments' => array(TRUE, NULL, TRUE, NULL, REMINDER_ADMIN_PAGE, REMINDER_MANUAL_TODAY),
       'access arguments' => array('relaunch waiting users registration'),
       'file' => 'band_booking_registration_reminder_batch.inc',
       'file path' => $path,
@@ -139,7 +138,7 @@ function band_booking_registration_reminder_permission() {
  */
 function band_booking_registration_reminder_cron() {
   module_load_include('inc', 'band_booking_registration_reminder', 'includes/band_booking_registration_reminder_batch');
-  _band_booking_registration_reminder_setup_batch(FALSE, NULL, TRUE, NULL);
+  _band_booking_registration_reminder_setup_batch(FALSE, NULL, TRUE, NULL, NULL, NULL);
 }
 
 /**
@@ -191,5 +190,24 @@ function _bbr_ensure_reminder_timestamp($timestamp, $is_today) {
   // If timestamp is not defined, check today.
   else {
     return $is_today ? time() : NULL;
+  }
+}
+
+/**
+ * Ensure batch path.
+ *
+ * @param string $batch_path
+ *   The batch path, if one.
+ * @param int $nid
+ *   The node ID, if one.
+ * @return string
+ *   The final batch path.
+ */
+function _bbr_ensure_batch_path($batch_path, $nid) {
+  if(isset($nid) && !empty($nid)) {
+    return 'node/' . $nid . '/relaunch_waiting';
+  }
+  else {
+    return $batch_path;
   }
 }

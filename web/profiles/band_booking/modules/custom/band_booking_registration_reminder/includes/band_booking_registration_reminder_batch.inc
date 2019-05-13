@@ -18,13 +18,15 @@
  *   Date specified or not.
  * @param string $redirect
  *   Redirect path.
+ * @param string $batch_path
+ *   The current batch path.
  */
-function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL, $redirect = NULL) {
+function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $nid = NULL, $is_today = TRUE, $timestamp = NULL, $redirect = NULL, $batch_path = NULL) {
   // Ensure timestamp, get one if is today.
   $timestamp = _bbr_ensure_reminder_timestamp($timestamp, $is_today);
 
-  // @todo remove.
-  $progressive = FALSE;
+  // Ensure batch path.
+  $batch_path = _bbr_ensure_batch_path($batch_path, $nid);
 
   // Manual = progressive.
   $manual = $progressive;
@@ -40,14 +42,14 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
           $manual,
           $nid,
           $timestamp,
+          $batch_path,
         ),
       ),
     ),
     'finished' => '_band_booking_registration_reminder_batch_finished',
-    // @todo : translate.
-    'title' => t('Band booking relaunch batch'),
-    'init_message' => t('Initialization of band booking relaunches'),
-    'progress_message' => t('Processed @current out of @total.'),
+    'title' => t('Band booking reminders batch'),
+    'init_message' => t('Initialization of band booking reminders'),
+    'progress_message' => t('Processed @current out of @total'),
     'error_message' => t('An error occurred trying to relaunch band booking registrations'),
   );
 
@@ -66,11 +68,11 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
   // Finally process batch and redirect to admin.
   batch_process($redirect);
 
-  //return('<p>Uncomment that line to have a page view with dpm.</p>');
+  // return('<p>Uncomment that line to have a page view with dpm.</p>');.
 }
 
 /**
- * Setup batch and operations to perform. We create a list of batch operations.
+ * Reminder batch process to perform.
  *
  * @param bool $manual
  *   Is manual action or not.
@@ -78,10 +80,12 @@ function _band_booking_registration_reminder_setup_batch($progressive = FALSE, $
  *   The node id specified or not.
  * @param int $timestamp
  *   Date specified or not.
+ * @param string $batch_path
+ *   The current batch path.
  * @param array $context
  *   The context variables.
  */
-function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid = NULL, $timestamp = NULL, array &$context = array()) {
+function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid = NULL, $timestamp = NULL, $batch_path = NULL, array &$context = array()) {
   // Init the batch.
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
@@ -90,9 +94,10 @@ function _band_booking_registration_reminder_batch_process($manual = FALSE, $nid
     // Record amount of results.
     $context['sandbox']['max'] = _bbrr_get_reminder_amount($nid, $timestamp);
   }
-  if (!isset($context['results']['success'], $context['results']['failure'])) {
+  if (!isset($context['results']['success'], $context['results']['failure'], $context['results']['batch_path'])) {
     $context['results']['success'] = 0;
     $context['results']['failure'] = 0;
+    $context['results']['batch_path'] = $batch_path;
   }
 
   // If there are results, batch the operations.
@@ -237,9 +242,6 @@ function _bbr_send_mail($reminder, $manual) {
   $to = $reminder->mail;
   $from = variable_get('site_mail', '');
 
-  // @todo : remove.
-  $to = 'romain.trenet@gmail.com';
-
   // Send out the e-mail.
   $message = array(
     'headers' => array(
@@ -287,16 +289,15 @@ function _bbr_send_mail($reminder, $manual) {
 
 /**
  * The batch finish handler.
- * @ todo
- * @param $success
- * @param $results
- * @param $operations
+ *
+ * @param bool $success
+ *   The success status returned by batch.
+ * @param array $results
+ *   The results returned by batch.
+ * @param array $operations
+ *   The operations returned by batch.
  */
-function _band_booking_registration_reminder_batch_finished($success, $results, $operations) {
-  //dpm($success);
-  //dpm($results);
-  //dpm($operations);
-
+function _band_booking_registration_reminder_batch_finished($success, array $results, array $operations) {
   if ($success) {
     $message = t('Relaunch proceeding succesfully applied, with @success_amount success(es) and @failure_amount failure(s).', array(
       '@success_amount' => $results['success'],
@@ -315,7 +316,10 @@ function _band_booking_registration_reminder_batch_finished($success, $results, 
       '@arguments' => print_r($error_operation[1], TRUE),
     ));
     drupal_set_message($message, 'error');
-    ////@todo : path.
-    //drupal_set_message(l(t('Run again'), 'admin/relaunch_batch_manually_today'));
+
+    // Add link to relaunch the batch.
+    if (!empty($results['batch_path'])) {
+      drupal_set_message(l(t('Run batch again'), $results['batch_path']));
+    }
   }
 }

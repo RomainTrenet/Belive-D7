@@ -96,3 +96,18 @@ msgstr "Relance envoyée à @name pour la prestation <a href=\"@perf_path\" targ
 
 msgid "Could not send reminder to @name for performance <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"
 msgstr "Impossble d'envoyer la relance à @name pour la prestation <a href=\"@perf_path\" target=\"_blank\">@perf_name</a>"
+
+msgid "Band booking reminders batch"
+msgstr "Traitement par lot de relances Band booking"
+
+msgid "Initialization of band booking reminders"
+msgstr "Initialisation du traitement par lot de relances Band booking"
+
+msgid "Processed @current out of @total"
+msgstr "@current traité sur @total"
+
+msgid "An error occurred trying to relaunch band booking registrations"
+msgstr "Une erreur s'est produite lors de la tentative de relance des inscriptions de Band booking"
+
+msgid "Run batch again"
+msgstr "Relancer le traitement par lot"
