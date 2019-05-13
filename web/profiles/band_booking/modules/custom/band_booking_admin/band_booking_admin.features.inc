@@ -26,10 +26,10 @@ function band_booking_admin_views_api($module = NULL, $api = NULL) {
  */
 function band_booking_admin_default_profile2_type() {
   $items = array();
-  $items['profil_musicien'] = entity_import('profile2_type', '{
+  $items['profil_artist'] = entity_import('profile2_type', '{
     "userCategory" : true,
     "userView" : true,
-    "type" : "profil_musicien",
+    "type" : "profil_artist",
     "label" : "Profil artiste",
     "weight" : "0",
     "data" : { "registration" : 0, "roles" : { "5" : "5" } },

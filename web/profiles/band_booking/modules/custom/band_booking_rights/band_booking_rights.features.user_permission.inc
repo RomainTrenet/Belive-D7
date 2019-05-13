@@ -800,9 +800,9 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'band_booking_registration',
   );
 
-  // Exported permission: 'edit any profil_musicien profile'.
-  $permissions['edit any profil_musicien profile'] = array(
-    'name' => 'edit any profil_musicien profile',
+  // Exported permission: 'edit any profil_artist profile'.
+  $permissions['edit any profil_artist profile'] = array(
+    'name' => 'edit any profil_artist profile',
     'roles' => array(),
     'module' => 'profile2',
   );
@@ -844,9 +844,9 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'band_booking_registration',
   );
 
-  // Exported permission: 'edit own profil_musicien profile'.
-  $permissions['edit own profil_musicien profile'] = array(
-    'name' => 'edit own profil_musicien profile',
+  // Exported permission: 'edit own profil_artist profile'.
+  $permissions['edit own profil_artist profile'] = array(
+    'name' => 'edit own profil_artist profile',
     'roles' => array(),
     'module' => 'profile2',
   );
@@ -1158,9 +1158,9 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'filter',
   );
 
-  // Exported permission: 'view any profil_musicien profile'.
-  $permissions['view any profil_musicien profile'] = array(
-    'name' => 'view any profil_musicien profile',
+  // Exported permission: 'view any profil_artist profile'.
+  $permissions['view any profil_artist profile'] = array(
+    'name' => 'view any profil_artist profile',
     'roles' => array(),
     'module' => 'profile2',
   );
@@ -1183,9 +1183,9 @@ function band_booking_rights_user_default_permissions() {
     'module' => 'registration',
   );
 
-  // Exported permission: 'view own profil_musicien profile'.
-  $permissions['view own profil_musicien profile'] = array(
-    'name' => 'view own profil_musicien profile',
+  // Exported permission: 'view own profil_artist profile'.
+  $permissions['view own profil_artist profile'] = array(
+    'name' => 'view own profil_artist profile',
     'roles' => array(),
     'module' => 'profile2',
   );

@@ -293,9 +293,28 @@ function band_booking_admin_views_default_views() {
   $handler->display->display_options['filters']['rid']['expose']['operator'] = 'rid_op';
   $handler->display->display_options['filters']['rid']['expose']['identifier'] = 'rid';
   $handler->display->display_options['filters']['rid']['expose']['remember'] = TRUE;
+  /* Critère de filtrage: Utilisateur : Poste de l&#039;artiste (field_poste_de_l_artiste) */
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['id'] = 'field_poste_de_l_artiste_tid';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['table'] = 'field_data_field_poste_de_l_artiste';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['field'] = 'field_poste_de_l_artiste_tid';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['operator_id'] = 'field_poste_de_l_artiste_tid_op';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['label'] = 'Poste de l\'artiste';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['operator'] = 'field_poste_de_l_artiste_tid_op';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['identifier'] = 'field_poste_de_l_artiste_tid';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+  );
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_poste_de_l_artiste_tid']['vocabulary'] = 'position';
 
-  /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page_1');
+  /* Display: /admin/artists/list */
+  $handler = $view->new_display('page', '/admin/artists/list', 'page_1');
   $handler->display->display_options['path'] = 'admin/artists/list';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Liste des artistes';
@@ -336,7 +355,7 @@ function band_booking_admin_views_default_views() {
     t('Nom d\'utilisateur'),
     t('Courriel'),
     t('Rôle'),
-    t('Page'),
+    t('/admin/artists/list'),
   );
   $export['administration_artists'] = $view;
 
