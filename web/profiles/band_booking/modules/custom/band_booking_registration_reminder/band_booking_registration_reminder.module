@@ -13,6 +13,23 @@ define("REMINDER_MANUAL_EVERYDAY", 'admin/relaunch_batch_manually_everyday');
 define("REMINDER_MANUAL_TODAY", 'admin/relaunch_batch_manually_today');
 
 /**
+ * Gets a list of administrative and non-administrative paths.
+ *
+ * @return array
+ *   The list of admin paths.
+ */
+function band_booking_registration_reminder_admin_paths() {
+  $paths = [
+    REMINDER_ADMIN_PAGE => TRUE,
+    'relaunch_batch_cron' => TRUE,
+    'node/%/relaunch_waiting' => TRUE,
+    REMINDER_MANUAL_EVERYDAY => TRUE,
+    REMINDER_MANUAL_TODAY => TRUE,
+  ];
+  return $paths;
+}
+
+/**
  * Implements hook_menu().
  *
  * @ingroup signup_core

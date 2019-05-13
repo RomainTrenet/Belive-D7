@@ -19,6 +19,20 @@ module_load_include('inc', 'band_booking_registration', 'includes/band_booking_r
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
 
+/**
+ * Gets a list of administrative and non-administrative paths.
+ *
+ * @return array
+ *   The list of admin paths.
+ */
+function band_booking_registration_admin_paths() {
+  $paths = [
+    'admin/structure/registration/band-booking-registration/roles' => TRUE,
+    'node/%performance_node_menu/state_registration/%' => TRUE,
+  ];
+  return $paths;
+}
+
 function band_booking_registration_menu() {
   $path = drupal_get_path('module', 'band_booking_registration') . '/includes';
   $type = 'performance';

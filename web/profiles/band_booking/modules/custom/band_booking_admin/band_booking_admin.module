@@ -6,13 +6,27 @@
 
 include_once 'band_booking_admin.features.inc';
 
+/**
+ * Gets a list of administrative and non-administrative paths.
+ *
+ * @return array
+ *   The list of admin paths.
+ */
 function band_booking_admin_admin_paths() {
-  $paths = array(
+  $paths = [
     'admin/band_booking_dashboard' => TRUE,
-  );
+    'admin/band_booking_dashboard/add_performance' => TRUE,
+    'admin/performances/add_performance' => TRUE,
+    'admin/artists/list/add_artist' => TRUE,
+  ];
   return $paths;
 }
 
+/**
+ * Implements hook_menu().
+ *
+ * @ingroup signup_core
+ */
 function band_booking_admin_menu() {
   return [
     // Admin dashboard path and local action.
@@ -91,47 +105,22 @@ function band_booking_admin_menu_alter(&$items) {
     if (isset($items[$path])) {
       $args = array(
         'roles' => !empty($options['roles']) ? $options['roles'] : [],
-        'permissions' => !empty($options['permissions']) ? $options['permissions'] : [],
-        'path' => [$path]
+        'permissions' => !empty($options['permissions']) ? $options['permissions'] : []
       );
       $items[$path]['access arguments'] = $args;
       $items[$path]['access callback'] = 'band_booking_admin_restricted_access';
     }
   }
 
-  // Change entity register access.
-  /*if (isset($items['node/%entity_object/register'])) {
-    //Remove the tab for all node type
-    $items['node/%entity_object/register']['type'] = MENU_CALLBACK;
-
-    // Avoid register self form for performance node type.
-    $items['node/%entity_object/register']['access callback'] = 'band_booking_admin_register_page_access';
-  }
-
-  // Change registrations page on node.
-  if (isset($items['node/%entity_object/registrations'])) {
-    $items['node/%entity_object/registrations']['page callback'] = 'band_booking_admin_node_registrations_view';
-  }*/
-
-  // @todo.
+  // Avoid default registrations menu entries for every type of entity.
   foreach (registration_get_registration_instances() as $instance) {
     $type = $instance['entity_type'];
     if (!in_array($type, array('registration', 'registration_type'))) {
-
-      // Temporary.
+      $items[$type . '/%entity_object/register']['access callback'] = FALSE;
       $items[$type . '/%entity_object/registrations']['access callback'] = FALSE;
-
       $items[$type . '/%entity_object/registrations/list']['access callback'] = FALSE;
       $items[$type . '/%entity_object/registrations/settings']['access callback'] = FALSE;
       $items[$type . '/%entity_object/registrations/broadcast']['access callback'] = FALSE;
-
-      // Remove the tab for all type.
-      $items[$type . '/%entity_object/register']['type'] = MENU_CALLBACK;
-      // Avoid register self form.
-      $items[$type . '/%entity_object/register']['access callback'] = 'band_booking_admin_register_page_access';
-
-      // Change registrations page.
-      $items[$type . '/%entity_object/registrations']['page callback'] = 'band_booking_admin_node_registrations_view';
     }
   }
 }
@@ -139,7 +128,7 @@ function band_booking_admin_menu_alter(&$items) {
 /**
  * Restricted access for Band booking admin parts, per role and permissions.
  *
- * @param null $rid
+ * @param null $rids
  *   The administrator role ID.
  * @param null $permissions
  *   The permissions array to pass.
@@ -147,18 +136,18 @@ function band_booking_admin_menu_alter(&$items) {
  * @return bool
  *   If user has access or no.
  */
-function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL, $path = NULL){
+function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL){
   global $user;
 
-  /*dpm($rids);
-  dpm($permissions);*/
+  //dpm($rids);
+  //dpm($permissions);
 
+  // Default states.
   $has_one_role = FALSE;
   $has_permission = FALSE;
 
-  //if (isset($rid['rid'])) {
+  // Check if user has one of the roles.
   if (!empty($rids)) {
-    //dpm($rids);
     // User has no administrator role.
     foreach ($rids as $rid) {
       if (user_has_role($rid, $user)) {
@@ -167,61 +156,30 @@ function band_booking_admin_restricted_access($rids = NULL, $permissions = NULL,
     }
 
     if (!$has_one_role) {
-      /*if ($path[0] == 'admin/people/create') {
-        dpm('no role...');
-      }*/
       return FALSE;
     }
-
-    /*if ($path[0] == 'admin/people/create') {
-      dpm('role passed');
-    }*/
   }
 
+  // @todo : one of the permissions ? or every permissions ?
+  // If user passed the roles checking.
   // Has administrator role. Test every permissions.
   if (!empty($permissions)) {
     $has_permission = TRUE;
     foreach ($permissions as $permission) {
       if (!user_access($permission, $user)) {
-        /*if ($path[0] == 'admin/people/create') {
-          dpm('pas le droit d acceder');
-        }*/
         $has_permission = FALSE;
         return FALSE;
       }
     }
-    /*if ($path[0] == 'admin/people/create') {
-      dpm('permissions ok');
-    }*/
   }
 
   // If all passed.
   if ($has_one_role && $has_permission) {
-    /*if ($path[0] == 'admin/people/create') {
-      dpm('all passed');
-    }*/
     return TRUE;
   }
 
-  /*if ($path[0] == 'admin/people/create') {
-    dpm('rien');
-  }*/
-
   // Security.
   return FALSE;
-}
-
-// @TODO put in inc file
-function band_booking_admin_node_registrations_view () {
-  return views_embed_view('registrations', 'block_nid_registration');
-}
-
-// @todo.
-function band_booking_admin_register_page_access($type, $node){
-  if ( $node->type == 'performance' ) {
-    return FALSE;
-  }
-  return TRUE;
 }
 
 /**
