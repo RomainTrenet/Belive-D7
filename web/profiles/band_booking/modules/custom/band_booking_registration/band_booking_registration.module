@@ -10,6 +10,9 @@ define('BB_REGISTRATION_WORKFLOW', 'bb_confirmation_workflow');
 
 // @todo : unify statuses.
 define("WAITING_SYSTEM_NAME", 'waiting');
+define("REFUSED_SYSTEM_NAME", 'refused');
+// New, not implemented. @todo
+define("ACCEPTED_SYSTEM_NAME", 'accepted');
 
 // Load functions.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
@@ -263,12 +266,21 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
           // Prepare value.
           $data['users_mail_list'] = '';
 
-          // Get contextual node id/
+          // Get contextual node id.
           $nid = arg(1);
 
+          // By default, send to every statuses.
+          $accepted_registration_statuses = array();
+          // @todo Get option "bb_mail_list_allow_refused_registration".
+          $allow_refused_registration = variable_get('bb_mail_list_allow_refused_registration', FALSE);
+          if (!$allow_refused_registration) {
+            $accepted_registration_statuses = array(WAITING_SYSTEM_NAME, ACCEPTED_SYSTEM_NAME);
+          }
+
+          // Get users mail list.
           if (is_numeric($nid)) {
-            $temp_user_list = _get_node_registered_users_mail_list($nid);
-            $data['users_mail_list'] = _prepare_user_mail_list($temp_user_list);
+            $mail_list = _get_node_registered_users_mail_list($nid, $accepted_registration_statuses);
+            $data['users_mail_list'] = implode ( ',', $mail_list);
           }
 
           // Construct user mail list.
@@ -279,7 +291,10 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
       }
     }
   }
-
+  /*
+  if (!empty($replacements)) {
+    dpm($replacements);
+  }*/
   return $replacements;
 }
 
@@ -292,11 +307,13 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
  * @return string
  *  The string of users mail.
  *
- */
+ * /
 function _prepare_user_mail_list($users) {
   $total = count($users);
   $count = 1;
   $mails = '';
+  dpm($users);
+
 
   foreach ($users as $user) {
     if (is_object($user)) {
@@ -311,3 +328,4 @@ function _prepare_user_mail_list($users) {
 
   return $mails;
 }
+*/

@@ -28,14 +28,28 @@ function _band_booking_dev_test_page_view() {
     '@perf' => 'Test google',
   ));
 
+  /*
   try {
-    mail('romain.trenet@gmail.com', 'Hello world', 'Testing Postfix');
+    //mail('romain.trenet@gmail.com', 'Hello world', 'Testing Postfix');
     dpm('ok');
   }
   catch (Exception $e) {
     dpm('no ok');
   }
+  */
+  $nid = 424;
 
+  // By default, send to every statuses.
+  $accepted_registration_statuses = array();
+  // @todo Get option "bb_mail_list_allow_refused_registration".
+  $allow_refused_registration = variable_get('bb_mail_list_allow_refused_registration', FALSE);
+  if (!$allow_refused_registration) {
+    $accepted_registration_statuses = array(WAITING_SYSTEM_NAME, ACCEPTED_SYSTEM_NAME);
+  }
+  $mail_list = _get_node_registered_users_mail_list($nid, $accepted_registration_statuses);
+  $users_mail_list = implode ( ',', $mail_list);
+  dpm($mail_list);
+  dpm($users_mail_list);
 
   return $text;
 }
