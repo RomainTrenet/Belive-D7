@@ -139,16 +139,16 @@
     "extra": {
         "installer-paths": {
             "web/": ["type:drupal-core"],
-            "web/profiles/band_booking/modules/contrib/{$name}/": ["type:drupal-module"],
-            "web/profiles/band_booking/themes/contrib/{$name}/": ["type:drupal-theme"],
-            "web/profiles/band_booking/libraries/{$name}/": ["type:drupal-library"],
+            "web/profiles/{$name}/": ["type:drupal-profile"],
             "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
-            "web/profiles/band_booking/modules/custom/{$name}": ["type:drupal-custom-module"],
-            "web/profiles/{$name}/": ["type:drupal-profile"]
+            "web/sites/all/libraries/{$name}/": ["type:drupal-library"],
+            "web/profiles/band_booking/modules/contrib/{$name}/": ["type:drupal-module"],
+            "web/profiles/band_booking/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
+        "patches-install-hooks": true,
         "patches": {
             "cweagans/composer-patches": {
-                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+                "Call the preserve paths hooks" : "https://github.com/jcnventura/composer-patches/compare/1.x...jcnventura:fix-preserve-paths.diff"
             },
             "drupal/drupal": {
                 "PHP 7.4 vs Core": "patches/drupal-trying_to_access_array_offset_on_value_of_type_null-3169850-2.patch"
@@ -157,7 +157,6 @@
         "preserve-paths": [
             "web/sites",
             "web/profiles/band_booking",
-            "web/profiles/band_booking/libraries",
             "web/profiles/band_booking/modules/custom",
             "web/profiles/band_booking/themes/custom",
             "web/profiles/band_booking/translations"

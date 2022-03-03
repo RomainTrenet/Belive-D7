@@ -4,6 +4,17 @@
 /web/profiles/band_booking/modules/contrib/
 /web/profiles/band_booking/themes/contrib/
 
+/web/CHANGELOG.txt
+/web/COPYRIGHT.txt
+/web/INSTALL.mysql.txt
+/web/INSTALL.pgsql.txt
+/web/INSTALL.sqlite.txt
+/web/INSTALL.txt
+/web/LICENSE.txt
+/web/MAINTAINERS.txt
+/web/README.txt
+/web/UPGRADE.txt
+
 # Ignore Drupal 7 core files.
 #/web/*
 #!/web/*/
