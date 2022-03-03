@@ -8,12 +8,6 @@ include_once 'band_booking_registration.features.inc';
 
 define('BB_REGISTRATION_WORKFLOW', 'bb_confirmation_workflow');
 
-// @todo : unify statuses.
-define("WAITING_SYSTEM_NAME", 'waiting');
-define("REFUSED_SYSTEM_NAME", 'refused');
-// New, not implemented. @todo
-define("ACCEPTED_SYSTEM_NAME", 'accepted');
-
 // Load functions.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_functions');
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_determine.form');
@@ -21,20 +15,6 @@ module_load_include('inc', 'band_booking_registration', 'includes/band_booking_r
 // Needed register and unregister for blocks.
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
 module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
-
-/**
- * Gets a list of administrative and non-administrative paths.
- *
- * @return array
- *   The list of admin paths.
- */
-function band_booking_registration_admin_paths() {
-  $paths = [
-    'admin/structure/registration/band-booking-registration/roles' => TRUE,
-    'node/%performance_node_menu/state_registration/%' => TRUE,
-  ];
-  return $paths;
-}
 
 function band_booking_registration_menu() {
   $path = drupal_get_path('module', 'band_booking_registration') . '/includes';
@@ -51,6 +31,31 @@ function band_booking_registration_menu() {
       'description' => 'Configure the roles for Belive Registration',
       'file' => 'includes/band_booking_registration.admin.inc',
     ),
+    // Register many.
+    /*
+    'node/%performance_node_menu/register_many' => array(
+      'title' => 'Register many artists',
+      'page callback' => 'band_booking_registration_register_many_users_view',
+      'page arguments' => array(1),
+      'access callback' => '_band_booking_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'band_booking_registration_register_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 3,
+    ),
+    //Unregister many
+    'node/%performance_node_menu/unregister_many' => array(
+      'title' => 'Unregister many musicians',
+      'page callback' => 'band_booking_registration_unregister_many_users_view',
+      'page arguments' => array(1),
+      'access callback' => '_band_booking_registration_menu_register_many_users_access',
+      'access arguments' => array(1, "registrate users to $type registration"),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'band_booking_registration_unregister_many_users.form.inc',
+      'file path' => $path,
+      'weight' => 4,
+    ),*/
     //States registration
     'node/%performance_node_menu/state_registration/%' => array(
       'title' => "State $type registration",
@@ -123,12 +128,14 @@ function band_booking_registration_block_view($delta = '') {
 
 function band_booking_registration_register_many_block_content() {
   if ($node = menu_get_object()) {
+    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_register_many_users.form');
     return drupal_get_form('band_booking_registration_register_many_users_form', $node);
   }
 }
 
 function band_booking_registration_unregister_many_block_content() {
   if ($node = menu_get_object()) {
+    module_load_include('inc', 'band_booking_registration', 'includes/band_booking_registration_unregister_many_users.form');
     return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);
   }
 }
@@ -142,6 +149,24 @@ function band_booking_registration_unregister_many_block_content() {
 function band_booking_registration_form_registration_entity_settings_form_alter(&$form, &$form_state, $form_id) {
   $form['reminder']['#collapsed'] = TRUE;
   $form['settings']['#collapsed'] = TRUE;
+}
+
+/**
+ * Determine menu access callback for a specific signup.
+ *
+ * @param stdClass $signup
+ *   The fully-loaded signup object that would be affected.
+ * @param string $op
+ *   The operation the menu item would perform. Can be 'edit' or 'cancel'.
+ *
+ * @return bool
+ *   TRUE if the operation should be permitted, otherwise FALSE.
+ */
+function _band_booking_registration_menu_register_many_users_access($node, $permission) {
+  if (!user_access($permission) || empty($node->field_inscriptions['und'][0]['registration_type'])) {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /**
@@ -266,21 +291,12 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
           // Prepare value.
           $data['users_mail_list'] = '';
 
-          // Get contextual node id.
+          // Get contextual node id/
           $nid = arg(1);
 
-          // By default, send to every statuses.
-          $accepted_registration_statuses = array();
-          // @todo Get option "bb_mail_list_allow_refused_registration".
-          $allow_refused_registration = variable_get('bb_mail_list_allow_refused_registration', FALSE);
-          if (!$allow_refused_registration) {
-            $accepted_registration_statuses = array(WAITING_SYSTEM_NAME, ACCEPTED_SYSTEM_NAME);
-          }
-
-          // Get users mail list.
           if (is_numeric($nid)) {
-            $mail_list = _get_node_registered_users_mail_list($nid, $accepted_registration_statuses);
-            $data['users_mail_list'] = implode ( ',', $mail_list);
+            $temp_user_list = _get_node_registered_users_mail_list($nid);
+            $data['users_mail_list'] = _prepare_user_mail_list($temp_user_list);
           }
 
           // Construct user mail list.
@@ -291,10 +307,7 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
       }
     }
   }
-  /*
-  if (!empty($replacements)) {
-    dpm($replacements);
-  }*/
+
   return $replacements;
 }
 
@@ -307,13 +320,11 @@ function band_booking_registration_tokens($type, $tokens, array $data = array(),
  * @return string
  *  The string of users mail.
  *
- * /
+ */
 function _prepare_user_mail_list($users) {
   $total = count($users);
   $count = 1;
   $mails = '';
-  dpm($users);
-
 
   foreach ($users as $user) {
     if (is_object($user)) {
@@ -328,4 +339,3 @@ function _prepare_user_mail_list($users) {
 
   return $mails;
 }
-*/

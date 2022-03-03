@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * band_booking_admin.rules_defaults.inc
@@ -13,7 +12,6 @@ function band_booking_admin_default_rules_configuration() {
   $items['rules_on_manager_login'] = entity_import('rules_config', '{ "rules_on_manager_login" : {
       "LABEL" : "On manager login",
       "PLUGIN" : "reaction rule",
-      "WEIGHT" : "1",
       "OWNER" : "rules",
       "REQUIRES" : [ "rules" ],
       "ON" : { "user_login" : [] },
@@ -31,12 +29,7 @@ function band_booking_admin_default_rules_configuration() {
       "ON" : { "user_login" : [] },
       "IF" : [
         { "user_has_role" : { "account" : [ "account" ], "roles" : { "value" : { "5" : "5" } } } },
-        { "NOT pathrules_checkpath" : { "path" : "?destination" } },
-        { "NOT user_has_role" : {
-            "account" : [ "account" ],
-            "roles" : { "value" : { "3" : "3", "4" : "4" } }
-          }
-        }
+        { "NOT pathrules_checkpath" : { "path" : "?destination" } }
       ],
       "DO" : [ { "redirect" : { "url" : "mes-prestations" } } ]
     }

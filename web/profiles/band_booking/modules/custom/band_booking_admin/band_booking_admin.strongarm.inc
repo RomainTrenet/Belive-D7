@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * band_booking_admin.strongarm.inc

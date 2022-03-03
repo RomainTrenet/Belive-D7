@@ -1,0 +1,196 @@
+<?php
+/**
+ * @file
+ * A light-weight, select form item style plugin for Drupal based on jQuery and Bootstrap
+ */
+
+define("BOOTSTRAP_MULTISELECT_VERSION", variable_get('bootstrap_multiselect_version', '2.0'));
+define("BOOTSTRAP_MULTISELECT_DEBUG", variable_get('bootstrap_multiselect_debug', FALSE));
+
+/**
+ * Called by bootstrap_multiselect_theme() to provide hook_theme().
+ *
+ * This is kept in this file so it can be with the theme functions it presents.
+ * Otherwise it would get lonely.
+ */
+function bootstrap_multiselect_theme($existing, $type, $theme, $path) {
+ 	$path = 'includes/';
+	return array(
+		'bootstrap_multiselect_inline_form_element' => array(
+			'render element' => 'element',
+			'file' => $path . 'bootstrap_multiselect.elements.inc',
+		),
+	);
+}
+
+function bootstrap_multiselect_element_info() {
+  $path_to_js = drupal_get_path('module', 'bootstrap_multiselect') . '/js/bootstrap-multiselect.js';
+  $path_to_css = drupal_get_path('module', 'bootstrap_multiselect') . '/css/bootstrap-multiselect.css';
+
+	$types['bootstrap_multiselect_field'] = array(
+    '#input' => TRUE,
+    '#multiple' => TRUE,
+    '#title' => 'Mon champs perso',
+		'#title_display' => 'before',
+    '#process' => array(
+      'form_process_select',
+      'ajax_process_form'
+    ),
+    '#theme' => 'select',
+    '#theme_wrappers' => array(
+      'bootstrap_multiselect_inline_form_element'
+    ),
+    '#attributes' => array(
+			'class' => array('jquery-multiselect'),
+		),
+    '#attached' => array(
+      'js' => array(
+        $path_to_js => array(
+          'scope' => 'footer',
+        ),
+      ),
+      'css' => array(
+        $path_to_css => array(
+          //'scope' => 'footer',
+        ),
+      ),
+      'libraries_load' => array(
+        0 => array('bootstrap_multiselect'),
+      ),
+    ),
+	);
+	return $types;
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function bootstrap_multiselect_libraries_info() {
+	$libraries['bootstrap_multiselect'] = array(
+		'name' => 'Bootstrap Multiselect',
+		'vendor url' => 'http://www.jqueryscript.net/',
+		'download url' => 'http://www.jqueryscript.net/form/jQuery-Multiple-Select-Plugin-For-Bootstrap-Bootstrap-Multiselect.html',
+		'version arguments' => array(
+		  'file' => 'dist/js/bootstrap-multiselect.js',
+		  'pattern' => '/Bootstrap Multiselect v(\d+\.+\d+)/',//Example : Bootstrap Multiselect v2.1
+		  'lines' => 2,
+		),
+    'path' => 'dist',
+		'files' => array(
+			'js' => array(
+				'js/bootstrap-multiselect.js' => array(
+				    'scope' => 'footer',
+				),
+			),
+			'css' => array(
+				'css/bootstrap-multiselect.css',
+			),
+		),
+		/*
+		'dependencies' => array(
+			0 => 'bootstrap',
+		),*/
+	);
+
+	return $libraries;
+}
+
+/**
+ * Implements hook_library().
+ *
+ * We also define FlexSlider through the core library callbacks
+ */
+function bootstrap_multiselect_library() {
+	$library_path = libraries_get_path('bootstrap_multiselect') . '/dist';
+  
+	$libraries['bootstrap_multiselect'] = array(
+		'title' => 'Bootstrap Multiselect',
+		'website' => 'http://www.jqueryscript.net/',
+		'version' => BOOTSTRAP_MULTISELECT_VERSION,
+		'js' => array(
+		  $library_path . '/js/bootstrap-multiselect.js' => array(
+		    'scope' => 'footer',
+		  ),
+		),
+		'css' => array(
+		  $library_path . '/css/bootstrap-multiselect.css' => array(
+		    'type' => 'file',
+		    'media' => 'screen',
+		  ),
+		),
+	);
+
+	return $libraries;
+}
+
+/**
+ * Implements hook_libraries_info_alter().
+ *
+ * Set the bootstrap library to the footer.
+ */
+function bootstrap_multiselect_libraries_info_alter(&$libraries) {
+	foreach ($libraries['bootstrap']['files']['js'] as $key => $value) {
+		if (is_numeric( $key )) {
+			unset($libraries['bootstrap']['files']['js'][ $key ]);
+			$libraries['bootstrap']['files']['js'][ $value ] = array(
+				'scope' => 'footer',
+			);
+		}
+	}
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bootstrap_multiselect_permission() {
+  return array(
+    'administer bootstrap multiselect' =>  array(
+      'title' => t('Administer the bootstrap multiselect module'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function bootstrap_multiselect_menu() {
+  $items = array();
+
+  $items['admin/config/media/bootstrap-multiselect'] = array(
+    'title' => 'BootstrapMultiselect.js',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bootstrap_multiselect_settings_form'),
+    'access arguments' => array('administer bootstrap multiselect'),
+    'description' => 'Configure the settings for the bootstrap_multiselect.js module.',
+    'file' => 'includes/bootstrap_multiselect.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Add the Video.js library to the page.
+ *
+ * @param $add
+ *   By default this function will add videojs to the page JavaScript array
+ *   directly. If wanting to store the Video.js file as an #attached property,
+ *   set this to FALSE and videojs_add() will only return the needed array
+ *   suitable for use as an #attached property.
+ */
+/*
+ * Not used.
+function bootstrap_multiselect_add($add = TRUE) {
+	static $added = FALSE;
+	if (!isset($added)) {
+		$added = &drupal_static(__FUNCTION__);
+	}
+
+	if ($add && !$added) {
+		//Add bootstrap library (normally in dependencies...)
+    // @todo remove.
+		//libraries_load('bootstrap');
+		drupal_add_library('bootstrap_multiselect', 'bootstrap_multiselect', FALSE);
+		$added = TRUE;
+	}
+}
+*/

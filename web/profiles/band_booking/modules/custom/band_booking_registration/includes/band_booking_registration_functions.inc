@@ -80,35 +80,16 @@ function _get_node_registered_users($nid) {
   }
 }
 
-/**
- * Get node registered users mail list.
- *
- * @param int $nid
- *   The node id.
- * @param array $accepted_registration_statuses
- *   List of authorized registration statuses.
- *
- * @return array
- *   Return associative array of mail.
- */
-function _get_node_registered_users_mail_list($nid, array $accepted_registration_statuses = array()) {
+function _get_node_registered_users_mail_list($nid) {
   if (is_numeric($nid)) {
-    $query = db_select('users', 'u');
-    $query->fields('u', array('mail'));
-    $query->join('registration', 'r', 'r.user_uid = u.uid');
+    $query=db_select('users','u');
+    $query->fields('u',array('mail'));
+    $query->join('registration', 'e', 'e.user_uid = u.uid');
     $query->condition('u.status', 1, '=');
-    $query->condition('r.entity_id', $nid, '=');
-    // Remove refused registration.
-    if (!empty($accepted_registration_statuses)) {
-      $query->condition('r.state', $accepted_registration_statuses, 'IN');
-    }
-
-    // Return associative array of mail.
-    return $query->execute()->fetchCol();
+    $query->condition('e.entity_id', $nid, '=');
+    return $query->execute()->fetchAll();
   }
-  else {
-    return [];
-  }
+  return FALSE;
 }
 
 /**

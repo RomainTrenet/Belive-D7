@@ -1,16 +1,17 @@
 <?php
-/**
- * @file
- * Drupal needs this blank file.
- */
 
 include_once 'band_booking_user.features.inc';
 
 define('BB_ADMINISTRATOR_RID', 3);
 define('BB_MANAGER_RID', 4);
 
+/**
+ * @file
+ * Drupal needs this blank file.
+ */
+
 function band_booking_user_menu() {
-  return array(
+  return [
     // Artist edit account redirection.
     'artist/edit-account' => array(
       'title' => 'Add performance',
@@ -18,7 +19,7 @@ function band_booking_user_menu() {
       'access callback' => TRUE,
       'type' => MENU_NORMAL_ITEM,
     ),
-  );
+  ];
 }
 
 function _band_booking_user_goto_edit_page() {
@@ -27,14 +28,6 @@ function _band_booking_user_goto_edit_page() {
   drupal_goto($edit_path);
 }
 
-/**
- * Alters form user pass.
- * @param $form
- * The form
- *
- * @param $form_state
- * @param $form_id
- */
 function band_booking_user_form_user_pass_alter(&$form, &$form_state, $form_id) {
   $form['actions'][] = array(
     '#markup' => l(t('Log in'),'/user')
@@ -53,3 +46,84 @@ function band_booking_user_form_user_login_alter(&$form, &$form_state, $form_id)
     '#markup' => l(t('Request new password'),'/user/password')
   );
 }
+
+/**
+ * Implements hook_theme().
+ */
+/*
+function band_booking_user_theme($existing, $type, $theme, $path) {
+  $path = drupal_get_path('module', 'band_booking_user') . '/theme';
+  // @todo: repair.
+  return array(
+    'user_quick_access_block' => array(
+      'variables' => array(),
+      'template' => 'user_quick_access_block',
+      'path' => $path
+    ),
+  );
+}
+*/
+
+/**
+ * Implements hook_block_info().
+ * /
+function band_booking_user_block_info() {
+  $blocks['user_quick_access'] = array(
+    'info' => t('User quick access'),
+    'status' => 1,
+    'region' => 'sidebar_first',
+    'cache' => DRUPAL_CACHE_PER_USER,
+  );
+  return $blocks;
+}
+ * */
+
+/**
+ * Implements hook_block_view().
+ * /
+function band_booking_user_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'user_quick_access':
+      global $user;
+      $block['subject'] = $user->name;
+      $block['content'] = band_booking_user_user_quick_access_block_content();
+      $block['block_html_id'] = drupal_html_id('block-band_booking-user-user-quick-access');
+      break;
+  }
+  return $block;
+}
+*/
+
+/**
+ * Get export links
+ *
+ * @code $link = array('text' => 'link text', 'path' => 'drupal path', 'options' => array());
+ * /
+function band_booking_user_user_quick_access_block_content() {
+  global $user;
+  global $base_url;
+
+  //Links info to poulate $links array, passed to the template.
+  $links = array();
+  $links['my_account'] = array(
+    'text' => t('My account'),
+    'path' => $base_url . '/user',
+  );
+  $links['my_performances'] = array(
+    'text' => t('My performances'),
+    'path' => $base_url . '/mes-prestations',
+  );
+  $links['edit_account'] = array(
+    'text' => t('Edit my account'),
+    'path' => $base_url . '/user/' . $user->uid . '/edit',
+  );
+  $links['logout'] = array(
+    'text' => t('Logout'),
+    'path' => $base_url . '/user/logout',
+  );
+
+  return theme('user_quick_access_block', array('links' => $links));
+}
+ * */

@@ -23,6 +23,12 @@ module_load_include('inc', 'band_booking_registration', 'includes/band_booking_r
  * @return array
  *   The FAPI form array for the signup accept form.
  */
+
+function band_booking_registration_unregister_many_users_view ($node) {
+  //drupal_set_title($node->title);
+  return drupal_get_form('band_booking_registration_unregister_many_users_form', $node);
+}
+
 function band_booking_registration_unregister_many_users_form($form, &$form_state, $node) {
   // Get registered artists.
   $registered_artists = _get_node_registered_users($node->nid);

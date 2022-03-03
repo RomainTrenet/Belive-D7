@@ -1,0 +1,16 @@
+name = Artists position
+core = 7.x
+package = Belive
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = taxonomy
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[field_base][] = field_postition
+features[taxonomy][] = position
+features[user_role][] = Musicien
+features[variable][] = pathauto_taxonomy_term_position_pattern
+features[variable][] = pathauto_user_pattern
+project path = sites/all/modules/features
