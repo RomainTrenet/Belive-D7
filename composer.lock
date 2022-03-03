@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d6d942197b36f8166e47e40688744af",
+    "content-hash": "5350e24a55dddb8de8203ea29eec0d12",
     "packages": [
         {
             "name": "composer/installers",
@@ -1894,86 +1894,6 @@
             }
         },
         {
-            "name": "drupal/diff",
-            "version": "3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/diff.git",
-                "reference": "7.x-3.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/diff-7.x-3.4.zip",
-                "reference": "7.x-3.4",
-                "shasum": "baae45e1131953330b1553d7e887960ae494d79c"
-            },
-            "require": {
-                "drupal/drupal": "~7.0"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.4",
-                    "datestamp": "1541401381",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Alan D.",
-                    "homepage": "https://www.drupal.org/user/198838"
-                },
-                {
-                    "name": "Junyor",
-                    "homepage": "https://www.drupal.org/user/7006"
-                },
-                {
-                    "name": "dww",
-                    "homepage": "https://www.drupal.org/user/46549"
-                },
-                {
-                    "name": "juampynr",
-                    "homepage": "https://www.drupal.org/user/682736"
-                },
-                {
-                    "name": "lhangea",
-                    "homepage": "https://www.drupal.org/user/2743803"
-                },
-                {
-                    "name": "miro_dietiker",
-                    "homepage": "https://www.drupal.org/user/227761"
-                },
-                {
-                    "name": "phenaproxima",
-                    "homepage": "https://www.drupal.org/user/205645"
-                },
-                {
-                    "name": "realityloop",
-                    "homepage": "https://www.drupal.org/user/139189"
-                },
-                {
-                    "name": "rötzi",
-                    "homepage": "https://www.drupal.org/user/73064"
-                },
-                {
-                    "name": "yhahn",
-                    "homepage": "https://www.drupal.org/user/264833"
-                }
-            ],
-            "description": "Show differences between content revisions.",
-            "homepage": "https://www.drupal.org/project/diff",
-            "support": {
-                "source": "https://git.drupalcode.org/project/diff"
-            }
-        },
-        {
             "name": "drupal/drupal",
             "version": "7.89.0",
             "source": {
@@ -2353,60 +2273,6 @@
             "homepage": "https://www.drupal.org/project/features",
             "support": {
                 "source": "https://git.drupalcode.org/project/features"
-            }
-        },
-        {
-            "name": "drupal/features_diff",
-            "version": "1.0.0-beta2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/features_diff.git",
-                "reference": "7.x-1.0-beta2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/features_diff-7.x-1.0-beta2.zip",
-                "reference": "7.x-1.0-beta2",
-                "shasum": "8646b9241e357d6086a6c1ead25ac2eaa6da81ec"
-            },
-            "require": {
-                "drupal/diff": "*",
-                "drupal/drupal": "~7.0",
-                "drupal/features": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-1.0-beta2",
-                    "datestamp": "1427846881",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "alchemist",
-                    "homepage": "https://www.drupal.org/user/49328"
-                },
-                {
-                    "name": "gbaudoin",
-                    "homepage": "https://www.drupal.org/user/377795"
-                }
-            ],
-            "description": "Provides a diff output off features.",
-            "homepage": "https://www.drupal.org/project/features_diff",
-            "support": {
-                "source": "https://git.drupalcode.org/project/features_diff"
             }
         },
         {
@@ -7715,15 +7581,251 @@
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "drupal/devel",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/devel.git",
+                "reference": "7.x-1.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/devel-7.x-1.7.zip",
+                "reference": "7.x-1.7",
+                "shasum": "dbbd9a2e1a45b16467a26d0db2887a0c3dd6a63b"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.7",
+                    "datestamp": "1550852888",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "drupalspoons",
+                    "homepage": "https://www.drupal.org/user/3647684"
+                },
+                {
+                    "name": "moshe weitzman",
+                    "homepage": "https://www.drupal.org/user/23"
+                }
+            ],
+            "description": "Various blocks, pages, and functions for developers.",
+            "homepage": "https://www.drupal.org/project/devel",
+            "support": {
+                "source": "https://git.drupalcode.org/project/devel"
+            }
+        },
+        {
+            "name": "drupal/diff",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/diff.git",
+                "reference": "7.x-3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/diff-7.x-3.4.zip",
+                "reference": "7.x-3.4",
+                "shasum": "baae45e1131953330b1553d7e887960ae494d79c"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.4",
+                    "datestamp": "1541401381",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Alan D.",
+                    "homepage": "https://www.drupal.org/user/198838"
+                },
+                {
+                    "name": "Junyor",
+                    "homepage": "https://www.drupal.org/user/7006"
+                },
+                {
+                    "name": "dww",
+                    "homepage": "https://www.drupal.org/user/46549"
+                },
+                {
+                    "name": "juampynr",
+                    "homepage": "https://www.drupal.org/user/682736"
+                },
+                {
+                    "name": "lhangea",
+                    "homepage": "https://www.drupal.org/user/2743803"
+                },
+                {
+                    "name": "miro_dietiker",
+                    "homepage": "https://www.drupal.org/user/227761"
+                },
+                {
+                    "name": "phenaproxima",
+                    "homepage": "https://www.drupal.org/user/205645"
+                },
+                {
+                    "name": "realityloop",
+                    "homepage": "https://www.drupal.org/user/139189"
+                },
+                {
+                    "name": "rötzi",
+                    "homepage": "https://www.drupal.org/user/73064"
+                },
+                {
+                    "name": "yhahn",
+                    "homepage": "https://www.drupal.org/user/264833"
+                }
+            ],
+            "description": "Show differences between content revisions.",
+            "homepage": "https://www.drupal.org/project/diff",
+            "support": {
+                "source": "https://git.drupalcode.org/project/diff"
+            }
+        },
+        {
+            "name": "drupal/features_diff",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/features_diff.git",
+                "reference": "7.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/features_diff-7.x-1.0-beta2.zip",
+                "reference": "7.x-1.0-beta2",
+                "shasum": "8646b9241e357d6086a6c1ead25ac2eaa6da81ec"
+            },
+            "require": {
+                "drupal/diff": "*",
+                "drupal/drupal": "~7.0",
+                "drupal/features": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.0-beta2",
+                    "datestamp": "1427846881",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "alchemist",
+                    "homepage": "https://www.drupal.org/user/49328"
+                },
+                {
+                    "name": "gbaudoin",
+                    "homepage": "https://www.drupal.org/user/377795"
+                }
+            ],
+            "description": "Provides a diff output off features.",
+            "homepage": "https://www.drupal.org/project/features_diff",
+            "support": {
+                "source": "https://git.drupalcode.org/project/features_diff"
+            }
+        },
+        {
+            "name": "drupal/search_krumo",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/search_krumo.git",
+                "reference": "7.x-1.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/search_krumo-7.x-1.6.zip",
+                "reference": "7.x-1.6",
+                "shasum": "698496e66d53bde2ff87e09c0ae27a3f1b04df58"
+            },
+            "require": {
+                "drupal/devel": "*",
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.6",
+                    "datestamp": "1429280289",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Open Social",
+                    "homepage": "https://www.drupal.org/user/272162"
+                },
+                {
+                    "name": "bramtenhove",
+                    "homepage": "https://www.drupal.org/user/1549848"
+                },
+                {
+                    "name": "ronaldtebrake",
+                    "homepage": "https://www.drupal.org/user/2314038"
+                }
+            ],
+            "description": "Makes it possible to search through Devels krumo's.",
+            "homepage": "https://www.drupal.org/project/search_krumo",
+            "support": {
+                "source": "https://git.drupalcode.org/project/search_krumo"
+            }
+        }
+    ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/content_access": 10,
-        "drupal/features_diff": 10,
         "drupal/menu_item_visibility": 10,
         "drupal/telephone": 15,
-        "drupal/user_picture_default": 10
+        "drupal/user_picture_default": 10,
+        "drupal/features_diff": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

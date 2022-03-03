@@ -149,9 +149,6 @@
         "patches": {
             "cweagans/composer-patches": {
                 "Call the preserve paths hooks" : "https://github.com/jcnventura/composer-patches/compare/1.x...jcnventura:fix-preserve-paths.diff"
-            },
-            "drupal/drupal": {
-                "PHP 7.4 vs Core": "patches/drupal-trying_to_access_array_offset_on_value_of_type_null-3169850-2.patch"
             }
         },
         "preserve-paths": [
