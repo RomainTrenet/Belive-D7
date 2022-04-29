@@ -149,9 +149,6 @@
         "patches": {
             "cweagans/composer-patches": {
                 "Call the preserve paths hooks" : "https://github.com/jcnventura/composer-patches/compare/1.x...jcnventura:fix-preserve-paths.diff"
-            },
-            "drupal/core": {
-                "PHP7.4 and empty entity_keys for taxonomy term result in notices": "https://www.drupal.org/files/issues/2021-05-25/3166668-14.patch"
             }
         },
         "preserve-paths": [

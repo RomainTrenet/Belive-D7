@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Artists position feature.
- */
-
-include_once 'artists_position.features.inc';
